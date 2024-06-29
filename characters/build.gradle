@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     implementation libs.guava
+    implementation project(':lifeform')
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
