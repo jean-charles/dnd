@@ -1,9 +1,10 @@
 package com.gayasystem.games.dnd.common.dices;
 
-import org.junit.Before;
+
+import org.junit.jupiter.api.BeforeEach;
 
 public class Dice1d20Test extends AbstractDice {
-    @Before
+    @BeforeEach
     public void setUp() {
         dice = Dice1d20.dice;
         max = 20;
