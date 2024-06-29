@@ -7,4 +7,5 @@ include 'lifeform'
 include 'characters'
 include 'ecosystem'
 include 'world'
+include 'common'
 
