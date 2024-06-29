@@ -3,12 +3,13 @@ package com.gayasystem.games.dnd.lifeform;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.lifeform.brain.Brain;
+import com.gayasystem.games.dnd.lifeform.brain.Moveable;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.sounds.Sound;
 import com.gayasystem.games.dnd.lifeform.brain.sounds.SoundSpectrum;
 
-public class LifeForm implements Thing, Runnable {
-    private final Brain brain = new Brain();
+public class LifeForm implements Moveable, Thing, Runnable {
+    private final Brain brain;
 
     private double sightDistance;
     private SoundSpectrum soundSpectrum;
@@ -18,6 +19,7 @@ public class LifeForm implements Thing, Runnable {
     private double mass;
 
     public LifeForm(double speed) {
+        brain = new Brain(this);
         this.speed = speed;
     }
 
@@ -37,6 +39,11 @@ public class LifeForm implements Thing, Runnable {
 
     public Velocity velocity() {
         return velocity;
+    }
+
+    @Override
+    public void setVelocity(Velocity velocity) {
+        this.velocity = velocity;
     }
 
     @Override
