@@ -7,7 +7,7 @@ import com.gayasystem.games.dnd.lifeform.brain.sounds.Sound;
 
 import java.util.Collection;
 
-import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.velocity;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.direction;
 import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.weight;
 
 public class EngramComputing {
@@ -36,7 +36,7 @@ public class EngramComputing {
         if (mostImportantEngram != null) {
             if (mostImportantEngram.engram() instanceof Image) {
                 var emotion = mostImportantEngram.emotion();
-                moveable.setVelocity(velocity(emotion));
+                moveable.setDirection(direction(emotion));
             }
         }
     }

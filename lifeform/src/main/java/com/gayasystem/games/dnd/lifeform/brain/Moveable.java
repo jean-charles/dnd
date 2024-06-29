@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
-import com.gayasystem.games.dnd.common.Velocity;
+import com.gayasystem.games.dnd.common.Direction;
 
 public interface Moveable {
-    void setVelocity(Velocity velocity);
+    void setDirection(Direction direction);
 }
