@@ -5,13 +5,22 @@ import com.gayasystem.games.dnd.common.characters.equipments.Equipment;
 import com.gayasystem.games.dnd.common.characters.scores.AbilityScores;
 import com.gayasystem.games.dnd.common.characters.scores.Skills;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Character {
-    protected AbilityScores abilityScores;
-    protected AbilityScores abilityScoreIncrease;
-    protected Alignment alignment;
-    protected Skills skills;
-    protected int armorClass;
-    protected Set<Equipment> equipments;
+    private AbilityScores abilityScores;
+    private AbilityScores abilityScoreIncrease;
+    private Alignment alignment;
+    private Skills skills;
+    private int armorClass;
+    private Set<Equipment> equipments = new HashSet<>();
+
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass) {
+        this.abilityScores = abilityScores;
+        this.abilityScoreIncrease = abilityScoreIncrease;
+        this.alignment = alignment;
+        this.skills = skills;
+        this.armorClass = armorClass;
+    }
 }
