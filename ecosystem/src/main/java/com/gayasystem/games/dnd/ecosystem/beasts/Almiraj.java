@@ -1,10 +1,10 @@
 package com.gayasystem.games.dnd.ecosystem.beasts;
 
-import com.gayasystem.games.dnd.common.characters.Beast;
-import com.gayasystem.games.dnd.common.characters.scores.Ability;
-import com.gayasystem.games.dnd.common.characters.scores.AbilityScores;
-import com.gayasystem.games.dnd.common.characters.scores.Skills;
-import com.gayasystem.games.dnd.common.dices.Dice1d6;
+import com.gayasystem.games.dnd.characters.Beast;
+import com.gayasystem.games.dnd.characters.scores.Ability;
+import com.gayasystem.games.dnd.characters.scores.AbilityScores;
+import com.gayasystem.games.dnd.characters.scores.Skills;
+import com.gayasystem.games.dnd.gametools.dices.Dice1d6;
 
 public class Almiraj extends Beast {
     public Almiraj() {
