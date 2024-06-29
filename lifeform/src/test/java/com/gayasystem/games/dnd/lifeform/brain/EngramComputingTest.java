@@ -2,7 +2,6 @@ package com.gayasystem.games.dnd.lifeform.brain;
 
 import com.gayasystem.games.dnd.common.Direction;
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
 import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
@@ -26,7 +25,7 @@ class EngramComputingTest {
         Collection<Engram> engrams = List.of(new Image(ThingA.class));
         engramComputing.compute(engrams);
 
-        verify(moveable).setVelocity(any(Velocity.class));
+        verify(moveable).setDirection(any(Direction.class));
     }
 
     @Test
@@ -38,7 +37,7 @@ class EngramComputingTest {
         Collection<Engram> engrams = List.of(new Image(ThingB.class));
         engramComputing.compute(engrams);
 
-        verify(moveable, never()).setVelocity(any(Velocity.class));
+        verify(moveable, never()).setDirection(any(Direction.class));
     }
 
     @Test
@@ -52,12 +51,12 @@ class EngramComputingTest {
         Collection<Engram> engrams = List.of(new Image(ThingA.class));
         engramComputing.compute(engrams);
 
-        verify(moveable).setVelocity(new Velocity(1.0, new Direction(90.0, 0.0, 0.0)));
+        verify(moveable).setDirection(new Direction(90.0, 0.0, 0.0));
 
         engrams = List.of(new Image(ThingB.class));
         engramComputing.compute(engrams);
 
-        verify(moveable).setVelocity(new Velocity(1.0, new Direction(0.0, 0.0, 0.0)));
+        verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));
     }
 }
 
