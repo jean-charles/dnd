@@ -10,6 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/ecosystem" />
+            <option value="$PROJECT_DIR$/lifeform" />
+            <option value="$PROJECT_DIR$/world" />
           </set>
         </option>
       </GradleProjectSettings>
