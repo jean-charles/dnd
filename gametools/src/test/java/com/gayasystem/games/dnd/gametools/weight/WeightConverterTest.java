@@ -1,6 +1,6 @@
-package com.gayasystem.games.dnd.common.weight;
+package com.gayasystem.games.dnd.gametools.weight;
 
-import com.gayasystem.games.dnd.common.wealth.coins.Coin;
+import com.gayasystem.games.dnd.gametools.coins.Coin;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.common.wealth.coins;
+package com.gayasystem.games.dnd.gametools.coins;
 
 
 import org.junit.jupiter.api.Test;

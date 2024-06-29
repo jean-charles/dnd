@@ -8,6 +8,8 @@ import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.sounds.Sound;
 import com.gayasystem.games.dnd.lifeform.brain.sounds.SoundSpectrum;
 
+import java.util.Collection;
+
 public class LifeForm implements Moveable, Thing, Runnable {
     private final Brain brain;
 
@@ -18,8 +20,8 @@ public class LifeForm implements Moveable, Thing, Runnable {
     private Velocity velocity;
     private double mass;
 
-    public LifeForm(double speed) {
-        brain = new Brain(this);
+    public LifeForm(double speed, Collection<Class<? extends Thing>> scaredBy, Collection<Class<? extends Thing>> attractedBy) {
+        brain = new Brain(this, attractedBy, scaredBy);
         this.speed = speed;
     }
 

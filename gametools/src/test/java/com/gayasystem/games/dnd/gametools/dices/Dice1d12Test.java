@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.common.dices;
+package com.gayasystem.games.dnd.gametools.dices;
 
 import org.junit.jupiter.api.BeforeEach;
 

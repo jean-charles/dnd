@@ -1,30 +1,76 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
+import com.gayasystem.games.dnd.common.Direction;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
+import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import static com.gayasystem.games.dnd.lifeform.brain.memories.Emotion.attracted;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.Emotion.scared;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class EngramComputingTest {
-    private EngramComputing engramComputing = new EngramComputing();
-
     @Test
-    void computeImage() {
-        Collection<Engram> engrams = new ArrayList<>();
-        Thing thing = mock(Thing.class);
-        engrams.add(new Image(thing));
-
+    void computeImageFound() {
+        Collection<PersistedEngram> memories = List.of(new PersistedEngram(scared, new Image(ThingA.class)));
         Moveable moveable = mock(Moveable.class);
-        engramComputing.compute(engrams, moveable);
+        var engramComputing = new EngramComputing(memories, moveable);
+
+        Collection<Engram> engrams = List.of(new Image(ThingA.class));
+        engramComputing.compute(engrams);
 
         verify(moveable).setVelocity(any(Velocity.class));
+    }
+
+    @Test
+    void computeImageNotFound() {
+        Collection<PersistedEngram> memories = List.of(new PersistedEngram(scared, new Image(ThingA.class)));
+        Moveable moveable = mock(Moveable.class);
+        var engramComputing = new EngramComputing(memories, moveable);
+
+        Collection<Engram> engrams = List.of(new Image(ThingB.class));
+        engramComputing.compute(engrams);
+
+        verify(moveable, never()).setVelocity(any(Velocity.class));
+    }
+
+    @Test
+    void computeFearAttracted() {
+        Collection<PersistedEngram> memories = List.of(
+                new PersistedEngram(scared, new Image(ThingA.class)),
+                new PersistedEngram(attracted, new Image(ThingB.class)));
+        Moveable moveable = mock(Moveable.class);
+        var engramComputing = new EngramComputing(memories, moveable);
+
+        Collection<Engram> engrams = List.of(new Image(ThingA.class));
+        engramComputing.compute(engrams);
+
+        verify(moveable).setVelocity(new Velocity(1.0, new Direction(90.0, 0.0, 0.0)));
+
+        engrams = List.of(new Image(ThingB.class));
+        engramComputing.compute(engrams);
+
+        verify(moveable).setVelocity(new Velocity(1.0, new Direction(0.0, 0.0, 0.0)));
+    }
+}
+
+class ThingA implements Thing {
+    @Override
+    public double mass() {
+        return 0;
+    }
+}
+
+class ThingB implements Thing {
+    @Override
+    public double mass() {
+        return 0;
     }
 }

@@ -20,7 +20,9 @@ public class Dragonborn extends Character {
                 30,
                 alignment,
                 null,
-                armorClass
+                armorClass,
+                null,
+                null
         );
     }
 }

@@ -20,7 +20,9 @@ public class Dwarf extends Character {
                 25,
                 alignment,
                 null,
-                armorClass
+                armorClass,
+                null,
+                null
         );
     }
 }

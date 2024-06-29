@@ -4,8 +4,10 @@ import com.gayasystem.games.dnd.characters.alignments.Alignment;
 import com.gayasystem.games.dnd.characters.equipments.Equipment;
 import com.gayasystem.games.dnd.characters.scores.AbilityScores;
 import com.gayasystem.games.dnd.characters.scores.Skills;
+import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.LifeForm;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,8 +19,8 @@ public class Character extends LifeForm {
     private int armorClass;
     private Set<Equipment> equipments = new HashSet<>();
 
-    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, double speed, Alignment alignment, Skills skills, int armorClass) {
-        super(speed);
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, double speed, Alignment alignment, Skills skills, int armorClass, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+        super(speed, attractedBy, scaredBy);
         this.abilityScores = abilityScores;
         this.abilityScoreIncrease = abilityScoreIncrease;
         this.alignment = alignment;

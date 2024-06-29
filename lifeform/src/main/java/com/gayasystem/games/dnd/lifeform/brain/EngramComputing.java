@@ -1,32 +1,67 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
-import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
+import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
 import com.gayasystem.games.dnd.lifeform.brain.sounds.Sound;
 
 import java.util.Collection;
 
+import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.velocity;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.weight;
+
 public class EngramComputing {
-    public void compute(Collection<Engram> engrams, Moveable moveable) {
-        Engram mostImportantEngram = null;
-        double mostImportantEngramWeight = 0.0;
-        for (Engram engram : engrams) {
-            var weight = compute(engram, moveable);
-            if (weight > mostImportantEngramWeight) {
-                mostImportantEngramWeight = weight;
-                mostImportantEngram = engram;
-            }
-        }
-        if (mostImportantEngram instanceof Image)
-            moveable.setVelocity(new Velocity());
+    private Collection<PersistedEngram> memories;
+    private Moveable moveable;
+
+    public EngramComputing(Collection<PersistedEngram> memories, Moveable moveable) {
+        this.memories = memories;
+        this.moveable = moveable;
     }
 
-    private double compute(Engram engram, Moveable moveable) {
+    public void compute(Collection<Engram> engrams) {
+        PersistedEngram mostImportantEngram = null;
+        double mostImportantEngramWeight = 0.0;
+        for (Engram engram : engrams) {
+            var foundEngram = compute(engram);
+            if (foundEngram != null) {
+                var emotion = foundEngram.emotion();
+                double weight = weight(emotion);
+                if (weight > mostImportantEngramWeight) {
+                    mostImportantEngram = foundEngram;
+                    mostImportantEngramWeight = weight;
+                }
+            }
+        }
+        if (mostImportantEngram != null) {
+            if (mostImportantEngram.engram() instanceof Image) {
+                var emotion = mostImportantEngram.emotion();
+                moveable.setVelocity(velocity(emotion));
+            }
+        }
+    }
+
+    private PersistedEngram compute(Engram engram) {
         if (engram instanceof Image)
-            return 1.0;
+            return computeImage((Image) engram);
         if (engram instanceof Sound)
-            return 0.5;
-        return 0.0;
+            return computeSound((Sound) engram);
+        return null;
+    }
+
+    private PersistedEngram computeImage(Image image) {
+        for (var memory : memories) {
+            if (memory.engram().equals(image))
+                return memory;
+        }
+        return null;
+    }
+
+    private PersistedEngram computeSound(Sound sound) {
+        for (var memory : memories) {
+            if (memory.engram().equals(sound))
+                return memory;
+        }
+        return null;
     }
 }
