@@ -3,7 +3,7 @@ plugins {
 }
 
 rootProject.name = 'Donjon & Dragon'
-include 'common'
+include 'characters'
 include 'ecosystem'
 include 'lifeform'
 include 'world'
