@@ -4,11 +4,12 @@ import com.gayasystem.games.dnd.common.characters.alignments.Alignment;
 import com.gayasystem.games.dnd.common.characters.equipments.Equipment;
 import com.gayasystem.games.dnd.common.characters.scores.AbilityScores;
 import com.gayasystem.games.dnd.common.characters.scores.Skills;
+import com.gayasystem.games.dnd.lifeform.LifeForm;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Character {
+public class Character extends LifeForm {
     private AbilityScores abilityScores;
     private AbilityScores abilityScoreIncrease;
     private Alignment alignment;
