@@ -8,8 +8,8 @@ import com.gayasystem.games.dnd.common.dices.Dice;
 public class Beast extends Character {
     private Dice hitDice;
 
-    public Beast(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, Dice hitDice) {
-        super(abilityScores, abilityScoreIncrease, alignment, skills, armorClass);
+    public Beast(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, double speed, Alignment alignment, Skills skills, int armorClass, Dice hitDice) {
+        super(abilityScores, abilityScoreIncrease, speed, alignment, skills, armorClass);
         this.hitDice = hitDice;
     }
 }

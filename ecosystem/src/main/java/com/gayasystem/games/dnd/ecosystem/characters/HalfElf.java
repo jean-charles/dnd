@@ -17,6 +17,7 @@ public class HalfElf extends Character {
                         null,
                         new Ability(2)
                 ),
+                30,
                 alignment,
                 null,
                 armorClass

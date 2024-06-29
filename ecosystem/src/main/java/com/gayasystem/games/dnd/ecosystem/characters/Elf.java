@@ -17,6 +17,7 @@ public class Elf extends Character {
                         null,
                         null
                 ),
+                30,
                 alignment,
                 null,
                 armorClass

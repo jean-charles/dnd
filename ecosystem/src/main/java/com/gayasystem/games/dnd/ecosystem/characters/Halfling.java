@@ -17,6 +17,7 @@ public class Halfling extends Character {
                         null,
                         null
                 ),
+                25,
                 alignment,
                 null,
                 armorClass
