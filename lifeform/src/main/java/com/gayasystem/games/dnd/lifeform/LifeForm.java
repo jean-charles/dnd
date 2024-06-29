@@ -1,5 +1,6 @@
 package com.gayasystem.games.dnd.lifeform;
 
+import com.gayasystem.games.dnd.common.Direction;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.lifeform.brain.Brain;
@@ -44,8 +45,8 @@ public class LifeForm implements Moveable, Thing, Runnable {
     }
 
     @Override
-    public void setVelocity(Velocity velocity) {
-        this.velocity = velocity;
+    public void setDirection(Direction direction) {
+        this.velocity = new Velocity(speed, direction);
     }
 
     @Override
