@@ -5,6 +5,7 @@ import com.gayasystem.games.dnd.characters.scores.Ability;
 import com.gayasystem.games.dnd.characters.scores.AbilityScores;
 import com.gayasystem.games.dnd.characters.scores.Skills;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.gametools.dices.Dice1d6;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class Almiraj extends Beast {
                         0),
                 13,
                 Dice1d6.dice,
-                List.of(),
+                List.of(Carrot.class),
                 List.of(Thing.class)
         );
     }
