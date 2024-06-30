@@ -6,6 +6,7 @@ import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.lifeform.brain.Brain;
 import com.gayasystem.games.dnd.lifeform.brain.Moveable;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
+import com.gayasystem.games.dnd.lifeform.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeform.brain.sounds.Sound;
 import com.gayasystem.games.dnd.lifeform.brain.sounds.SoundSpectrum;
 
@@ -26,13 +27,13 @@ public class LifeForm implements Moveable, Thing, Runnable {
         this.speed = speed;
     }
 
-    public void see(Image image) {
-        brain.handle(image);
+    public void see(Image image, Direction origin) {
+        brain.handle(new SpatialEngram(image, origin));
     }
 
-    public void ear(Sound sound) {
+    public void ear(Sound sound, Direction origin) {
         if (sound.spectrum() == soundSpectrum && sound.amplitude() >= minSoundAmplitude) {
-            brain.handle(sound);
+            brain.handle(new SpatialEngram(sound, origin));
         }
     }
 

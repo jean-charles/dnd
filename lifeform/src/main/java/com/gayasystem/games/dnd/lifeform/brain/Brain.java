@@ -4,6 +4,7 @@ import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
 import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
+import com.gayasystem.games.dnd.lifeform.brain.memories.SpatialEngram;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,7 @@ public class Brain implements Runnable {
     private final EngramComputing engramComputing;
 
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
-    private final Collection<Engram> shortTermMemories = new ArrayList<>();
+    private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
 
     public Brain(Moveable moveable, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
         rememberAttractedByMemories(attractedBy);
@@ -39,7 +40,7 @@ public class Brain implements Runnable {
         }
     }
 
-    public void handle(Engram engram) {
+    public void handle(SpatialEngram engram) {
         shortTermMemories.add(engram);
     }
 

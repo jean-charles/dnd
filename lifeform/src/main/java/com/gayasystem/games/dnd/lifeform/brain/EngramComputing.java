@@ -1,41 +1,46 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
+import com.gayasystem.games.dnd.common.Direction;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
-import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
-import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
+import com.gayasystem.games.dnd.lifeform.brain.memories.*;
 
 import java.util.Collection;
+import java.util.List;
 
 import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.direction;
 import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.weight;
 
 public class EngramComputing {
-    private Collection<PersistedEngram> memories;
-    private Moveable moveable;
+    private final Collection<PersistedEngram> memories;
+    private final Moveable moveable;
 
     public EngramComputing(Collection<PersistedEngram> memories, Moveable moveable) {
         this.memories = memories;
         this.moveable = moveable;
     }
 
-    public void compute(Collection<Engram> engrams) {
-        PersistedEngram mostImportantEngram = null;
+    public void compute(Collection<SpatialEngram> engrams) {
+        Collection<SpatialEmotionalEngram> mostImportantEngrams = List.of();
         double mostImportantEngramWeight = 0.0;
 
-        for (Engram engram : engrams) {
-            var foundEngram = compute(engram);
-            if (foundEngram != null) {
-                var emotion = foundEngram.emotion();
+        for (SpatialEngram engram : engrams) {
+            var foundMemory = compute(engram.engram());
+            if (foundMemory != null) {
+                var emotion = foundMemory.emotion();
                 double weight = weight(emotion);
-                if (weight > mostImportantEngramWeight) {
-                    mostImportantEngram = foundEngram;
+                if (weight >= mostImportantEngramWeight) {
+                    mostImportantEngrams.add(convert(engram, emotion));
                     mostImportantEngramWeight = weight;
                 }
             }
         }
 
-        move(mostImportantEngram);
+        move(mostImportantEngrams);
+    }
+
+    private SpatialEmotionalEngram convert(SpatialEngram engram, Emotion emotion) {
+        return new SpatialEmotionalEngram(engram.engram(), engram.origin(), emotion);
     }
 
     private PersistedEngram compute(Engram engram) {
@@ -53,12 +58,21 @@ public class EngramComputing {
         return similarMemory;
     }
 
-    private void move(PersistedEngram persistedEngram) {
+    private void move(Collection<SpatialEmotionalEngram> engrams) {
+        Collection<Direction> directions = List.of();
+        for (SpatialEmotionalEngram engram : engrams) {
+            directions.add(getDirection(engram));
+        }
+        moveable.setDirection(null);
+    }
+
+    private Direction getDirection(SpatialEmotionalEngram persistedEngram) {
         if (persistedEngram != null) {
             if (persistedEngram.engram() instanceof Image) {
                 var emotion = persistedEngram.emotion();
-                moveable.setDirection(direction(emotion));
+                return direction(emotion);
             }
         }
+        return null;
     }
 }

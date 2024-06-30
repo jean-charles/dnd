@@ -3,8 +3,8 @@ package com.gayasystem.games.dnd.lifeform.brain;
 import com.gayasystem.games.dnd.common.Direction;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
-import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
 import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
+import com.gayasystem.games.dnd.lifeform.brain.memories.SpatialEngram;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -22,7 +22,10 @@ class EngramComputingTest {
         Moveable moveable = mock(Moveable.class);
         var engramComputing = new EngramComputing(memories, moveable);
 
-        Collection<Engram> engrams = List.of(new Image(ThingA.class));
+        Collection<SpatialEngram> engrams = List.of(
+                new SpatialEngram(
+                        new Image(ThingA.class),
+                        new Direction(0.0, 0.0, 0.0));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(any(Direction.class));
@@ -34,7 +37,10 @@ class EngramComputingTest {
         Moveable moveable = mock(Moveable.class);
         var engramComputing = new EngramComputing(memories, moveable);
 
-        Collection<Engram> engrams = List.of(new Image(ThingB.class));
+        Collection<SpatialEngram> engrams = List.of(
+                new SpatialEngram(
+                        new Image(ThingB.class),
+                        new Direction(0.0, 0.0, 0.0));
         engramComputing.compute(engrams);
 
         verify(moveable, never()).setDirection(any(Direction.class));
@@ -48,12 +54,18 @@ class EngramComputingTest {
         Moveable moveable = mock(Moveable.class);
         var engramComputing = new EngramComputing(memories, moveable);
 
-        Collection<Engram> engrams = List.of(new Image(ThingA.class));
+        Collection<SpatialEngram> engrams = List.of(
+                new SpatialEngram(
+                        new Image(ThingA.class),
+                        new Direction(0.0, 0.0, 0.0));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(new Direction(90.0, 0.0, 0.0));
 
-        engrams = List.of(new Image(ThingB.class));
+        engrams = List.of(
+                new SpatialEngram(
+                        new Image(ThingB.class),
+                        new Direction(0.0, 0.0, 0.0));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));
@@ -67,12 +79,18 @@ class EngramComputingTest {
         Moveable moveable = mock(Moveable.class);
         var engramComputing = new EngramComputing(memories, moveable);
 
-        Collection<Engram> engrams = List.of(new Image(ThingA.class));
+        Collection<SpatialEngram> engrams = List.of(
+                new SpatialEngram(
+                        new Image(ThingA.class),
+                        new Direction(0.0, 0.0, 0.0));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(new Direction(90.0, 0.0, 0.0));
 
-        engrams = List.of(new Image(ThingB.class));
+        engrams = List.of(
+                new SpatialEngram(
+                        new Image(ThingB.class),
+                        new Direction(0.0, 0.0, 0.0));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));
