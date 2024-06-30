@@ -25,7 +25,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new Direction(0.0, 0.0, 0.0));
+                        new Direction(0.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(any(Direction.class));
@@ -40,7 +40,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new Direction(0.0, 0.0, 0.0));
+                        new Direction(0.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
         verify(moveable, never()).setDirection(any(Direction.class));
@@ -57,7 +57,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new Direction(0.0, 0.0, 0.0));
+                        new Direction(0.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(new Direction(90.0, 0.0, 0.0));
@@ -65,7 +65,7 @@ class EngramComputingTest {
         engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new Direction(0.0, 0.0, 0.0));
+                        new Direction(0.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));
@@ -82,7 +82,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new Direction(0.0, 0.0, 0.0));
+                        new Direction(0.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(new Direction(90.0, 0.0, 0.0));
@@ -90,7 +90,7 @@ class EngramComputingTest {
         engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new Direction(0.0, 0.0, 0.0));
+                        new Direction(0.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
         verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));
