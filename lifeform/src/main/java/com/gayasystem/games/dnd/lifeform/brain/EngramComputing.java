@@ -1,9 +1,9 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
+import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
 import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
-import com.gayasystem.games.dnd.lifeform.brain.sounds.Sound;
 
 import java.util.Collection;
 
@@ -22,6 +22,7 @@ public class EngramComputing {
     public void compute(Collection<Engram> engrams) {
         PersistedEngram mostImportantEngram = null;
         double mostImportantEngramWeight = 0.0;
+
         for (Engram engram : engrams) {
             var foundEngram = compute(engram);
             if (foundEngram != null) {
@@ -33,35 +34,31 @@ public class EngramComputing {
                 }
             }
         }
-        if (mostImportantEngram != null) {
-            if (mostImportantEngram.engram() instanceof Image) {
-                var emotion = mostImportantEngram.emotion();
-                moveable.setDirection(direction(emotion));
-            }
-        }
+
+        move(mostImportantEngram);
     }
 
     private PersistedEngram compute(Engram engram) {
-        if (engram instanceof Image)
-            return computeImage((Image) engram);
-        if (engram instanceof Sound)
-            return computeSound((Sound) engram);
-        return null;
+        Class<? extends Thing> thing = engram.thingClass();
+        PersistedEngram similarMemory = null;
+
+        for (var memory : memories) {
+            var memoryThing = memory.engram().thingClass();
+            if (memoryThing.isAssignableFrom(thing)) {
+                if (memoryThing.equals(thing))
+                    return memory;
+                similarMemory = memory;
+            }
+        }
+        return similarMemory;
     }
 
-    private PersistedEngram computeImage(Image image) {
-        for (var memory : memories) {
-            if (memory.engram().equals(image))
-                return memory;
+    private void move(PersistedEngram persistedEngram) {
+        if (persistedEngram != null) {
+            if (persistedEngram.engram() instanceof Image) {
+                var emotion = persistedEngram.emotion();
+                moveable.setDirection(direction(emotion));
+            }
         }
-        return null;
-    }
-
-    private PersistedEngram computeSound(Sound sound) {
-        for (var memory : memories) {
-            if (memory.engram().equals(sound))
-                return memory;
-        }
-        return null;
     }
 }

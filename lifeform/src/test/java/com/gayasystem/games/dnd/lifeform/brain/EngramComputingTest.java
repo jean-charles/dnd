@@ -58,6 +58,25 @@ class EngramComputingTest {
 
         verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));
     }
+
+    @Test
+    void computeFearThing() {
+        Collection<PersistedEngram> memories = List.of(
+                new PersistedEngram(scared, new Image(Thing.class)),
+                new PersistedEngram(attracted, new Image(ThingB.class)));
+        Moveable moveable = mock(Moveable.class);
+        var engramComputing = new EngramComputing(memories, moveable);
+
+        Collection<Engram> engrams = List.of(new Image(ThingA.class));
+        engramComputing.compute(engrams);
+
+        verify(moveable).setDirection(new Direction(90.0, 0.0, 0.0));
+
+        engrams = List.of(new Image(ThingB.class));
+        engramComputing.compute(engrams);
+
+        verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));
+    }
 }
 
 class ThingA implements Thing {
