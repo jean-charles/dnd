@@ -2,7 +2,6 @@ package com.gayasystem.games.dnd.lifeform.brain;
 
 import com.gayasystem.games.dnd.common.Direction;
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.*;
 
 import java.util.Collection;
@@ -61,18 +60,8 @@ public class EngramComputing {
     private void move(Collection<SpatialEmotionalEngram> engrams) {
         Collection<Direction> directions = List.of();
         for (SpatialEmotionalEngram engram : engrams) {
-            directions.add(getDirection(engram));
+            directions.add(direction(engram.origin(), engram.emotion()));
         }
         moveable.setDirection(null);
-    }
-
-    private Direction getDirection(SpatialEmotionalEngram persistedEngram) {
-        if (persistedEngram != null) {
-            if (persistedEngram.engram() instanceof Image) {
-                var emotion = persistedEngram.emotion();
-                return direction(emotion);
-            }
-        }
-        return null;
     }
 }

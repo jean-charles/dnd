@@ -12,13 +12,12 @@ public class EmotionConverter {
         return weight;
     }
 
-    public static Direction direction(Emotion emotion) {
+    public static Direction direction(Direction origin, Emotion emotion) {
         Direction direction = new Direction(0.0, 0.0, 0.0);
         switch (emotion) {
-            case scared -> direction = new Direction(90.0, 0.0, 0.0);
-            case attracted -> direction = new Direction(0.0, 0.0, 0.0);
+            case scared -> direction = origin.add(new Direction(180.0, 0.0, 0.0));
+            case attracted -> direction = origin.add(new Direction(0.0, 0.0, 0.0));
         }
         return direction;
-
     }
 }
