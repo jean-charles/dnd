@@ -2,38 +2,43 @@ plugins {
     id 'application'
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
+    id 'jacoco'
 }
 
 application {
-    // Define the main class for the application.
     mainClass = 'com.gayasystem.games.dnd.Application'
 }
 
 repositories {
-    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
 dependencies {
     // Projects implementation
-    implementation project(':characters')
-    implementation project(':ecosystem')
 
     implementation libs.guava
     implementation 'org.springframework.boot:spring-boot-starter'
 
-    testImplementation libs.junit
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.mockito:mockito-core:3.+"
-
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
 }
 
-// Apply a specific Java toolchain to ease working on different environments.
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
