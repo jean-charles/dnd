@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
 import com.gayasystem.games.dnd.common.Direction;
+import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;

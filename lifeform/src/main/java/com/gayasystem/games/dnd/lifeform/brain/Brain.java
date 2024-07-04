@@ -1,5 +1,6 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
+import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
@@ -14,11 +15,14 @@ import static com.gayasystem.games.dnd.lifeform.brain.memories.Emotion.scared;
 
 public class Brain implements Runnable {
     private final EngramComputing engramComputing;
-
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
     private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
+    private final double speed;
 
-    public Brain(Moveable moveable, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+    private double currentSpeed;
+
+    public Brain(Moveable moveable, double speed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+        this.speed = speed;
         rememberAttractedByMemories(attractedBy);
         rememberScaredByMemories(scaredBy);
         engramComputing = new EngramComputing(longTermMemories, moveable);
@@ -46,6 +50,11 @@ public class Brain implements Runnable {
 
     @Override
     public void run() {
+        currentSpeed = speed;
         engramComputing.compute(shortTermMemories);
+    }
+
+    public double speed() {
+        return currentSpeed;
     }
 }

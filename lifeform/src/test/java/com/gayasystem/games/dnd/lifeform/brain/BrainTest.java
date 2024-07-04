@@ -8,6 +8,6 @@ import java.util.List;
 public class BrainTest {
     @Test
     public void memories() {
-        new Brain(null, List.of(Thing.class), List.of());
+        new Brain(null, 0, List.of(Thing.class), List.of());
     }
 }
