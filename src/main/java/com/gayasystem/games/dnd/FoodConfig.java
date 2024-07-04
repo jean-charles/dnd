@@ -1,19 +1,14 @@
 package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
+import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BeastsConfig {
+public class FoodConfig {
     @Bean
-    public Thing almiraj1() {
-        return new Almiraj();
-    }
-
-    @Bean
-    public Thing almiraj2() {
-        return new Almiraj();
+    public Thing carrot() {
+        return new Carrot();
     }
 }
