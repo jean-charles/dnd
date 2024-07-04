@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.world.World;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +20,9 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Hello");
+        var world = new World(things);
+        while (true) {
+            world.run();
+        }
     }
 }
