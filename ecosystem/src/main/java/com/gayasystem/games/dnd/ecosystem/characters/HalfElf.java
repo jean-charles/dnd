@@ -17,6 +17,7 @@ public class HalfElf extends Character {
                         null,
                         new Ability(2)
                 ),
+                100, // 100 to 180 lb
                 30,
                 alignment,
                 null,

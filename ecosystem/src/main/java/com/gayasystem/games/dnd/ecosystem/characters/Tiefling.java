@@ -5,8 +5,8 @@ import com.gayasystem.games.dnd.characters.alignments.Alignment;
 import com.gayasystem.games.dnd.characters.scores.Ability;
 import com.gayasystem.games.dnd.characters.scores.AbilityScores;
 
-public class Thiefling extends Character {
-    public Thiefling(AbilityScores abilityScores, Alignment alignment, int armorClass) {
+public class Tiefling extends Character {
+    public Tiefling(AbilityScores abilityScores, Alignment alignment, int armorClass) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -17,6 +17,7 @@ public class Thiefling extends Character {
                         null,
                         new Ability(2)
                 ),
+                140, // 140 to 220 lb
                 30,
                 alignment,
                 null,

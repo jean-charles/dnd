@@ -22,6 +22,7 @@ public class Almiraj extends Beast {
                         new Ability(10)
                 ),
                 null,
+                9,
                 60,
                 null,
                 new Skills(

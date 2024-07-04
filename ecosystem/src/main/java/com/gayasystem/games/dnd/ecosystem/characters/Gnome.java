@@ -17,6 +17,7 @@ public class Gnome extends Character {
                         null,
                         null
                 ),
+                40, // 40 to 45 lb
                 25,
                 alignment,
                 null,

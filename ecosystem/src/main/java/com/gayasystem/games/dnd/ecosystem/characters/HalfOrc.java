@@ -17,6 +17,7 @@ public class HalfOrc extends Character {
                         null,
                         null
                 ),
+                155, // 155 to 225 lb
                 30,
                 alignment,
                 null,

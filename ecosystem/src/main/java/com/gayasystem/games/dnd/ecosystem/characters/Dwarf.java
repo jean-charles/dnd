@@ -17,6 +17,7 @@ public class Dwarf extends Character {
                         null,
                         null
                 ),
+                150,
                 25,
                 alignment,
                 null,

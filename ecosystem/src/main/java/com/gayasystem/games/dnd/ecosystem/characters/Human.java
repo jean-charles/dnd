@@ -17,6 +17,7 @@ public class Human extends Character {
                         new Ability(1),
                         new Ability(1)
                 ),
+                125, // 125 to 250 lb
                 30,
                 alignment,
                 null,

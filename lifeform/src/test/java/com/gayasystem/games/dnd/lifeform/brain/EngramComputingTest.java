@@ -98,16 +98,34 @@ class EngramComputingTest {
     }
 }
 
-class ThingA implements Thing {
+class ThingA extends Thing {
+    protected ThingA() {
+        super(1);
+    }
+
     @Override
     public double mass() {
         return 0;
     }
+
+    @Override
+    public void run() {
+
+    }
 }
 
-class ThingB implements Thing {
+class ThingB extends Thing {
+    protected ThingB() {
+        super(1);
+    }
+
     @Override
     public double mass() {
         return 0;
+    }
+
+    @Override
+    public void run() {
+
     }
 }
