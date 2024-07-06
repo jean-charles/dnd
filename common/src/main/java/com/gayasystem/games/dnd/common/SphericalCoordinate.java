@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 
 import static java.lang.Math.PI;
 
+/**
+ * @param rho   distance in feet
+ * @param theta longitudinal radian angle
+ * @param phi   latitudinal radian angle
+ */
 public record SphericalCoordinate(BigDecimal rho, BigDecimal theta, BigDecimal phi) {
     public SphericalCoordinate(double rho, double theta, double phi) {
         this(BigDecimal.valueOf(rho), BigDecimal.valueOf(theta), BigDecimal.valueOf(phi));
