@@ -3,11 +3,29 @@ package com.gayasystem.games.dnd.ecosystem.food;
 import com.gayasystem.games.dnd.common.Thing;
 
 public abstract class Food extends Thing {
-    protected final double nourishment;
+    private static final double PERCENT_MASS_LOST = 0.80;
+    private final double massDecay;
+    private final double nourishmentDecay;
+    protected double nourishment;
 
-    protected Food(double mass, double nourishment) {
+    /**
+     * @param mass
+     * @param timeToDecompose in days
+     * @param nourishment
+     */
+    protected Food(double mass, int timeToDecompose, double nourishment) {
         super(mass);
+        this.massDecay = (mass * PERCENT_MASS_LOST) / timeToDecompose;
+        this.nourishmentDecay = nourishment / timeToDecompose;
         this.nourishment = nourishment;
+    }
+
+    @Override
+    public void run() {
+        if (mass > massDecay)
+            mass -= massDecay;
+        if (nourishment > 0)
+            nourishment -= nourishmentDecay;
     }
 
     /**
