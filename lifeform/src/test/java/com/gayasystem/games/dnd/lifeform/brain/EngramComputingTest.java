@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
 import com.gayasystem.games.dnd.common.Moveable;
-import com.gayasystem.games.dnd.common.SpericalCoordinate;
+import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
@@ -26,7 +26,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new SpericalCoordinate(0.0, 0.0, 0.0)));
+                        new SphericalCoordinate(0.0, 0.0, 0.0)));
 //        engramComputing.compute(engrams);
 
 //        verify(moveable).setDirection(any(Direction.class));
@@ -41,10 +41,10 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new SpericalCoordinate(0.0, 0.0, 0.0)));
+                        new SphericalCoordinate(0.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
-        verify(moveable, never()).setDirection(any(SpericalCoordinate.class));
+        verify(moveable, never()).setDirection(any(SphericalCoordinate.class));
     }
 
     @Test
@@ -58,7 +58,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new SpericalCoordinate(0.0, 0.0, 0.0)));
+                        new SphericalCoordinate(0.0, 0.0, 0.0)));
 //        engramComputing.compute(engrams);
 
 //        verify(moveable).setDirection(new Direction(90.0, 0.0, 0.0));
@@ -66,7 +66,7 @@ class EngramComputingTest {
         engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new SpericalCoordinate(0.0, 0.0, 0.0)));
+                        new SphericalCoordinate(0.0, 0.0, 0.0)));
 //        engramComputing.compute(engrams);
 
 //        verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));
@@ -83,7 +83,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new SpericalCoordinate(0.0, 0.0, 0.0)));
+                        new SphericalCoordinate(0.0, 0.0, 0.0)));
 //        engramComputing.compute(engrams);
 
 //        verify(moveable).setDirection(new Direction(90.0, 0.0, 0.0));
@@ -91,7 +91,7 @@ class EngramComputingTest {
         engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new SpericalCoordinate(0.0, 0.0, 0.0)));
+                        new SphericalCoordinate(0.0, 0.0, 0.0)));
 //        engramComputing.compute(engrams);
 
 //        verify(moveable).setDirection(new Direction(0.0, 0.0, 0.0));

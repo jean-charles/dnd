@@ -19,8 +19,8 @@ public abstract class Thing implements Moveable, Runnable {
     }
 
     @Override
-    public void setDirection(SpericalCoordinate spericalCoordinate) {
-        velocity = new Velocity(displacement, spericalCoordinate);
+    public void setDirection(SphericalCoordinate sphericalCoordinate) {
+        velocity = new Velocity(displacement, sphericalCoordinate);
     }
 
     @Override

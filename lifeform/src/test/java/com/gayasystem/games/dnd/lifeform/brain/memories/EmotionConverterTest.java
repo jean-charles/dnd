@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.lifeform.brain.memories;
 
-import com.gayasystem.games.dnd.common.SpericalCoordinate;
+import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,27 +15,27 @@ class EmotionConverterTest {
 
     @Test
     void directionScared() {
-        SpericalCoordinate d;
-        d = EmotionConverter.direction(new SpericalCoordinate(0, 0, 0), Emotion.scared);
+        SphericalCoordinate d;
+        d = EmotionConverter.direction(new SphericalCoordinate(0, 0, 0), Emotion.scared);
 //        assertEquals(new Direction(-180, 0, 0), d);
 
-        d = EmotionConverter.direction(new SpericalCoordinate(45, 0, 0), Emotion.scared);
+        d = EmotionConverter.direction(new SphericalCoordinate(45, 0, 0), Emotion.scared);
 //        assertEquals(new Direction(-135, 0, 0), d);
 
-        d = EmotionConverter.direction(new SpericalCoordinate(45, 45, 0), Emotion.scared);
+        d = EmotionConverter.direction(new SphericalCoordinate(45, 45, 0), Emotion.scared);
 //        assertEquals(new Direction(-135, -45, 0), d);
     }
 
     @Test
     void directionAttracted() {
-        SpericalCoordinate d;
-        d = EmotionConverter.direction(new SpericalCoordinate(0, 0, 0), Emotion.attracted);
-        assertEquals(new SpericalCoordinate(0, 0, 0), d);
+        SphericalCoordinate d;
+        d = EmotionConverter.direction(new SphericalCoordinate(0, 0, 0), Emotion.attracted);
+        assertEquals(new SphericalCoordinate(0, 0, 0), d);
 
-        d = EmotionConverter.direction(new SpericalCoordinate(45, 0, 0), Emotion.attracted);
-        assertEquals(new SpericalCoordinate(45, 0, 0), d);
+        d = EmotionConverter.direction(new SphericalCoordinate(45, 0, 0), Emotion.attracted);
+        assertEquals(new SphericalCoordinate(45, 0, 0), d);
 
-        d = EmotionConverter.direction(new SpericalCoordinate(45, 45, 0), Emotion.attracted);
-        assertEquals(new SpericalCoordinate(45, 45, 0), d);
+        d = EmotionConverter.direction(new SphericalCoordinate(45, 45, 0), Emotion.attracted);
+        assertEquals(new SphericalCoordinate(45, 45, 0), d);
     }
 }
