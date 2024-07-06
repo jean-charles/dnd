@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.lifeform;
 
-import com.gayasystem.games.dnd.common.Direction;
+import com.gayasystem.games.dnd.common.SpericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.Brain;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
@@ -22,11 +22,11 @@ public class LifeForm extends Thing {
         brain = new Brain(this, speed, attractedBy, scaredBy);
     }
 
-    public void see(Image image, Direction origin) {
+    public void see(Image image, SpericalCoordinate origin) {
         brain.handle(new SpatialEngram(image, origin));
     }
 
-    public void ear(Sound sound, Direction origin) {
+    public void ear(Sound sound, SpericalCoordinate origin) {
         if (sound.spectrum() == soundSpectrum && sound.amplitude() >= minSoundAmplitude) {
             brain.handle(new SpatialEngram(sound, origin));
         }

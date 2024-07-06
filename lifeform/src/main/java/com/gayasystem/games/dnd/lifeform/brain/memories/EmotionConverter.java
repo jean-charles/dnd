@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.lifeform.brain.memories;
 
-import com.gayasystem.games.dnd.common.Direction;
+import com.gayasystem.games.dnd.common.SpericalCoordinate;
 
 public class EmotionConverter {
     public static double weight(Emotion emotion) {
@@ -12,12 +12,12 @@ public class EmotionConverter {
         return weight;
     }
 
-    public static Direction direction(Direction origin, Emotion emotion) {
-        Direction direction = new Direction(0.0, 0.0, 0.0);
+    public static SpericalCoordinate direction(SpericalCoordinate origin, Emotion emotion) {
+        SpericalCoordinate spericalCoordinate = new SpericalCoordinate(0.0, 0.0, 0.0);
         switch (emotion) {
-            case scared -> direction = origin.add(new Direction(180.0, 0.0, 0.0));
-            case attracted -> direction = origin.add(new Direction(0.0, 0.0, 0.0));
+            case scared -> spericalCoordinate = origin.add(new SpericalCoordinate(180.0, 0.0, 0.0));
+            case attracted -> spericalCoordinate = origin.add(new SpericalCoordinate(0.0, 0.0, 0.0));
         }
-        return direction;
+        return spericalCoordinate;
     }
 }

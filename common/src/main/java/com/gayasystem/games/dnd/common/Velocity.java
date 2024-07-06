@@ -1,4 +1,4 @@
 package com.gayasystem.games.dnd.common;
 
-public record Velocity(double displacement, Direction direction) {
+public record Velocity(double displacement, SpericalCoordinate spericalCoordinate) {
 }

@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.lifeform.brain;
 
-import com.gayasystem.games.dnd.common.Direction;
 import com.gayasystem.games.dnd.common.Moveable;
+import com.gayasystem.games.dnd.common.SpericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.memories.*;
 
@@ -59,9 +59,9 @@ public class EngramComputing {
     }
 
     private void move(Collection<SpatialEmotionalEngram> engrams) {
-        Collection<Direction> directions = List.of();
+        Collection<SpericalCoordinate> spericalCoordinates = List.of();
         for (SpatialEmotionalEngram engram : engrams) {
-            directions.add(direction(engram.origin(), engram.emotion()));
+            spericalCoordinates.add(direction(engram.origin(), engram.emotion()));
         }
         moveable.setDirection(null);
     }

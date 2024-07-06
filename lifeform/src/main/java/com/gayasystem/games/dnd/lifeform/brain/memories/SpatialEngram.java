@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.lifeform.brain.memories;
 
-import com.gayasystem.games.dnd.common.Direction;
+import com.gayasystem.games.dnd.common.SpericalCoordinate;
 
-public record SpatialEngram(Engram engram, Direction origin) {
+public record SpatialEngram(Engram engram, SpericalCoordinate origin) {
 }
