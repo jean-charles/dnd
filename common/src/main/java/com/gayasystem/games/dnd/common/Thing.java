@@ -2,7 +2,6 @@ package com.gayasystem.games.dnd.common;
 
 public abstract class Thing implements Moveable, Runnable {
     protected double mass;
-    protected double displacement;
     private Velocity velocity;
 
     protected Thing(double mass) {
@@ -19,8 +18,8 @@ public abstract class Thing implements Moveable, Runnable {
     }
 
     @Override
-    public void setDirection(SphericalCoordinate sphericalCoordinate) {
-        velocity = new Velocity(displacement, sphericalCoordinate);
+    public void setDestination(SphericalCoordinate destination, double speed) {
+        velocity = new Velocity(speed, destination);
     }
 
     @Override

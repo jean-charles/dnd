@@ -1,4 +1,4 @@
 package com.gayasystem.games.dnd.common;
 
-public record Velocity(double displacement, SphericalCoordinate sphericalCoordinate) {
+public record Velocity(double speed, SphericalCoordinate destination) {
 }

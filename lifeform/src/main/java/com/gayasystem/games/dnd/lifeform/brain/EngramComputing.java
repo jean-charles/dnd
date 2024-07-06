@@ -59,10 +59,20 @@ public class EngramComputing {
     }
 
     private void move(Collection<SpatialEmotionalEngram> engrams) {
-        Collection<SphericalCoordinate> sphericalCoordinates = List.of();
-        for (SpatialEmotionalEngram engram : engrams) {
-            sphericalCoordinates.add(direction(engram.origin(), engram.emotion()));
+        Collection<SphericalCoordinate> destinations = List.of();
+        for (var engram : engrams) {
+            destinations.add(direction(engram.origin(), engram.emotion()));
         }
-        moveable.setDirection(null);
+        var speed = computeSpeed();
+        var destination = computeDestination(destinations);
+        moveable.setDestination(destination, speed);
+    }
+
+    private double computeSpeed() {
+        return 0;
+    }
+
+    private SphericalCoordinate computeDestination(Collection<SphericalCoordinate> destinations) {
+        return null;
     }
 }
