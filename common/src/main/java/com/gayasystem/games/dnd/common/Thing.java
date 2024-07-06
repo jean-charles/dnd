@@ -18,7 +18,7 @@ public abstract class Thing implements Moveable, Runnable {
     }
 
     @Override
-    public void setDestination(SphericalCoordinate destination, double speed) {
+    public void setVelocity(SphericalCoordinate destination, double speed) {
         velocity = new Velocity(speed, destination);
     }
 

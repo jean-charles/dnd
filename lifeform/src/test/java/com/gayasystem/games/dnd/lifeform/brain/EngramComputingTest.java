@@ -44,7 +44,7 @@ class EngramComputingTest {
                         new SphericalCoordinate(0.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
-        verify(moveable, never()).setDestination(any(SphericalCoordinate.class), anyDouble());
+        verify(moveable, never()).setVelocity(any(SphericalCoordinate.class), anyDouble());
     }
 
     @Test
