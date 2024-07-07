@@ -30,7 +30,8 @@ public class World implements Runnable {
             var rho = BigDecimal.valueOf(speed);
             destination = new SphericalCoordinate(rho, destination.theta(), destination.phi());
         }
-        var newCoordinate = Coordinate.from(destination);
+        var relativeCoordinate = Coordinate.from(destination);
+        var newCoordinate = coordinate.add(relativeCoordinate);
         things.put(thing, newCoordinate);
     }
 
@@ -40,5 +41,12 @@ public class World implements Runnable {
             thing.run();
             move(thing);
         }
+    }
+
+    /**
+     * TEST ONLY
+     */
+    Coordinate get(Thing thing) {
+        return things.get(thing);
     }
 }

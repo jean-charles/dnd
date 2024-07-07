@@ -11,6 +11,16 @@ public record Coordinate(BigDecimal x, BigDecimal y, BigDecimal z) {
         this(BigDecimal.valueOf(x), BigDecimal.valueOf(y), BigDecimal.valueOf(z));
     }
 
+    public Coordinate add(Coordinate relativeCoordinate) {
+        var x = relativeCoordinate.x.doubleValue();
+        var y = relativeCoordinate.y.doubleValue();
+        var z = relativeCoordinate.z.doubleValue();
+        x += this.x.doubleValue();
+        y += this.y.doubleValue();
+        z += this.z.doubleValue();
+        return new Coordinate(x, y, z);
+    }
+
     public static Coordinate from(SphericalCoordinate sc) {
         double rho = sc.rho().doubleValue();
         double theta = sc.theta().doubleValue();
