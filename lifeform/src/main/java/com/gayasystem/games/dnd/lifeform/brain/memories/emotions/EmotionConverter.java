@@ -15,8 +15,8 @@ public class EmotionConverter {
     public static SphericalCoordinate direction(SphericalCoordinate origin, Emotion emotion) {
         SphericalCoordinate sphericalCoordinate = new SphericalCoordinate(0.0, 0.0, 0.0);
         switch (emotion) {
-            case scared -> sphericalCoordinate = origin.add(new SphericalCoordinate(180.0, 0.0, 0.0));
-            case attracted -> sphericalCoordinate = origin.add(new SphericalCoordinate(0.0, 0.0, 0.0));
+            case scared -> sphericalCoordinate = origin.opposite();
+            case attracted -> sphericalCoordinate = origin;
         }
         return sphericalCoordinate;
     }

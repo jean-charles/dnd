@@ -20,23 +20,6 @@ public class EngramComputing {
         this.moveable = moveable;
     }
 
-    public void compute(Collection<SpatialEngram> engrams) {
-        Collection<SpatialEmotionalEngram> emotionalEngrams = new ArrayList<>();
-
-        for (var engram : engrams) {
-            var foundMemory = compute(engram);
-            if (foundMemory != null) {
-                var emotion = foundMemory.emotion();
-                emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
-            } else {
-                Emotion emotion = neutral;
-                emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
-            }
-        }
-
-        move(emotionalEngrams);
-    }
-
     private PersistedEngram compute(SpatialEngram engram) {
         Class<? extends Thing> thing = engram.engram().thingClass();
         PersistedEngram similarMemory = null;
@@ -67,6 +50,23 @@ public class EngramComputing {
     }
 
     private SphericalCoordinate computeDestination(Collection<SphericalCoordinate> destinations) {
-        return null;
+        return destinations.iterator().next();
+    }
+
+    public void compute(Collection<SpatialEngram> engrams) {
+        Collection<SpatialEmotionalEngram> emotionalEngrams = new ArrayList<>();
+
+        for (var engram : engrams) {
+            var foundMemory = compute(engram);
+            if (foundMemory != null) {
+                var emotion = foundMemory.emotion();
+                emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
+            } else {
+                Emotion emotion = neutral;
+                emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
+            }
+        }
+
+        move(emotionalEngrams);
     }
 }
