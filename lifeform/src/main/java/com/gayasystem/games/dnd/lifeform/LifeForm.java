@@ -10,7 +10,7 @@ import com.gayasystem.games.dnd.lifeform.brain.sounds.SoundSpectrum;
 
 import java.util.Collection;
 
-public class LifeForm extends Thing {
+public abstract class LifeForm extends Thing {
     private final Brain brain;
 
     private double sightDistance;
