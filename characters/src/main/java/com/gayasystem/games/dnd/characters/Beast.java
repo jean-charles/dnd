@@ -8,7 +8,7 @@ import com.gayasystem.games.dnd.gametools.dices.Dice;
 
 import java.util.Collection;
 
-public class Beast extends Character {
+public abstract class Beast extends Character {
     private Dice hitDice;
 
     public Beast(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, double mass, double speed, Alignment alignment, Skills skills, int armorClass, Dice hitDice, Collection<Class<? extends Thing>> scaredBy, Collection<Class<? extends Thing>> attractedBy) {
