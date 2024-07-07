@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.lifeform.brain.memories;
+package com.gayasystem.games.dnd.lifeform.brain.memories.emotions;
 
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 

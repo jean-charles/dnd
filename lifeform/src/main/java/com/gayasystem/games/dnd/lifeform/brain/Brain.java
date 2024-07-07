@@ -4,14 +4,15 @@ import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
 import com.gayasystem.games.dnd.lifeform.brain.memories.Engram;
+import com.gayasystem.games.dnd.lifeform.brain.memories.EngramComputing;
 import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
 import com.gayasystem.games.dnd.lifeform.brain.memories.SpatialEngram;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static com.gayasystem.games.dnd.lifeform.brain.memories.Emotion.attracted;
-import static com.gayasystem.games.dnd.lifeform.brain.memories.Emotion.scared;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion.attracted;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion.scared;
 
 public class Brain implements Runnable {
     private final EngramComputing engramComputing;

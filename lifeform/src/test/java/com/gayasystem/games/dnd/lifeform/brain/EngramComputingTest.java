@@ -4,6 +4,7 @@ import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeform.brain.images.Image;
+import com.gayasystem.games.dnd.lifeform.brain.memories.EngramComputing;
 import com.gayasystem.games.dnd.lifeform.brain.memories.PersistedEngram;
 import com.gayasystem.games.dnd.lifeform.brain.memories.SpatialEngram;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 import java.util.List;
 
-import static com.gayasystem.games.dnd.lifeform.brain.memories.Emotion.attracted;
-import static com.gayasystem.games.dnd.lifeform.brain.memories.Emotion.scared;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion.attracted;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion.scared;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

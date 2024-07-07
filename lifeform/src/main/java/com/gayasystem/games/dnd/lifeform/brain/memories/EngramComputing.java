@@ -1,15 +1,15 @@
-package com.gayasystem.games.dnd.lifeform.brain;
+package com.gayasystem.games.dnd.lifeform.brain.memories;
 
 import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.lifeform.brain.memories.*;
+import com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.direction;
-import static com.gayasystem.games.dnd.lifeform.brain.memories.EmotionConverter.weight;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion.neutral;
+import static com.gayasystem.games.dnd.lifeform.brain.memories.emotions.EmotionConverter.direction;
 
 public class EngramComputing {
     private final Collection<PersistedEngram> memories;
@@ -21,30 +21,24 @@ public class EngramComputing {
     }
 
     public void compute(Collection<SpatialEngram> engrams) {
-        Collection<SpatialEmotionalEngram> mostImportantEngrams = List.of();
-        double mostImportantEngramWeight = 0.0;
+        Collection<SpatialEmotionalEngram> emotionalEngrams = new ArrayList<>();
 
-        for (SpatialEngram engram : engrams) {
-            var foundMemory = compute(engram.engram());
+        for (var engram : engrams) {
+            var foundMemory = compute(engram);
             if (foundMemory != null) {
                 var emotion = foundMemory.emotion();
-                double weight = weight(emotion);
-                if (weight >= mostImportantEngramWeight) {
-                    mostImportantEngrams.add(convert(engram, emotion));
-                    mostImportantEngramWeight = weight;
-                }
+                emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
+            } else {
+                Emotion emotion = neutral;
+                emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
             }
         }
 
-        move(mostImportantEngrams);
+        move(emotionalEngrams);
     }
 
-    private SpatialEmotionalEngram convert(SpatialEngram engram, Emotion emotion) {
-        return new SpatialEmotionalEngram(engram.engram(), engram.origin(), emotion);
-    }
-
-    private PersistedEngram compute(Engram engram) {
-        Class<? extends Thing> thing = engram.thingClass();
+    private PersistedEngram compute(SpatialEngram engram) {
+        Class<? extends Thing> thing = engram.engram().thingClass();
         PersistedEngram similarMemory = null;
 
         for (var memory : memories) {
@@ -58,10 +52,10 @@ public class EngramComputing {
         return similarMemory;
     }
 
-    private void move(Collection<SpatialEmotionalEngram> engrams) {
-        Collection<SphericalCoordinate> destinations = List.of();
-        for (var engram : engrams) {
-            destinations.add(direction(engram.origin(), engram.emotion()));
+    private void move(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
+        Collection<SphericalCoordinate> destinations = new ArrayList<>();
+        for (var spatialEmotionalEngram : spatialEmotionalEngrams) {
+            destinations.add(direction(spatialEmotionalEngram.engram().origin(), spatialEmotionalEngram.emotion()));
         }
         var speed = computeSpeed();
         var destination = computeDestination(destinations);

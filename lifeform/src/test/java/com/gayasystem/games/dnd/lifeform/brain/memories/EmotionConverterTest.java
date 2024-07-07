@@ -1,6 +1,8 @@
 package com.gayasystem.games.dnd.lifeform.brain.memories;
 
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
+import com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeform.brain.memories.emotions.EmotionConverter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
