@@ -95,7 +95,6 @@ class ThingA extends Thing {
 
     @Override
     public void run() {
-
     }
 }
 
@@ -111,6 +110,5 @@ class ThingB extends Thing {
 
     @Override
     public void run() {
-
     }
 }

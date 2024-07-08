@@ -3,7 +3,6 @@ package com.gayasystem.games.dnd.lifeform.brain.memories;
 import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +19,7 @@ public class EngramComputing {
         this.moveable = moveable;
     }
 
-    private PersistedEngram compute(SpatialEngram engram) {
+    private PersistedEngram search(SpatialEngram engram) {
         Class<? extends Thing> thing = engram.engram().thingClass();
         PersistedEngram similarMemory = null;
 
@@ -57,13 +56,12 @@ public class EngramComputing {
         Collection<SpatialEmotionalEngram> emotionalEngrams = new ArrayList<>();
 
         for (var engram : engrams) {
-            var foundMemory = compute(engram);
+            var foundMemory = search(engram);
             if (foundMemory != null) {
                 var emotion = foundMemory.emotion();
                 emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
             } else {
-                Emotion emotion = neutral;
-                emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
+                emotionalEngrams.add(new SpatialEmotionalEngram(engram, neutral));
             }
         }
 
