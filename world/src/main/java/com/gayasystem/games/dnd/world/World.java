@@ -9,8 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import static java.lang.Math.PI;
+
 public class World implements Runnable {
     private Map<Thing, Coordinate> things = new HashMap<>();
+    private Map<Thing, SphericalCoordinate> thingsOrientation = new HashMap<>();
 
     public World(Collection<Thing> newThings) {
         for (var thing : newThings) {
@@ -18,6 +21,8 @@ public class World implements Runnable {
             var y = 0.0;
             var z = 0.0;
             things.put(thing, new Coordinate(x, y, z));
+            var orientation = new SphericalCoordinate(0, new Random().nextDouble() * 2 * PI, new Random().nextDouble() * 2 * PI);
+            thingsOrientation.put(thing, orientation);
         }
     }
 
