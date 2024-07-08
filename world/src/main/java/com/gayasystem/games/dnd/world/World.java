@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.lifeforms.LifeForm;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -26,6 +27,12 @@ public class World implements Runnable {
         }
     }
 
+    private void show(Thing thing) {
+        if (thing instanceof LifeForm) {
+
+        }
+    }
+
     private void move(Thing thing) {
         var coordinate = things.get(thing);
         var velocity = thing.velocity();
@@ -43,7 +50,11 @@ public class World implements Runnable {
     @Override
     public void run() {
         for (var thing : things.keySet()) {
+            // Show all visible things to this thing
+            show(thing);
+            // Run the thing
             thing.run();
+            // Move th thing
             move(thing);
         }
     }

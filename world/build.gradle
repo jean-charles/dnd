@@ -12,6 +12,7 @@ dependencies {
     implementation project(':common')
     implementation project(':characters')
     implementation project(':ecosystem')
+    implementation project(':lifeforms')
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

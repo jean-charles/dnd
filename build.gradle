@@ -18,7 +18,7 @@ dependencies {
     implementation project('common')
     implementation project('ecosystem')
     implementation project('characters')
-    implementation project('lifeform')
+    implementation project('lifeforms')
     implementation project('world')
 
     implementation libs.guava

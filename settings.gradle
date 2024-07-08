@@ -2,8 +2,8 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
-rootProject.name = 'Donjon & Dragon'
-include 'lifeform'
+rootProject.name = 'Dungeons & Dragons'
+include 'lifeforms'
 include 'characters'
 include 'ecosystem'
 include 'world'

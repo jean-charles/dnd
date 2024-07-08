@@ -10,7 +10,7 @@ repositories {
 dependencies {
     implementation libs.guava
     implementation project(':common')
-    implementation project(':lifeform')
+    implementation project(':lifeforms')
     implementation project(':characters')
     implementation project(':gametools')
 

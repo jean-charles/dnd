@@ -5,7 +5,7 @@ import com.gayasystem.games.dnd.characters.equipments.Equipment;
 import com.gayasystem.games.dnd.characters.scores.AbilityScores;
 import com.gayasystem.games.dnd.characters.scores.Skills;
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.lifeform.LifeForm;
+import com.gayasystem.games.dnd.lifeforms.LifeForm;
 
 import java.util.Collection;
 import java.util.HashSet;
