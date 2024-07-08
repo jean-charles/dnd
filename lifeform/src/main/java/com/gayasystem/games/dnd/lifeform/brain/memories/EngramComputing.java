@@ -42,7 +42,7 @@ public class EngramComputing {
         }
         var speed = computeSpeed();
         var destination = computeDestination(destinations);
-        moveable.setVelocity(destination, speed);
+        moveable.setVelocity(speed, destination);
     }
 
     private double computeSpeed() {

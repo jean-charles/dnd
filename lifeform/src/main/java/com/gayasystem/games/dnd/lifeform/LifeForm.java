@@ -12,6 +12,7 @@ import java.util.Collection;
 
 public abstract class LifeForm extends Thing {
     private final Brain brain;
+    private final double speed;
 
     private double sightDistance;
     private SoundSpectrum soundSpectrum;
@@ -20,6 +21,12 @@ public abstract class LifeForm extends Thing {
     public LifeForm(double mass, double speed, Collection<Class<? extends Thing>> scaredBy, Collection<Class<? extends Thing>> attractedBy) {
         super(mass);
         brain = new Brain(this, speed, attractedBy, scaredBy);
+        this.speed = speed;
+    }
+
+    @Override
+    public void run() {
+        brain.run();
     }
 
     public void see(Image image, SphericalCoordinate origin) {
@@ -34,10 +41,5 @@ public abstract class LifeForm extends Thing {
 
     public double sightDistance() {
         return sightDistance;
-    }
-
-    @Override
-    public void run() {
-        brain.run();
     }
 }
