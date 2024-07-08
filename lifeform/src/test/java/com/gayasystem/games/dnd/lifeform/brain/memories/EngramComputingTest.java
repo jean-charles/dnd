@@ -27,7 +27,7 @@ class EngramComputingTest {
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
-        verify(moveable, times(1)).setVelocity(0.0, new SphericalCoordinate(1.0, PI, PI));
+        verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(1.0, PI, PI));
     }
 
     @Test
@@ -42,7 +42,7 @@ class EngramComputingTest {
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
-        verify(moveable, times(1)).setVelocity(0.0, new SphericalCoordinate(0.0, 0.0, 0.0));
+        verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(0.0, 0.0, 0.0));
     }
 
     @Test
@@ -62,7 +62,7 @@ class EngramComputingTest {
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
-        verify(moveable, times(1)).setVelocity(0.0, new SphericalCoordinate(1.0, PI, PI));
+        verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(1.0, PI, PI));
     }
 
     @Test
@@ -79,7 +79,7 @@ class EngramComputingTest {
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
-        verify(moveable, times(1)).setVelocity(0.0, new SphericalCoordinate(1.0, PI, PI));
+        verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(1.0, PI, PI));
     }
 }
 

@@ -7,7 +7,7 @@ public interface Moveable {
      * @param speed       The speed of the velocity in feet per hour.
      * @param destination The spherical coordinate destination.
      */
-    void setVelocity(double speed, SphericalCoordinate destination);
+    void velocity(double speed, SphericalCoordinate destination);
 
     /**
      * Current velocity of the thing.
