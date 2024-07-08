@@ -3,12 +3,12 @@ package com.gayasystem.games.dnd.lifeform.brain.memories;
 import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static com.gayasystem.games.dnd.lifeform.brain.memories.emotions.Emotion.neutral;
-import static com.gayasystem.games.dnd.lifeform.brain.memories.emotions.EmotionConverter.direction;
 
 public class EngramComputing {
     private final Collection<PersistedEngram> memories;
@@ -35,21 +35,34 @@ public class EngramComputing {
     }
 
     private void move(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
-        Collection<SphericalCoordinate> destinations = new ArrayList<>();
-        for (var spatialEmotionalEngram : spatialEmotionalEngrams) {
-            destinations.add(direction(spatialEmotionalEngram.engram().origin(), spatialEmotionalEngram.emotion()));
-        }
-        var speed = computeSpeed();
-        var destination = computeDestination(destinations);
+        var engram = findMostImportantEngram(spatialEmotionalEngrams);
+        var speed = computeSpeed(engram.emotion());
+        var destination = computeDestination(engram);
         moveable.velocity(speed, destination);
     }
 
-    private double computeSpeed() {
+    private SpatialEmotionalEngram findMostImportantEngram(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
+
+        return null;
+    }
+
+    private double computeSpeed(Emotion emotion) {
+        switch (emotion) {
+            case scared -> {
+                return 20;
+            }
+            case attracted -> {
+                return 10;
+            }
+            case neutral -> {
+                return 0;
+            }
+        }
         return 0;
     }
 
-    private SphericalCoordinate computeDestination(Collection<SphericalCoordinate> destinations) {
-        return destinations.iterator().next();
+    private SphericalCoordinate computeDestination(SpatialEmotionalEngram engram) {
+        return null;
     }
 
     public void compute(Collection<SpatialEngram> engrams) {
