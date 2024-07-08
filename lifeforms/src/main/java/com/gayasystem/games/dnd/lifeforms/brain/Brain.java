@@ -31,7 +31,7 @@ public class Brain implements Runnable {
 
     private void rememberAttractedByMemories(Collection<Class<? extends Thing>> attractedBy) {
         for (var thingClass : attractedBy) {
-            Engram engram = new Image(thingClass);
+            Engram engram = new Image(thingClass, null);
             var persistedEngram = new PersistedEngram(attracted, engram);
             longTermMemories.add(persistedEngram);
         }
@@ -39,7 +39,7 @@ public class Brain implements Runnable {
 
     private void rememberScaredByMemories(Collection<Class<? extends Thing>> scaredBy) {
         for (var thingClass : scaredBy) {
-            Engram engram = new Image(thingClass);
+            Engram engram = new Image(thingClass, null);
             var persistedEngram = new PersistedEngram(scared, engram);
             longTermMemories.add(persistedEngram);
         }

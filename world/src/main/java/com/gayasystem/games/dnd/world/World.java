@@ -3,6 +3,7 @@ package com.gayasystem.games.dnd.world;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
+import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -29,7 +30,29 @@ public class World implements Runnable {
 
     private void show(Thing thing) {
         if (thing instanceof LifeForm) {
+            var lifeForm = (LifeForm) thing;
+            var sightDistance = lifeForm.sightDistance();
 
+            var lifeFormCoordinate = things.get(lifeForm);
+            var lifeFormPosition = lifeFormCoordinate.to();
+            var lifeFormOrientation = thingsOrientation.get(lifeForm);
+
+            for (var other : things.keySet()) {
+                if (thing == other) continue;
+
+                var coordinate = things.get(other);
+                var position = coordinate.to();
+                var orientation = thingsOrientation.get(other);
+
+                var distance = coordinate.distanceFrom(lifeFormCoordinate);
+                if (distance <= sightDistance) {
+                    var relativeOrientation = lifeFormOrientation.transpose(orientation);
+                    var image = new Image(other.getClass(), relativeOrientation);
+                    var relativePosition = lifeFormPosition.transpose(position);
+                    var finalRelativePosition = new SphericalCoordinate(BigDecimal.valueOf(distance), relativePosition.theta(), relativePosition.phi());
+                    lifeForm.see(image, finalRelativePosition);
+                }
+            }
         }
     }
 

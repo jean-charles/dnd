@@ -27,4 +27,12 @@ class CoordinateTest {
         assertEquals(PI / 3, sphericalCoordinate.theta().doubleValue(), 0.0000000000000002);
         assertEquals(PI / 6, sphericalCoordinate.phi().doubleValue(), 0.0000000000000002);
     }
+
+    @Test
+    public void distance() {
+        Coordinate c1 = new Coordinate(2, 2, 4);
+        Coordinate c2 = new Coordinate(4, 2, 4);
+        var distance = c1.distanceFrom(c2);
+        assertEquals(2, distance);
+    }
 }

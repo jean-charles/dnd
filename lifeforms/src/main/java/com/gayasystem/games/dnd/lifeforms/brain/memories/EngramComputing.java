@@ -42,8 +42,16 @@ public class EngramComputing {
     }
 
     private SpatialEmotionalEngram findMostImportantEngram(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
-
-        return null;
+        var mostImportantEngram = new SpatialEmotionalEngram(null, neutral);
+        double closedDistance = Double.MAX_VALUE;
+        for (var spatialEmotionalEngram : spatialEmotionalEngrams) {
+            var distance = spatialEmotionalEngram.engram().origin().rho().doubleValue();
+            if (distance < closedDistance) {
+                closedDistance = distance;
+                mostImportantEngram = spatialEmotionalEngram;
+            }
+        }
+        return mostImportantEngram;
     }
 
     private double computeSpeed(Emotion emotion) {
@@ -62,7 +70,15 @@ public class EngramComputing {
     }
 
     private SphericalCoordinate computeDestination(SpatialEmotionalEngram engram) {
-        return null;
+        switch (engram.emotion()) {
+            case scared -> {
+                return engram.engram().origin().opposite();
+            }
+            case attracted -> {
+                return engram.engram().origin();
+            }
+        }
+        return new SphericalCoordinate(0, 0, 0);
     }
 
     public void compute(Collection<SpatialEngram> engrams) {

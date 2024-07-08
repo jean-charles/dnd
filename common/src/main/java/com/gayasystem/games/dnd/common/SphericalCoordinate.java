@@ -14,6 +14,10 @@ public record SphericalCoordinate(BigDecimal rho, BigDecimal theta, BigDecimal p
         this(BigDecimal.valueOf(rho), BigDecimal.valueOf(theta), BigDecimal.valueOf(phi));
     }
 
+    public SphericalCoordinate(double theta, double phi) {
+        this(BigDecimal.ZERO, BigDecimal.valueOf(theta), BigDecimal.valueOf(phi));
+    }
+
     public SphericalCoordinate add(SphericalCoordinate origin) {
         BigDecimal rho = this.rho.add(origin.rho);
         BigDecimal theta = this.theta.add(origin.theta);
@@ -27,12 +31,14 @@ public record SphericalCoordinate(BigDecimal rho, BigDecimal theta, BigDecimal p
     }
 
     public SphericalCoordinate transpose(SphericalCoordinate from) {
+//        var fromRho = from.rho.doubleValue();
         var fromTheta = (from.theta.doubleValue() >= 0) ? from.theta : BigDecimal.valueOf(2 * PI + from.theta.doubleValue());
         var fromPhi = (from.phi.doubleValue() >= 0) ? from.phi : BigDecimal.valueOf(2 * PI + from.phi.doubleValue());
 
+//        var transposedRho = BigDecimal.valueOf(abs(rho.doubleValue() - fromRho));
         var transposedTheta = fromTheta.subtract(this.theta);
         var transposedPhi = fromPhi.subtract(this.phi);
 
-        return new SphericalCoordinate(from.rho, transposedTheta, transposedPhi);
+        return new SphericalCoordinate(BigDecimal.ZERO, transposedTheta, transposedPhi);
     }
 }

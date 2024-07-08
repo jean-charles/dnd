@@ -44,4 +44,12 @@ public record Coordinate(BigDecimal x, BigDecimal y, BigDecimal z) {
 
         return new SphericalCoordinate(rho, theta, phi);
     }
+
+    public double distanceFrom(Coordinate formCoordinate) {
+        var newX = pow(x.doubleValue() - formCoordinate.x.doubleValue(), 2);
+        var newY = pow(y.doubleValue() - formCoordinate.y.doubleValue(), 2);
+        var newZ = pow(z.doubleValue() - formCoordinate.z.doubleValue(), 2);
+
+        return sqrt(newX + newY + newZ);
+    }
 }
