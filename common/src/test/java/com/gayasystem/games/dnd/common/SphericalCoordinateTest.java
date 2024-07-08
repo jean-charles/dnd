@@ -25,4 +25,15 @@ public class SphericalCoordinateTest {
         assertEquals(5 * PI / 4, opposite.theta().doubleValue(), 0.0);
         assertEquals(5 * PI / 4, opposite.phi().doubleValue(), 0.0);
     }
+
+    @Test
+    public void transpose() {
+        var origin = new SphericalCoordinate(0, PI / 4, 0);
+        var toBeTransposed = new SphericalCoordinate(0, -PI / 4, 0);
+        var expected = new SphericalCoordinate(0, 3 * PI / 2, 0);
+        var transposed = origin.transpose(toBeTransposed);
+        assertEquals(expected.rho().doubleValue(), transposed.rho().doubleValue(), 0.0);
+        assertEquals(expected.theta().doubleValue(), transposed.theta().doubleValue(), 0.0);
+        assertEquals(expected.phi().doubleValue(), transposed.phi().doubleValue(), 0.0);
+    }
 }
