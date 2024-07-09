@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
 import com.gayasystem.games.dnd.common.Moveable;
+import com.gayasystem.games.dnd.common.Orientation;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
@@ -37,7 +38,8 @@ public class EngramComputing {
     private void move(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
         var engram = findMostImportantEngram(spatialEmotionalEngrams);
         var speed = computeSpeed(engram.emotion());
-        var destination = computeDestination(engram);
+        var orientation = computeOrientation(engram);
+        var destination = new SphericalCoordinate(engram.engram().origin().rho(), orientation);
         moveable.velocity(speed, destination);
     }
 
@@ -69,16 +71,16 @@ public class EngramComputing {
         return 0;
     }
 
-    private SphericalCoordinate computeDestination(SpatialEmotionalEngram engram) {
+    private Orientation computeOrientation(SpatialEmotionalEngram engram) {
         switch (engram.emotion()) {
             case scared -> {
-                return engram.engram().origin().opposite();
+                return engram.engram().origin().orientation().opposite();
             }
             case attracted -> {
-                return engram.engram().origin();
+                return engram.engram().origin().orientation();
             }
         }
-        return new SphericalCoordinate(0, 0, 0);
+        return new Orientation(0, 0);
     }
 
     public void compute(Collection<SpatialEngram> engrams) {

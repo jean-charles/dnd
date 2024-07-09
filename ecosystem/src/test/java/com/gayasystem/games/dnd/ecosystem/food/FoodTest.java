@@ -5,6 +5,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FoodTest {
+    private class FoodA extends Food {
+        FoodA() {
+            super(125, 10, 100);
+        }
+
+        @Override
+        public double nourishment() {
+            return super.nourishment();
+        }
+
+        @Override
+        public void run() {
+            super.run();
+        }
+    }
+
     private Food food;
 
     @Test
@@ -54,21 +70,5 @@ class FoodTest {
         food.run();
         assertEquals(5, food.mass());
         assertEquals(0, food.nourishment());
-    }
-}
-
-class FoodA extends Food {
-    FoodA() {
-        super(125, 10, 100);
-    }
-
-    @Override
-    public double nourishment() {
-        return super.nourishment();
-    }
-
-    @Override
-    public void run() {
-        super.run();
     }
 }

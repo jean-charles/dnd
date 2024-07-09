@@ -24,8 +24,8 @@ class CoordinateTest {
         Coordinate c = new Coordinate(2, 2 * sqrt(3), 4 * sqrt(3));
         SphericalCoordinate sphericalCoordinate = c.to();
         assertEquals(8, sphericalCoordinate.rho().doubleValue(), 0.000000000000001);
-        assertEquals(PI / 3, sphericalCoordinate.theta().doubleValue(), 0.0000000000000002);
-        assertEquals(PI / 6, sphericalCoordinate.phi().doubleValue(), 0.0000000000000002);
+        assertEquals(PI / 3, sphericalCoordinate.orientation().theta().doubleValue(), 0.0000000000000002);
+        assertEquals(PI / 6, sphericalCoordinate.orientation().phi().doubleValue(), 0.0000000000000002);
     }
 
     @Test

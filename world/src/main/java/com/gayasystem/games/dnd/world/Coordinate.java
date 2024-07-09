@@ -23,8 +23,8 @@ public record Coordinate(BigDecimal x, BigDecimal y, BigDecimal z) {
 
     public static Coordinate from(SphericalCoordinate sc) {
         double rho = sc.rho().doubleValue();
-        double theta = sc.theta().doubleValue();
-        double phi = sc.phi().doubleValue();
+        double theta = sc.orientation().theta().doubleValue();
+        double phi = sc.orientation().phi().doubleValue();
 
         double x = rho * sin(phi) * cos(theta);
         double y = rho * sin(phi) * sin(theta);

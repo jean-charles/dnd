@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
 import com.gayasystem.games.dnd.common.Moveable;
+import com.gayasystem.games.dnd.common.Orientation;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
@@ -23,7 +24,7 @@ class EngramComputingTest {
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
-                        new Image(ThingA.class, new SphericalCoordinate(PI, 0)),
+                        new Image(ThingA.class, new Orientation(PI, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
@@ -32,33 +33,33 @@ class EngramComputingTest {
 
     @Test
     void computeImageNotFound() {
-        Collection<PersistedEngram> memories = List.of(new PersistedEngram(scared, new Image(ThingA.class, new SphericalCoordinate(0, 0, 0))));
+        Collection<PersistedEngram> memories = List.of(new PersistedEngram(scared, new Image(ThingA.class)));
         Moveable moveable = mock(Moveable.class);
         var engramComputing = new EngramComputing(memories, moveable);
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
-                        new Image(ThingB.class, new SphericalCoordinate(0, 0, 0)),
+                        new Image(ThingB.class, new Orientation(0, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
-        verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(0.0, 0.0, 0.0));
+        verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(1.0, 0.0, 0.0));
     }
 
     @Test
     void computeFearAttracted() {
         Collection<PersistedEngram> memories = List.of(
-                new PersistedEngram(scared, new Image(ThingA.class, new SphericalCoordinate(0, 0, 0))),
-                new PersistedEngram(attracted, new Image(ThingB.class, new SphericalCoordinate(0, 0, 0))));
+                new PersistedEngram(scared, new Image(ThingA.class)),
+                new PersistedEngram(attracted, new Image(ThingB.class)));
         Moveable moveable = mock(Moveable.class);
         var engramComputing = new EngramComputing(memories, moveable);
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
-                        new Image(ThingA.class, new SphericalCoordinate(0, 0, 0)),
+                        new Image(ThingA.class, new Orientation(0, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)),
                 new SpatialEngram(
-                        new Image(ThingB.class, new SphericalCoordinate(0, 0, 0)),
+                        new Image(ThingB.class, new Orientation(0, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
@@ -75,7 +76,7 @@ class EngramComputingTest {
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
-                        new Image(ThingA.class, new SphericalCoordinate(PI, 0)),
+                        new Image(ThingA.class, new Orientation(PI, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(engrams);
 
