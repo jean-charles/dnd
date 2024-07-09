@@ -25,10 +25,21 @@ public class OrientationTest {
     }
 
     @Test
-    public void transpose() {
+    public void transposeWithPositiveValues() {
         var origin = new Orientation(PI / 4, 0);
-        var toBeTransposed = new Orientation(-PI / 4, 0);
+        var toBeTransposed = new Orientation(7 * PI / 4, 0);
         var expected = new Orientation(3 * PI / 2, 0);
+        var transposed = origin.transpose(toBeTransposed);
+
+        assertEquals(expected.theta().doubleValue(), transposed.theta().doubleValue(), 0.0);
+        assertEquals(expected.phi().doubleValue(), transposed.phi().doubleValue(), 0.0);
+    }
+
+    @Test
+    public void transposeWithNegativeValues() {
+        var origin = new Orientation(PI / 4, 0);
+        var toBeTransposed = new Orientation(-PI / 4, -PI / 4);
+        var expected = new Orientation(3 * PI / 2, 7 * PI / 4);
         var transposed = origin.transpose(toBeTransposed);
 
         assertEquals(expected.theta().doubleValue(), transposed.theta().doubleValue(), 0.0);
