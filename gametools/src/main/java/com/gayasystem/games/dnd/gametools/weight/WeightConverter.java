@@ -2,6 +2,8 @@ package com.gayasystem.games.dnd.gametools.weight;
 
 import java.math.BigDecimal;
 
+import static java.math.RoundingMode.HALF_UP;
+
 public class WeightConverter {
     private static final double GRAINS_IN_OUNCE = 437.5;
     private static final int OUNCES_IN_POUND = 16;
@@ -9,7 +11,7 @@ public class WeightConverter {
 
     private static double round(double value) {
         BigDecimal bd = BigDecimal.valueOf(value);
-        return bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return bd.setScale(2, HALF_UP).doubleValue();
     }
 
     // Grains conversions
