@@ -1,28 +1,28 @@
 package com.gayasystem.games.dnd;
 
-import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.world.World;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.Collection;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class Application implements CommandLineRunner {
+public class Application {
     @Autowired
-    private Collection<Thing> things;
+    private World world;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        var world = new World(things);
-        while (true) {
-            world.run();
-        }
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -> {
+            while (true) {
+                world.run();
+            }
+        };
     }
 }

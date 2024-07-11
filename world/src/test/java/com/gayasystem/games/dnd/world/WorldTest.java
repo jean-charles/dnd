@@ -4,20 +4,33 @@ import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import org.junit.jupiter.api.Test;
-
-import java.util.Collection;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@SpringJUnitConfig
 public class WorldTest {
+    @MockBean
+    private Thing thing;
+    @Autowired
+    private World world;
+
+    @Configuration
+    class Config {
+        @Bean
+        public World world() {
+            return new World();
+        }
+    }
+
     @Test
     public void runMove() {
-        var thing = mock(Thing.class);
         when(thing.velocity()).thenReturn(new Velocity(1, new SphericalCoordinate(10, 0, 0)));
-        Collection<Thing> things = List.of(thing);
-        var world = new World(things);
         double originalX = world.get(thing).x().doubleValue();
 
         world.run();

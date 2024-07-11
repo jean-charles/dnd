@@ -5,6 +5,7 @@ import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -14,18 +15,21 @@ import java.util.Random;
 
 import static java.lang.Math.PI;
 
+@Component
 public class World implements Runnable {
-    private Map<Thing, Coordinate> things = new HashMap<>();
-    private Map<Thing, Orientation> thingsOrientation = new HashMap<>();
+    private Collection<? extends Thing> things;
 
-    public World(Collection<Thing> newThings) {
-        for (var thing : newThings) {
+    private Map<Thing, Coordinate> thingsCoordinates = new HashMap<>();
+    private Map<Thing, Orientation> thingsOrientations = new HashMap<>();
+
+    public World(Collection<? extends Thing> things) {
+        for (var thing : things) {
             var x = new Random().nextDouble() * 10;
             var y = 0.0;
             var z = 0.0;
-            things.put(thing, new Coordinate(x, y, z));
+            thingsCoordinates.put(thing, new Coordinate(x, y, z));
             var orientation = new Orientation(new Random().nextDouble() * 2 * PI, new Random().nextDouble() * 2 * PI);
-            thingsOrientation.put(thing, orientation);
+            thingsOrientations.put(thing, orientation);
         }
     }
 
@@ -34,14 +38,14 @@ public class World implements Runnable {
             var lifeForm = (LifeForm) thing;
             var sightDistance = lifeForm.sightDistance();
 
-            var lifeFormCoordinate = things.get(lifeForm);
-            var lifeFormOrientation = thingsOrientation.get(lifeForm);
+            var lifeFormCoordinate = thingsCoordinates.get(lifeForm);
+            var lifeFormOrientation = thingsOrientations.get(lifeForm);
 
-            for (var other : things.keySet()) {
+            for (var other : thingsCoordinates.keySet()) {
                 if (thing == other) continue;
 
-                var coordinate = things.get(other);
-                var orientation = thingsOrientation.get(other);
+                var coordinate = thingsCoordinates.get(other);
+                var orientation = thingsOrientations.get(other);
 
                 var distance = coordinate.distanceFrom(lifeFormCoordinate);
                 if (distance <= sightDistance) {
@@ -55,7 +59,7 @@ public class World implements Runnable {
     }
 
     private void move(Thing thing) {
-        var coordinate = things.get(thing);
+        var coordinate = thingsCoordinates.get(thing);
         var velocity = thing.velocity();
         var speed = velocity.speed();
         var destination = velocity.destination();
@@ -65,12 +69,12 @@ public class World implements Runnable {
         }
         var relativeCoordinate = Coordinate.from(destination);
         var newCoordinate = coordinate.add(relativeCoordinate);
-        things.put(thing, newCoordinate);
+        thingsCoordinates.put(thing, newCoordinate);
     }
 
     @Override
     public void run() {
-        for (var thing : things.keySet()) {
+        for (var thing : thingsCoordinates.keySet()) {
             // Show all visible things to this thing
             show(thing);
             // Run the thing
@@ -84,6 +88,6 @@ public class World implements Runnable {
      * TEST ONLY
      */
     Coordinate get(Thing thing) {
-        return things.get(thing);
+        return thingsCoordinates.get(thing);
     }
 }
