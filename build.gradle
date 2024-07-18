@@ -15,10 +15,10 @@ repositories {
 
 dependencies {
     implementation project('common')
-    implementation project('ecosystem')
-    implementation project('characters')
-    implementation project('lifeforms')
-    implementation project('world')
+//    implementation project('ecosystem')
+//    implementation project('characters')
+//    implementation project('lifeforms')
+//    implementation project('world')
 
     implementation libs.guava
     implementation 'org.springframework.boot:spring-boot-starter'

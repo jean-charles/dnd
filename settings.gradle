@@ -3,10 +3,10 @@ plugins {
 }
 
 rootProject.name = 'Dungeons & Dragons'
-include 'lifeforms'
-include 'characters'
-include 'ecosystem'
-include 'world'
+//include 'lifeforms'
+//include 'characters'
+//include 'ecosystem'
+//include 'world'
 include 'common'
-include 'gametools'
+//include 'gametools'
 

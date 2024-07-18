@@ -11,7 +11,7 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringJUnitConfig(classes = Application.class)
+@SpringJUnitConfig(classes = {Application.class, TestConfig.class})
 class ApplicationTest {
     @Autowired
     ApplicationContext ctx;
@@ -23,7 +23,7 @@ class ApplicationTest {
     void test() {
         String[] beanNames = ctx.getBeanDefinitionNames();
         assertThat(beanNames).isNotNull();
-        assertEquals(58, beanNames.length);
+        assertEquals(57, beanNames.length);
         assertThat(things).isNotNull();
         assertEquals(1, things.size());
     }
