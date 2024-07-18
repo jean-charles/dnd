@@ -8,7 +8,6 @@ import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CoordinateTest {
-
     @Test
     void from() {
         SphericalCoordinate sc = new SphericalCoordinate(8, PI / 3, PI / 6);

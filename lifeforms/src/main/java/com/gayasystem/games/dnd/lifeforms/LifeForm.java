@@ -3,10 +3,12 @@ package com.gayasystem.games.dnd.lifeforms;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
+import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.SoundSpectrum;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 
@@ -18,9 +20,12 @@ public abstract class LifeForm extends Thing {
     private SoundSpectrum soundSpectrum;
     private double minSoundAmplitude;
 
+    @Autowired
+    private BrainFactory brainFactory;
+
     public LifeForm(double mass, double speed, Collection<Class<? extends Thing>> scaredBy, Collection<Class<? extends Thing>> attractedBy) {
         super(mass);
-        brain = new Brain(this, speed, attractedBy, scaredBy);
+        brain = brainFactory.create(this, speed, attractedBy, scaredBy);
         this.speed = speed;
     }
 

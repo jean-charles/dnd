@@ -5,7 +5,6 @@ import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -15,10 +14,8 @@ import java.util.Random;
 
 import static java.lang.Math.PI;
 
-@Component
+//@Component("world")
 public class World implements Runnable {
-    private Collection<? extends Thing> things;
-
     private Map<Thing, Coordinate> thingsCoordinates = new HashMap<>();
     private Map<Thing, Orientation> thingsOrientations = new HashMap<>();
 

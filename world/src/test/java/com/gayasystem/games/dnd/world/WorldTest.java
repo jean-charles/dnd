@@ -6,30 +6,24 @@ import com.gayasystem.games.dnd.common.Velocity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@SpringJUnitConfig
+@SpringJUnitConfig(classes = World.class)
 public class WorldTest {
     @MockBean
     private Thing thing;
+
     @Autowired
     private World world;
 
-    @Configuration
-    class Config {
-        @Bean
-        public World world() {
-            return new World();
-        }
-    }
-
     @Test
     public void runMove() {
+        assertThat(thing).isNotNull();
+        assertThat(world).isNotNull();
         when(thing.velocity()).thenReturn(new Velocity(1, new SphericalCoordinate(10, 0, 0)));
         double originalX = world.get(thing).x().doubleValue();
 
