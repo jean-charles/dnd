@@ -3,7 +3,6 @@ package com.gayasystem.games.dnd.lifeforms;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -22,8 +21,8 @@ class LifeFormTest {
     @MockBean
     BrainFactory brainFactory;
 
-    @Autowired
-    LifeFormA lifeForm;
+//    @Autowired
+//    LifeFormA lifeForm;
 
     @Test
     void mass() {
