@@ -17,11 +17,14 @@ public class Tiefling extends Character {
                         null,
                         new Ability(2)
                 ),
-                140, // 140 to 220 lb
-                30,
                 alignment,
                 null,
                 armorClass,
+                140, // 140 to 220 lb
+                30,
+                0.0,
+                null,
+                0.0,
                 null,
                 null
         );

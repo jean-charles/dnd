@@ -17,11 +17,14 @@ public class Dragonborn extends Character {
                         null,
                         new Ability(1)
                 ),
-                250,
-                30,
                 alignment,
                 null,
                 armorClass,
+                250,
+                30,
+                0.0,
+                null,
+                0.0,
                 null,
                 null
         );

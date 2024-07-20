@@ -17,11 +17,14 @@ public class Gnome extends Character {
                         null,
                         null
                 ),
-                40, // 40 to 45 lb
-                25,
                 alignment,
                 null,
                 armorClass,
+                40, // 40 to 45 lb
+                25,
+                0.0,
+                null,
+                0.0,
                 null,
                 null
         );

@@ -4,6 +4,8 @@ import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Orientation;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.lifeforms.ThingA;
+import com.gayasystem.games.dnd.lifeforms.ThingB;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import org.junit.jupiter.api.Test;
 
@@ -81,35 +83,5 @@ class EngramComputingTest {
         engramComputing.compute(engrams);
 
         verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
-    }
-}
-
-class ThingA extends Thing {
-    protected ThingA() {
-        super(1);
-    }
-
-    @Override
-    public double mass() {
-        return 0;
-    }
-
-    @Override
-    public void run() {
-    }
-}
-
-class ThingB extends Thing {
-    protected ThingB() {
-        super(1);
-    }
-
-    @Override
-    public double mass() {
-        return 0;
-    }
-
-    @Override
-    public void run() {
     }
 }

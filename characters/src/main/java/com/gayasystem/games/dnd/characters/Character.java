@@ -6,6 +6,7 @@ import com.gayasystem.games.dnd.characters.scores.AbilityScores;
 import com.gayasystem.games.dnd.characters.scores.Skills;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
+import com.gayasystem.games.dnd.lifeforms.brain.sounds.SoundSpectrum;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -19,8 +20,8 @@ public abstract class Character extends LifeForm {
     private int armorClass;
     private Set<Equipment> equipments = new HashSet<>();
 
-    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, double mass, double speed, Alignment alignment, Skills skills, int armorClass, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
-        super(mass, speed, attractedBy, scaredBy);
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, double mass, double speed, double sightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> scaredBy, Collection<Class<? extends Thing>> attractedBy) {
+        super(mass, speed, sightDistance, soundSpectrum, minSoundAmplitude, scaredBy, attractedBy);
         this.abilityScores = abilityScores;
         this.abilityScoreIncrease = abilityScoreIncrease;
         this.alignment = alignment;

@@ -17,11 +17,14 @@ public class Elf extends Character {
                         null,
                         null
                 ),
-                100, // 100 to 145 lb
-                30,
                 alignment,
                 null,
                 armorClass,
+                100, // 100 to 145 lb
+                30,
+                0.0,
+                null,
+                0.0,
                 null,
                 null
         );

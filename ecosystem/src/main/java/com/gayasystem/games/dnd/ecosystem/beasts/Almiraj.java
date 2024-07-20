@@ -22,8 +22,6 @@ public class Almiraj extends Beast {
                         new Ability(10)
                 ),
                 null,
-                9,
-                60,
                 null,
                 new Skills(
                         0,
@@ -44,8 +42,13 @@ public class Almiraj extends Beast {
                         0,
                         0,
                         0),
-                13,
+                0,
                 Dice1d6.dice,
+                9,
+                60,
+                0.0,
+                null,
+                0.0,
                 List.of(Carrot.class),
                 List.of(Thing.class)
         );
