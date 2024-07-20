@@ -3,6 +3,7 @@ package com.gayasystem.games.dnd.lifeforms;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = {LifeFormContext.class, LifeFormTestContext.class})
+@SpringBootTest(classes = {LifeFormTestConfig.class})
 class LifeFormTest {
     static final double MASS = 1.2;
     static final double SPEED = 2.3;
@@ -21,13 +22,14 @@ class LifeFormTest {
     @MockBean
     BrainFactory brainFactory;
 
-//    @Autowired
+    @Autowired
+    MyBean lifeForm;
 //    LifeFormA lifeForm;
 
     @Test
     void mass() {
         assertThat(brainFactory).isNotNull();
-//        assertThat(lifeForm).isNotNull();
+        assertThat(lifeForm).isNotNull();
 //        assertEquals(MASS, lifeForm.mass());
     }
 

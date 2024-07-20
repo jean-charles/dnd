@@ -14,7 +14,6 @@ import java.util.Random;
 
 import static java.lang.Math.PI;
 
-//@Component("world")
 public class World implements Runnable {
     private Map<Thing, Coordinate> thingsCoordinates = new HashMap<>();
     private Map<Thing, Orientation> thingsOrientations = new HashMap<>();

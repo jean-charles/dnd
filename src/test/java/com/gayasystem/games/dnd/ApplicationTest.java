@@ -10,8 +10,9 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringJUnitConfig(classes = {Application.class, TestConfig.class})
+@SpringJUnitConfig(classes = {Application.class})
 class ApplicationTest {
     @Autowired
     ApplicationContext ctx;
@@ -21,10 +22,9 @@ class ApplicationTest {
 
     @Test
     void test() {
-        String[] beanNames = ctx.getBeanDefinitionNames();
-        assertThat(beanNames).isNotNull();
-        assertEquals(57, beanNames.length);
         assertThat(things).isNotNull();
         assertEquals(1, things.size());
+        var thing = things.iterator().next();
+        assertTrue(thing instanceof ThingA);
     }
 }
