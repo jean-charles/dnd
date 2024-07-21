@@ -9,6 +9,7 @@ import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.SoundSpectrum;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,6 +41,12 @@ class LifeFormTest {
     @Autowired
     LifeForm lifeForm;
 
+    @BeforeEach
+    void setUp() {
+        when(brainFactory.create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY)).thenReturn(brain);
+        lifeForm.run();
+    }
+
     @Test
     void mass() {
         assertThat(brainFactory).isNotNull();
@@ -49,10 +56,9 @@ class LifeFormTest {
 
     @Test
     void run() {
-        when(brainFactory.create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY)).thenReturn(brain);
         lifeForm.run();
-        lifeForm.run();
-        verify(brainFactory, times(1)).create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY);
+        verify(brainFactory, times(0)).create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY);
+        verify(brain, times(2)).run();
     }
 
     @Test
@@ -61,25 +67,19 @@ class LifeFormTest {
         var image = new Image(ThingA.class, orientation);
         SphericalCoordinate origin = new SphericalCoordinate(10, 0, 0);
 
-        when(brainFactory.create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY)).thenReturn(brain);
-        lifeForm.run();
         lifeForm.see(image, origin);
 
-        verify(brainFactory, times(1)).create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY);
         verify(brain).handle(new SpatialEngram(image, origin));
     }
 
     @Test
     void ear() {
         SphericalCoordinate origin = new SphericalCoordinate(10, 0, 0);
-        double amplitude = 2.3;
+        double amplitude = MIN_SOUND_AMPLITUDE * 2;
         var sound = new Sound(ThingA.class, SOUND_SPECTRUM, amplitude);
 
-        when(brainFactory.create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY)).thenReturn(brain);
-        lifeForm.run();
         lifeForm.ear(sound, origin);
 
-        verify(brainFactory, times(1)).create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY);
         verify(brain).handle(new SpatialEngram(sound, origin));
     }
 

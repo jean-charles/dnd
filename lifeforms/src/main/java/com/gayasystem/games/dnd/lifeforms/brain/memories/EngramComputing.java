@@ -5,22 +5,16 @@ import com.gayasystem.games.dnd.common.Orientation;
 import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.neutral;
 
+@Service
 public class EngramComputing {
-    private final Collection<PersistedEngram> memories;
-    private final Moveable moveable;
-
-    public EngramComputing(Collection<PersistedEngram> memories, Moveable moveable) {
-        this.memories = memories;
-        this.moveable = moveable;
-    }
-
-    private PersistedEngram search(SpatialEngram engram) {
+    private PersistedEngram search(Collection<PersistedEngram> memories, SpatialEngram engram) {
         Class<? extends Thing> thing = engram.engram().thingClass();
         PersistedEngram similarMemory = null;
 
@@ -35,7 +29,7 @@ public class EngramComputing {
         return similarMemory;
     }
 
-    private void move(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
+    private void move(Moveable moveable, Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
         var engram = findMostImportantEngram(spatialEmotionalEngrams);
         var speed = computeSpeed(engram.emotion());
         var orientation = computeOrientation(engram);
@@ -83,11 +77,11 @@ public class EngramComputing {
         return new Orientation(0, 0);
     }
 
-    public void compute(Collection<SpatialEngram> engrams) {
+    public void compute(Moveable moveable, Collection<PersistedEngram> memories, Collection<SpatialEngram> engrams) {
         Collection<SpatialEmotionalEngram> emotionalEngrams = new ArrayList<>();
 
         for (var engram : engrams) {
-            var foundMemory = search(engram);
+            var foundMemory = search(memories, engram);
             if (foundMemory != null) {
                 var emotion = foundMemory.emotion();
                 emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
@@ -96,6 +90,6 @@ public class EngramComputing {
             }
         }
 
-        move(emotionalEngrams);
+        move(moveable, emotionalEngrams);
     }
 }

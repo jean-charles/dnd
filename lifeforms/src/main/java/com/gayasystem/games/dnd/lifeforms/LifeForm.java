@@ -47,7 +47,7 @@ public abstract class LifeForm extends Thing {
     }
 
     public void ear(Sound sound, SphericalCoordinate origin) {
-        if (sound.spectrum() == soundSpectrum && sound.amplitude() >= minSoundAmplitude) {
+        if (sound.spectrum().equals(soundSpectrum) && sound.amplitude() >= minSoundAmplitude) {
             brain.handle(new SpatialEngram(sound, origin));
         }
     }

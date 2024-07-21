@@ -10,6 +10,6 @@ import java.util.Collection;
 public class BrainFactoryImpl implements BrainFactory {
     @Override
     public Brain create(Moveable moveable, double speed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
-        return new Brain(moveable, speed, attractedBy, scaredBy);
+        return new DefaultBrain(moveable, speed, attractedBy, scaredBy);
     }
 }

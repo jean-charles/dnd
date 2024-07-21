@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class BrainTest {
+public class DefaultBrainTest {
     @Test
     public void memories() {
-        new Brain(null, 0, List.of(Thing.class), List.of());
+        new DefaultBrain(null, 0, List.of(Thing.class), List.of());
     }
 }

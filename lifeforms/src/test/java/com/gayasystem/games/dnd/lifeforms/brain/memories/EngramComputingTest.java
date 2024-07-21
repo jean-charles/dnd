@@ -22,13 +22,13 @@ class EngramComputingTest {
     void computeImageFound() {
         Collection<PersistedEngram> memories = List.of(new PersistedEngram(scared, new Image(ThingA.class)));
         Moveable moveable = mock(Moveable.class);
-        var engramComputing = new EngramComputing(memories, moveable);
+        var engramComputing = new EngramComputing();
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class, new Orientation(PI, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
-        engramComputing.compute(engrams);
+        engramComputing.compute(moveable, memories, engrams);
 
         verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
     }
@@ -37,13 +37,13 @@ class EngramComputingTest {
     void computeImageNotFound() {
         Collection<PersistedEngram> memories = List.of(new PersistedEngram(scared, new Image(ThingA.class)));
         Moveable moveable = mock(Moveable.class);
-        var engramComputing = new EngramComputing(memories, moveable);
+        var engramComputing = new EngramComputing();
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class, new Orientation(0, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
-        engramComputing.compute(engrams);
+        engramComputing.compute(moveable, memories, engrams);
 
         verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(1.0, 0.0, 0.0));
     }
@@ -54,7 +54,7 @@ class EngramComputingTest {
                 new PersistedEngram(scared, new Image(ThingA.class)),
                 new PersistedEngram(attracted, new Image(ThingB.class)));
         Moveable moveable = mock(Moveable.class);
-        var engramComputing = new EngramComputing(memories, moveable);
+        var engramComputing = new EngramComputing();
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
@@ -63,7 +63,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingB.class, new Orientation(0, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
-        engramComputing.compute(engrams);
+        engramComputing.compute(moveable, memories, engrams);
 
         verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
     }
@@ -74,13 +74,13 @@ class EngramComputingTest {
                 new PersistedEngram(scared, new Image(Thing.class)),
                 new PersistedEngram(attracted, new Image(ThingB.class)));
         Moveable moveable = mock(Moveable.class);
-        var engramComputing = new EngramComputing(memories, moveable);
+        var engramComputing = new EngramComputing();
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class, new Orientation(PI, 0)),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
-        engramComputing.compute(engrams);
+        engramComputing.compute(moveable, memories, engrams);
 
         verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
     }
