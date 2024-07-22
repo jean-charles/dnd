@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.characters.alignments;
+package com.gayasystem.games.dnd.gametools.alignments;
 
 public record Alignment(
         Ethical ethical,

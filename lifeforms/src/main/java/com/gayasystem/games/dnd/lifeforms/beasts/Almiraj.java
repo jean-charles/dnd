@@ -1,11 +1,11 @@
 package com.gayasystem.games.dnd.lifeforms.beasts;
 
-import com.gayasystem.games.dnd.characters.scores.Ability;
-import com.gayasystem.games.dnd.characters.scores.AbilityScores;
-import com.gayasystem.games.dnd.characters.scores.Skills;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.gametools.dices.Dice1d6;
+import com.gayasystem.games.dnd.gametools.scores.Ability;
+import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
+import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Beast;
 
 import java.util.List;

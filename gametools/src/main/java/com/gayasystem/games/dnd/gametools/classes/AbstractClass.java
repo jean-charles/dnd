@@ -1,7 +1,7 @@
-package com.gayasystem.games.dnd.characters.classes;
+package com.gayasystem.games.dnd.gametools.classes;
 
-import com.gayasystem.games.dnd.characters.scores.Ability;
 import com.gayasystem.games.dnd.gametools.dices.Dice;
+import com.gayasystem.games.dnd.gametools.scores.Ability;
 
 public abstract class AbstractClass {
     protected Dice hitDice;

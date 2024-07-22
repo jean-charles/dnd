@@ -1,8 +1,8 @@
 package com.gayasystem.games.dnd.lifeforms.characters;
 
-import com.gayasystem.games.dnd.characters.alignments.Alignment;
-import com.gayasystem.games.dnd.characters.scores.Ability;
-import com.gayasystem.games.dnd.characters.scores.AbilityScores;
+import com.gayasystem.games.dnd.gametools.alignments.Alignment;
+import com.gayasystem.games.dnd.gametools.scores.Ability;
+import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.lifeforms.Character;
 
 public class Halfling extends Character {

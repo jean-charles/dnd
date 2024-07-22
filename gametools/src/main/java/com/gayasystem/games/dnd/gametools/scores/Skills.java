@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.characters.scores;
+package com.gayasystem.games.dnd.gametools.scores;
 
 public record Skills(
         // Strength
