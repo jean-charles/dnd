@@ -4,9 +4,10 @@ import com.gayasystem.games.dnd.gametools.alignments.Alignment;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.lifeforms.Character;
+import com.gayasystem.games.dnd.lifeforms.Gender;
 
 public class HalfOrc extends Character {
-    public HalfOrc(AbilityScores abilityScores, Alignment alignment, int armorClass) {
+    public HalfOrc(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -21,6 +22,7 @@ public class HalfOrc extends Character {
                 null,
                 armorClass,
                 155, // 155 to 225 lb
+                gender,
                 30,
                 0.0,
                 null,

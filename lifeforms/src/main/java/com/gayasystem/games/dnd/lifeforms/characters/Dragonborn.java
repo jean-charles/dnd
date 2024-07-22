@@ -4,9 +4,10 @@ import com.gayasystem.games.dnd.gametools.alignments.Alignment;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.lifeforms.Character;
+import com.gayasystem.games.dnd.lifeforms.Gender;
 
 public class Dragonborn extends Character {
-    public Dragonborn(AbilityScores abilityScores, Alignment alignment, int armorClass) {
+    public Dragonborn(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -21,6 +22,7 @@ public class Dragonborn extends Character {
                 null,
                 armorClass,
                 250,
+                gender,
                 30,
                 0.0,
                 null,

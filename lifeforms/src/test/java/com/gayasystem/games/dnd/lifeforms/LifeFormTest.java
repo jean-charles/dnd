@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.Collection;
 import java.util.List;
 
+import static com.gayasystem.games.dnd.lifeforms.Gender.female;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -25,6 +26,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = {LifeFormTestConfig.class})
 class LifeFormTest {
     static final double MASS = 1.2;
+    static final Gender GENDER = female;
     static final double SPEED = 2.3;
     static final double SIGHT_DISTANCE = 100.0;
     static final SoundSpectrum SOUND_SPECTRUM = new SoundSpectrum(10, 10000);

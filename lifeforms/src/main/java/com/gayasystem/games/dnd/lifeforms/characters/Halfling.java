@@ -4,9 +4,10 @@ import com.gayasystem.games.dnd.gametools.alignments.Alignment;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.lifeforms.Character;
+import com.gayasystem.games.dnd.lifeforms.Gender;
 
 public class Halfling extends Character {
-    public Halfling(AbilityScores abilityScores, Alignment alignment, int armorClass) {
+    public Halfling(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -21,6 +22,7 @@ public class Halfling extends Character {
                 null,
                 armorClass,
                 40, //40 to 45 lb
+                gender,
                 25,
                 0.0,
                 null,

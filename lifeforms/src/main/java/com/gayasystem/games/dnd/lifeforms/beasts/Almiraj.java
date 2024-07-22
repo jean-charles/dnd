@@ -7,11 +7,12 @@ import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Beast;
+import com.gayasystem.games.dnd.lifeforms.Gender;
 
 import java.util.List;
 
 public class Almiraj extends Beast {
-    public Almiraj() {
+    public Almiraj(Gender gender) {
         super(
                 new AbilityScores(
                         new Ability(2),
@@ -45,6 +46,7 @@ public class Almiraj extends Beast {
                 0,
                 Dice1d6.dice,
                 9,
+                gender,
                 60,
                 0.0,
                 null,
