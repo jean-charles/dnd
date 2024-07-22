@@ -30,11 +30,14 @@ public class EngramComputing {
     }
 
     private void move(Moveable moveable, Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
-        var engram = findMostImportantEngram(spatialEmotionalEngrams);
-        var speed = computeSpeed(engram.emotion());
-        var orientation = computeOrientation(engram);
-        var destination = new SphericalCoordinate(engram.engram().origin().rho(), orientation);
-        moveable.velocity(speed, destination);
+        var mostImportantEngram = findMostImportantEngram(spatialEmotionalEngrams);
+        var speed = computeSpeed(mostImportantEngram.emotion());
+        var orientation = computeOrientation(mostImportantEngram);
+        var engram = mostImportantEngram.engram();
+        if (engram != null) {
+            var destination = new SphericalCoordinate(engram.origin().rho(), orientation);
+            moveable.velocity(speed, destination);
+        }
     }
 
     private SpatialEmotionalEngram findMostImportantEngram(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {

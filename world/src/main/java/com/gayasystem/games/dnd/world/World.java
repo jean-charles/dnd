@@ -57,15 +57,17 @@ public class World implements Runnable {
     private void move(Thing thing) {
         var coordinate = thingsCoordinates.get(thing);
         var velocity = thing.velocity();
-        var speed = velocity.speed();
-        var destination = velocity.destination();
-        if (speed < destination.rho().doubleValue()) {
-            var rho = BigDecimal.valueOf(speed);
-            destination = new SphericalCoordinate(rho, destination.orientation());
+        if (velocity != null) {
+            var speed = velocity.speed();
+            var destination = velocity.destination();
+            if (speed < destination.rho().doubleValue()) {
+                var rho = BigDecimal.valueOf(speed);
+                destination = new SphericalCoordinate(rho, destination.orientation());
+            }
+            var relativeCoordinate = Coordinate.from(destination);
+            var newCoordinate = coordinate.add(relativeCoordinate);
+            thingsCoordinates.put(thing, newCoordinate);
         }
-        var relativeCoordinate = Coordinate.from(destination);
-        var newCoordinate = coordinate.add(relativeCoordinate);
-        thingsCoordinates.put(thing, newCoordinate);
     }
 
     @Override
