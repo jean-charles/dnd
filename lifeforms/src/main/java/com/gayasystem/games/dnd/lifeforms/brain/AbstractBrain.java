@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd.lifeforms.brain;
 
 import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.Engram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.EngramComputing;
@@ -26,8 +27,8 @@ public abstract class AbstractBrain implements Brain {
     @Autowired
     private EngramComputing engramComputing;
 
-    public AbstractBrain(Moveable moveable, double speed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
-        this.moveable = moveable;
+    protected AbstractBrain(LifeForm lifeForm, double speed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+        this.moveable = lifeForm;
         this.speed = speed;
         rememberAttractedByMemories(attractedBy);
         rememberScaredByMemories(scaredBy);
