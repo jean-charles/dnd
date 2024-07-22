@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.characters;
+package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.characters.alignments.Alignment;
 import com.gayasystem.games.dnd.characters.scores.AbilityScores;

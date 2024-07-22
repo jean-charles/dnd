@@ -1,9 +1,9 @@
-package com.gayasystem.games.dnd.ecosystem.characters;
+package com.gayasystem.games.dnd.lifeforms.characters;
 
-import com.gayasystem.games.dnd.characters.Character;
 import com.gayasystem.games.dnd.characters.alignments.Alignment;
 import com.gayasystem.games.dnd.characters.scores.Ability;
 import com.gayasystem.games.dnd.characters.scores.AbilityScores;
+import com.gayasystem.games.dnd.lifeforms.Character;
 
 public class HalfElf extends Character {
     public HalfElf(AbilityScores abilityScores, Alignment alignment, int armorClass) {

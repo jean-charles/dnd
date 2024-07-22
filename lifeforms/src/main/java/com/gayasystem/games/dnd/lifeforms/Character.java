@@ -1,11 +1,10 @@
-package com.gayasystem.games.dnd.characters;
+package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.characters.alignments.Alignment;
 import com.gayasystem.games.dnd.characters.equipments.Equipment;
 import com.gayasystem.games.dnd.characters.scores.AbilityScores;
 import com.gayasystem.games.dnd.characters.scores.Skills;
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.SoundSpectrum;
 
 import java.util.Collection;
