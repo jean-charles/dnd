@@ -23,7 +23,7 @@ class ApplicationTest {
     @Test
     void test() {
         assertThat(things).isNotNull();
-        assertEquals(1, things.size());
+        assertEquals(4, things.size());
         var thing = things.iterator().next();
         assertTrue(thing instanceof ThingA);
     }
