@@ -9,6 +9,7 @@ import com.gayasystem.games.dnd.lifeforms.brain.memories.EngramComputing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.PersistedEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,18 +17,21 @@ import java.util.Collection;
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.attracted;
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.scared;
 
+@Component
 public abstract class AbstractBrain implements Brain {
     private final Moveable moveable;
     private final double speed;
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
     private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
 
-    private double currentSpeed;
+    private double currentSpeed = 0;
 
     @Autowired
     private EngramComputing engramComputing;
 
     protected AbstractBrain(LifeForm lifeForm, double speed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+        if (lifeForm == null)
+            throw new NullPointerException("lifeForm cannot be null");
         this.moveable = lifeForm;
         this.speed = speed;
         rememberAttractedByMemories(attractedBy);
@@ -63,5 +67,14 @@ public abstract class AbstractBrain implements Brain {
 
     public double speed() {
         return currentSpeed;
+    }
+
+    /* UNIT TESTS ONLY */
+    Collection<PersistedEngram> getLongTermMemories() {
+        return longTermMemories;
+    }
+
+    Collection<SpatialEngram> getShortTermMemories() {
+        return shortTermMemories;
     }
 }
