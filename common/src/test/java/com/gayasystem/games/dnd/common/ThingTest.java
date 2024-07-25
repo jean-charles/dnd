@@ -1,5 +1,6 @@
 package com.gayasystem.games.dnd.common;
 
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

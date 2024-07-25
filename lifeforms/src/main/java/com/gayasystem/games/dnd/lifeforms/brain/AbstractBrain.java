@@ -40,7 +40,7 @@ public abstract class AbstractBrain implements Brain {
 
     private void rememberAttractedByMemories(Collection<Class<? extends Thing>> attractedBy) {
         for (var thingClass : attractedBy) {
-            Engram engram = new Image(thingClass, null);
+            Engram engram = new Image(thingClass);
             var persistedEngram = new PersistedEngram(attracted, engram);
             longTermMemories.add(persistedEngram);
         }
@@ -48,7 +48,7 @@ public abstract class AbstractBrain implements Brain {
 
     private void rememberScaredByMemories(Collection<Class<? extends Thing>> scaredBy) {
         for (var thingClass : scaredBy) {
-            Engram engram = new Image(thingClass, null);
+            Engram engram = new Image(thingClass);
             var persistedEngram = new PersistedEngram(scared, engram);
             longTermMemories.add(persistedEngram);
         }

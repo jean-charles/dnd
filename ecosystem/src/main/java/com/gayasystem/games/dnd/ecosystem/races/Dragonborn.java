@@ -1,27 +1,27 @@
-package com.gayasystem.games.dnd.lifeforms.characters;
+package com.gayasystem.games.dnd.ecosystem.races;
 
+import com.gayasystem.games.dnd.ecosystem.Character;
 import com.gayasystem.games.dnd.gametools.alignments.Alignment;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
-import com.gayasystem.games.dnd.lifeforms.Character;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 
-public class Human extends Character {
-    public Human(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
+public class Dragonborn extends Character {
+    public Dragonborn(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
-                        new Ability(1),
-                        new Ability(1),
-                        new Ability(1),
-                        new Ability(1),
-                        new Ability(1),
+                        new Ability(2),
+                        null,
+                        null,
+                        null,
+                        null,
                         new Ability(1)
                 ),
                 alignment,
                 null,
                 armorClass,
-                125, // 125 to 250 lb
+                250,
                 gender,
                 30,
                 0.0,

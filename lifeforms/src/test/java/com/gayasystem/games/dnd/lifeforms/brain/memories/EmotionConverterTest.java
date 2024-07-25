@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
-import com.gayasystem.games.dnd.common.Orientation;
+import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.EmotionConverter;
 import org.junit.jupiter.api.Test;

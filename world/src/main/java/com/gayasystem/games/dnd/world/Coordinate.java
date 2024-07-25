@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.world;
 
-import com.gayasystem.games.dnd.common.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 
 import java.math.BigDecimal;
 

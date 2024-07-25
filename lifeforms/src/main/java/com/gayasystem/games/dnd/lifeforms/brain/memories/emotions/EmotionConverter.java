@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories.emotions;
 
-import com.gayasystem.games.dnd.common.Orientation;
+import com.gayasystem.games.dnd.common.coordinates.Orientation;
 
 public class EmotionConverter {
     public static double weight(Emotion emotion) {

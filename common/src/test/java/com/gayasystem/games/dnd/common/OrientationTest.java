@@ -1,5 +1,6 @@
 package com.gayasystem.games.dnd.common;
 
+import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.PI;

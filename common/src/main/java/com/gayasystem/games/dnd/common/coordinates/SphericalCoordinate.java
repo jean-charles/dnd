@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.common;
+package com.gayasystem.games.dnd.common.coordinates;
 
 import java.math.BigDecimal;
 

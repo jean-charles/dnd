@@ -1,5 +1,7 @@
 package com.gayasystem.games.dnd.common;
 
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+
 public abstract class Thing implements Moveable, Runnable {
     protected double mass;
     private Velocity velocity;

@@ -1,19 +1,19 @@
-package com.gayasystem.games.dnd.lifeforms.characters;
+package com.gayasystem.games.dnd.ecosystem.races;
 
+import com.gayasystem.games.dnd.ecosystem.Character;
 import com.gayasystem.games.dnd.gametools.alignments.Alignment;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
-import com.gayasystem.games.dnd.lifeforms.Character;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 
-public class Halfling extends Character {
-    public Halfling(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
+public class Dwarf extends Character {
+    public Dwarf(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
                         null,
-                        new Ability(2),
                         null,
+                        new Ability(2),
                         null,
                         null,
                         null
@@ -21,7 +21,7 @@ public class Halfling extends Character {
                 alignment,
                 null,
                 armorClass,
-                40, //40 to 45 lb
+                150,
                 gender,
                 25,
                 0.0,

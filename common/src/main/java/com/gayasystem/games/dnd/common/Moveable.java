@@ -1,5 +1,7 @@
 package com.gayasystem.games.dnd.common;
 
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+
 public interface Moveable {
     /**
      * Set the velocity of the thing. Could be set by itself or external.

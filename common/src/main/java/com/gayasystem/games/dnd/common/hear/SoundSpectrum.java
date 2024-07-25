@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.lifeforms.brain.sounds;
+package com.gayasystem.games.dnd.common.hear;
 
 public record SoundSpectrum(double minFrequency, double maxFrequency) {
 }

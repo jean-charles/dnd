@@ -1,18 +1,21 @@
 package com.gayasystem.games.dnd.lifeforms;
 
-import com.gayasystem.games.dnd.common.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.LifeEnvironment;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.hear.Hearing;
+import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
+import com.gayasystem.games.dnd.common.sight.Sighted;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
-import com.gayasystem.games.dnd.lifeforms.brain.sounds.SoundSpectrum;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 
-public abstract class LifeForm extends Thing {
+public abstract class LifeForm extends Thing implements Sighted, Hearing {
     private final Gender gender;
     private final double speed;
     private final double sightDistance;
@@ -22,6 +25,9 @@ public abstract class LifeForm extends Thing {
     private final Collection<Class<? extends Thing>> scaredBy;
 
     private Brain brain;
+
+    @Autowired
+    private LifeEnvironment environment;
 
     @Autowired
     private BrainFactory brainFactory;
@@ -41,20 +47,22 @@ public abstract class LifeForm extends Thing {
     public void run() {
         if (brain == null)
             brain = brainFactory.create(this, speed, attractedBy, scaredBy);
+        environment.show(this, sightDistance);
+        environment.listen(this, minSoundAmplitude);
         brain.run();
     }
 
-    public void see(Image image, SphericalCoordinate origin) {
+    @Override
+    public void see(Thing thing, SphericalCoordinate origin) {
+        Image image = new Image(thing.getClass());
         brain.handle(new SpatialEngram(image, origin));
     }
 
-    public void ear(Sound sound, SphericalCoordinate origin) {
+    @Override
+    public void ear(Thing thing, SoundSpectrum spectrum, double amplitude, SphericalCoordinate origin) {
+        var sound = new Sound(thing.getClass(), spectrum, amplitude);
         if (sound.spectrum().equals(soundSpectrum) && sound.amplitude() >= minSoundAmplitude) {
             brain.handle(new SpatialEngram(sound, origin));
         }
-    }
-
-    public double sightDistance() {
-        return sightDistance;
     }
 }

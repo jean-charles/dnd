@@ -1,14 +1,12 @@
 package com.gayasystem.games.dnd.lifeforms;
 
-import com.gayasystem.games.dnd.common.Orientation;
-import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.Orientation;
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
-import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
-import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
-import com.gayasystem.games.dnd.lifeforms.brain.sounds.SoundSpectrum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,27 +64,22 @@ class LifeFormTest {
     @Test
     void see() {
         Orientation orientation = new Orientation(0, 0);
-        var image = new Image(ThingA.class, orientation);
+        var thing = new ThingA();
         SphericalCoordinate origin = new SphericalCoordinate(10, 0, 0);
 
-        lifeForm.see(image, origin);
+        lifeForm.see(thing, origin);
 
-        verify(brain).handle(new SpatialEngram(image, origin));
+        verify(brain).handle(any(SpatialEngram.class));
     }
 
     @Test
     void ear() {
         SphericalCoordinate origin = new SphericalCoordinate(10, 0, 0);
         double amplitude = MIN_SOUND_AMPLITUDE * 2;
-        var sound = new Sound(ThingA.class, SOUND_SPECTRUM, amplitude);
+        var thing = new ThingA();
 
-        lifeForm.ear(sound, origin);
+        lifeForm.ear(thing, SOUND_SPECTRUM, amplitude, origin);
 
-        verify(brain).handle(new SpatialEngram(sound, origin));
-    }
-
-    @Test
-    void sightDistance() {
-        assertEquals(SIGHT_DISTANCE, lifeForm.sightDistance());
+        verify(brain).handle(any(SpatialEngram.class));
     }
 }

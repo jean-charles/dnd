@@ -1,6 +1,4 @@
-package com.gayasystem.games.dnd.ecosystem.food;
-
-import com.gayasystem.games.dnd.common.Thing;
+package com.gayasystem.games.dnd.common;
 
 public abstract class Food extends Thing {
     private static final double PERCENT_MASS_LOST = 0.80;

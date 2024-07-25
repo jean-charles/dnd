@@ -1,7 +1,6 @@
 package com.gayasystem.games.dnd.lifeforms.brain;
 
-import com.gayasystem.games.dnd.common.Orientation;
-import com.gayasystem.games.dnd.common.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.lifeforms.*;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.EngramComputing;
@@ -67,8 +66,7 @@ public class DefaultBrainTest {
     @Test
     public void shortTermMemoriesMemoriesAttracted() {
         SphericalCoordinate coordinates = new SphericalCoordinate(10, 0, 0);
-        Orientation orientation = new Orientation(0, 0);
-        brain.handle(new SpatialEngram(new Image(ThingA.class, orientation), coordinates));
+        brain.handle(new SpatialEngram(new Image(ThingA.class), coordinates));
         brain.run();
         assertEquals(10, brain.speed());
         verify(engramComputing).compute(eq(lifeForm), any(Collection.class), any(Collection.class));

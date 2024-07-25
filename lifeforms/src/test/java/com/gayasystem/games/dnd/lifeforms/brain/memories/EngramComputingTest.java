@@ -1,9 +1,8 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
 import com.gayasystem.games.dnd.common.Moveable;
-import com.gayasystem.games.dnd.common.Orientation;
-import com.gayasystem.games.dnd.common.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.lifeforms.ThingA;
 import com.gayasystem.games.dnd.lifeforms.ThingB;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
@@ -26,7 +25,7 @@ class EngramComputingTest {
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
-                        new Image(ThingA.class, new Orientation(PI, 0)),
+                        new Image(ThingA.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(moveable, memories, engrams);
 
@@ -41,7 +40,7 @@ class EngramComputingTest {
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
-                        new Image(ThingB.class, new Orientation(0, 0)),
+                        new Image(ThingB.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(moveable, memories, engrams);
 
@@ -58,10 +57,10 @@ class EngramComputingTest {
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
-                        new Image(ThingA.class, new Orientation(0, 0)),
+                        new Image(ThingA.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)),
                 new SpatialEngram(
-                        new Image(ThingB.class, new Orientation(0, 0)),
+                        new Image(ThingB.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(moveable, memories, engrams);
 
@@ -78,7 +77,7 @@ class EngramComputingTest {
 
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
-                        new Image(ThingA.class, new Orientation(PI, 0)),
+                        new Image(ThingA.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
         engramComputing.compute(moveable, memories, engrams);
 

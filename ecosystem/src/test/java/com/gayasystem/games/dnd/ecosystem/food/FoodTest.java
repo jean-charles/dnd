@@ -1,5 +1,6 @@
 package com.gayasystem.games.dnd.ecosystem.food;
 
+import com.gayasystem.games.dnd.common.Food;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

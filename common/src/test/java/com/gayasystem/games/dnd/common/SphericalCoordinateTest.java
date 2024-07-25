@@ -1,5 +1,7 @@
 package com.gayasystem.games.dnd.common;
 
+import com.gayasystem.games.dnd.common.coordinates.Orientation;
+import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     implementation project(':common')
+    implementation project(':gametools')
+    implementation project(':lifeforms')
 
     implementation libs.guava
     implementation 'org.springframework.boot:spring-boot-starter'
