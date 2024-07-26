@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
     implementation project('common')
+    implementation project('ecosystem')
     implementation project('world')
 
     implementation libs.guava

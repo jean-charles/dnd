@@ -67,7 +67,7 @@ class LifeFormTest {
         var thing = new ThingA();
         SphericalCoordinate origin = new SphericalCoordinate(10, 0, 0);
 
-        lifeForm.see(thing, origin);
+        lifeForm.see(thing, origin, orientation);
 
         verify(brain).handle(any(SpatialEngram.class));
     }

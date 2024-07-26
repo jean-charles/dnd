@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.LifeEnvironment;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
@@ -53,7 +54,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     }
 
     @Override
-    public void see(Thing thing, SphericalCoordinate origin) {
+    public void see(Thing thing, SphericalCoordinate origin, Orientation orientation) {
         Image image = new Image(thing.getClass());
         brain.handle(new SpatialEngram(image, origin));
     }

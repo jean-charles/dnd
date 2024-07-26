@@ -4,10 +4,12 @@ import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.lifeforms.*;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.EngramComputing;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.PersistedEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,7 +19,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -69,7 +70,7 @@ public class DefaultBrainTest {
         brain.handle(new SpatialEngram(new Image(ThingA.class), coordinates));
         brain.run();
         assertEquals(10, brain.speed());
-        verify(engramComputing).compute(eq(lifeForm), any(Collection.class), any(Collection.class));
+        verify(engramComputing).compute(eq(lifeForm), ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());
     }
 
     @Test

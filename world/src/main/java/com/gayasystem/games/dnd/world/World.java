@@ -8,10 +8,7 @@ import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.Math.PI;
 
@@ -33,9 +30,13 @@ public class World implements Runnable, LifeEnvironment {
     @Override
     public void run() {
         for (var thing : thingsCoordinates.keySet()) {
-            // Run the thing
             thing.run();
         }
+    }
+
+    @Override
+    public void addFrom(Thing origin, Thing newThing, Orientation orientation) {
+
     }
 
     @Override
@@ -52,7 +53,8 @@ public class World implements Runnable, LifeEnvironment {
             var distance = coordinate.distanceFrom(lifeFormCoordinate);
             if (distance <= sightDistance) {
                 var finalRelativePosition = new SphericalCoordinate(BigDecimal.valueOf(distance), orientation);
-                sighted.see(other, finalRelativePosition);
+                var relativeOrientation = lifeFormOrientation.transpose(orientation);
+                sighted.see(other, finalRelativePosition, relativeOrientation);
             }
         }
     }
@@ -76,6 +78,15 @@ public class World implements Runnable, LifeEnvironment {
             var newCoordinate = coordinate.add(relativeCoordinate);
             thingsCoordinates.put(thing, newCoordinate);
         }
+    }
+
+    public void add(Thing thing, Coordinate coordinate, Orientation orientation) {
+        Objects.requireNonNull(thing, "Parameter 'thing' is null!");
+        Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
+        Objects.requireNonNull(orientation, "Parameter 'orientation' is null!");
+
+        thingsCoordinates.put(thing, coordinate);
+        thingsOrientations.put(thing, orientation);
     }
 
     /**
