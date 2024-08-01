@@ -8,11 +8,15 @@ import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
+@Scope("prototype")
 public class Almiraj extends Beast {
-    public Almiraj(Gender gender) {
+    public Almiraj() {
         super(
                 new AbilityScores(
                         new Ability(2),
@@ -46,9 +50,9 @@ public class Almiraj extends Beast {
                 0,
                 Dice1d6.dice,
                 9,
-                gender,
+                Gender.male,
                 60,
-                0.0,
+                30.0,
                 null,
                 0.0,
                 List.of(Carrot.class),
