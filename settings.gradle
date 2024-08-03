@@ -3,6 +3,7 @@ plugins {
 }
 
 rootProject.name = 'Dungeons & Dragons'
+
 include 'common'
 include 'gametools'
 include 'ecosystem'

@@ -8,47 +8,63 @@ import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;
 
 import java.math.BigDecimal;
-import java.util.*;
-
-import static java.lang.Math.PI;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class World implements Runnable, LifeEnvironment {
-    private Map<Thing, Coordinate> thingsCoordinates = new HashMap<>();
-    private Map<Thing, Orientation> thingsOrientations = new HashMap<>();
+    private Map<Thing, Object3D> things = new HashMap<>();
 
-    public World(Collection<? extends Thing> things) {
-        for (var thing : things) {
-            var x = new Random().nextDouble() * 10;
-            var y = 0.0;
-            var z = 0.0;
-            thingsCoordinates.put(thing, new Coordinate(x, y, z));
-            var orientation = new Orientation(new Random().nextDouble() * 2 * PI, new Random().nextDouble() * 2 * PI);
-            thingsOrientations.put(thing, orientation);
+    private void move(Thing thing) {
+        var velocity = thing.velocity();
+        if (velocity != null) {
+            var speed = velocity.speed();
+            var destination = velocity.destination();
+            if (speed < destination.rho().doubleValue()) {
+                var rho = BigDecimal.valueOf(speed);
+                destination = new SphericalCoordinate(rho, destination.orientation());
+            }
+            var obj = things.get(thing);
+            var coordinate = obj.coordinate();
+            var orientation = obj.orientation();
+
+            var relativeCoordinate = Coordinate.from(destination);
+            var newCoordinate = coordinate.add(relativeCoordinate);
+            things.put(thing, new Object3D(thing, newCoordinate, orientation));
         }
     }
 
     @Override
     public void run() {
-        for (var thing : thingsCoordinates.keySet()) {
+        for (var thing : things.keySet()) {
             thing.run();
+            var velocity = thing.velocity();
+            move(thing);
         }
     }
 
     @Override
     public void addFrom(Thing origin, Thing newThing, Orientation orientation) {
-
+        var obj = things.get(origin);
+        var originCoordinate = obj.coordinate();
+        var originOrientation = obj.orientation();
+        var newThingOrientation = orientation.transpose(originOrientation);
+        things.put(newThing, new Object3D(newThing, originCoordinate, newThingOrientation));
     }
 
     @Override
     public void show(Sighted sighted, double sightDistance) {
-        var lifeFormCoordinate = thingsCoordinates.get(sighted);
-        var lifeFormOrientation = thingsOrientations.get(sighted);
+        var obj = things.get((Thing) sighted);
+        var lifeFormCoordinate = obj.coordinate();
+        var lifeFormOrientation = obj.orientation();
 
-        for (var other : thingsCoordinates.keySet()) {
+        for (var other : things.keySet()) {
             if (sighted == other) continue;
 
-            var coordinate = thingsCoordinates.get(other);
-            var orientation = thingsOrientations.get(other);
+            var sightedObj = things.get((Thing) sighted);
+            var coordinate = sightedObj.coordinate();
+            var orientation = sightedObj.orientation();
 
             var distance = coordinate.distanceFrom(lifeFormCoordinate);
             if (distance <= sightDistance) {
@@ -64,35 +80,22 @@ public class World implements Runnable, LifeEnvironment {
 
     }
 
-    public void move(Thing thing) {
-        var coordinate = thingsCoordinates.get(thing);
-        var velocity = thing.velocity();
-        if (velocity != null) {
-            var speed = velocity.speed();
-            var destination = velocity.destination();
-            if (speed < destination.rho().doubleValue()) {
-                var rho = BigDecimal.valueOf(speed);
-                destination = new SphericalCoordinate(rho, destination.orientation());
-            }
-            var relativeCoordinate = Coordinate.from(destination);
-            var newCoordinate = coordinate.add(relativeCoordinate);
-            thingsCoordinates.put(thing, newCoordinate);
-        }
-    }
-
     public void add(Thing thing, Coordinate coordinate, Orientation orientation) {
         Objects.requireNonNull(thing, "Parameter 'thing' is null!");
         Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
         Objects.requireNonNull(orientation, "Parameter 'orientation' is null!");
 
-        thingsCoordinates.put(thing, coordinate);
-        thingsOrientations.put(thing, orientation);
+        things.put(thing, new Object3D(thing, coordinate, orientation));
+    }
+
+    public Collection<Object3D> objects() {
+        return things.values();
     }
 
     /**
      * TEST ONLY
      */
     Coordinate get(Thing thing) {
-        return thingsCoordinates.get(thing);
+        return things.get(thing).coordinate();
     }
 }
