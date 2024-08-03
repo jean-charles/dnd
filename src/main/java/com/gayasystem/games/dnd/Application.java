@@ -1,12 +1,15 @@
 package com.gayasystem.games.dnd;
 
+import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
+import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.World;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ApplicationContext;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +20,10 @@ import static javax.swing.GroupLayout.Alignment.CENTER;
 
 @SpringBootApplication
 public class Application extends JFrame {
-    public Application(World world) throws Exception {
+    private ApplicationContext ctx;
+
+    public Application(ApplicationContext ctx, World world) throws Exception {
+        this.ctx = ctx;
         init(world);
         var canvas = new Canvas(world);
         canvas.setSize(300, 300);
@@ -49,10 +55,14 @@ public class Application extends JFrame {
         });
     }
 
+    private Thing newThing(Class<? extends Thing> clazz) {
+        return ctx.getBean(clazz);
+    }
+
     private void init(World world) {
         var orientation = new Orientation(0, 0);
-//        world.add(new Almiraj(), new Coordinate(20, 20, 0), orientation);
-        world.add(new Carrot(), new Coordinate(20, 120, 0), orientation);
+        world.add(newThing(Almiraj.class), new Coordinate(20, 20, 0), orientation);
+        world.add(newThing(Carrot.class), new Coordinate(20, 120, 0), orientation);
     }
 
     private void createLayout(Component... arg) {
