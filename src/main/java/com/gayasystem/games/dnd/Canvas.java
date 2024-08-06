@@ -1,5 +1,6 @@
 package com.gayasystem.games.dnd;
 
+import com.gayasystem.games.dnd.drawables.Drawer;
 import com.gayasystem.games.dnd.world.Object3D;
 import com.gayasystem.games.dnd.world.World;
 
@@ -7,7 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Canvas extends JPanel {
-    private World world;
+    private final Drawer drawer;
+    private final World world;
     private Thread worker = new Thread() {
         @Override
         public void run() {
@@ -23,8 +25,9 @@ public class Canvas extends JPanel {
         }
     };
 
-    public Canvas(World world) {
+    public Canvas(Drawer drawer, World world) {
         super(true);
+        this.drawer = drawer;
         this.world = world;
         worker.start();
     }
@@ -43,8 +46,6 @@ public class Canvas extends JPanel {
     }
 
     private void draw(Object3D obj, Graphics g) {
-        var color = Color.getHSBColor((float) (Math.random() * 360), 100, 100);
-        g.setColor(color);
-        g.drawString(obj.toString(), obj.coordinate().x().intValue(), obj.coordinate().y().intValue());
+        drawer.draw(obj, g);
     }
 }

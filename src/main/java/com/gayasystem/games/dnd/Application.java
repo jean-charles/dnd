@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
+import com.gayasystem.games.dnd.drawables.Drawer;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.world.Coordinate;
@@ -22,10 +23,10 @@ import static javax.swing.GroupLayout.Alignment.CENTER;
 public class Application extends JFrame {
     private ApplicationContext ctx;
 
-    public Application(ApplicationContext ctx, World world) throws Exception {
+    public Application(ApplicationContext ctx, Drawer drawer, World world) throws Exception {
         this.ctx = ctx;
         init(world);
-        var canvas = new Canvas(world);
+        var canvas = new Canvas(drawer, world);
         canvas.setSize(300, 300);
         canvas.setBackground(black);
 
@@ -61,8 +62,8 @@ public class Application extends JFrame {
 
     private void init(World world) {
         var orientation = new Orientation(0, 0);
-        world.add(newThing(Almiraj.class), new Coordinate(20, 20, 0), orientation);
-        world.add(newThing(Carrot.class), new Coordinate(20, 120, 0), orientation);
+        world.add(newThing(Almiraj.class), new Coordinate(200, 200, 0), orientation);
+        world.add(newThing(Carrot.class), new Coordinate(200, 400, 0), orientation);
     }
 
     private void createLayout(Component... arg) {
