@@ -6,6 +6,7 @@ import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Component
 public class World implements Runnable, LifeEnvironment {
     private Map<Thing, Object3D> things = new HashMap<>();
 

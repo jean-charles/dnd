@@ -1,9 +1,7 @@
 package com.gayasystem.games.dnd.drawables.food;
 
-import com.gayasystem.games.dnd.drawables.CoordinateConvertor;
 import com.gayasystem.games.dnd.drawables.Drawable;
 import com.gayasystem.games.dnd.world.Object3D;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -13,12 +11,8 @@ import static java.awt.Color.white;
 
 @Service
 public class DrawableAlmiraj implements Drawable {
-    @Autowired
-    private CoordinateConvertor convertor;
-
     @Override
-    public void draw(int width, int height, Object3D obj, Graphics g) {
-        var point = convertor.coordinate2Point(width, height, obj.coordinate());
+    public void draw(int width, int height, Object3D obj, Point point, Graphics g) {
         int x = point.x;
         int y = point.y;
 

@@ -12,12 +12,16 @@ public class Drawer {
     @Autowired
     private ApplicationContext ctx;
 
-    public void draw(int width, int height, Object3D obj, Graphics g) {
+    @Autowired
+    private CoordinateConvertor convertor;
+
+    public void draw(int feet, int width, int height, Object3D obj, Graphics g) {
         try {
             String thingName = "drawable" + obj.thing().getClass().getSimpleName();
             Drawable drawable = (Drawable) ctx.getBean(thingName);
 
-            drawable.draw(width, height, obj, g);
+            var p = convertor.coordinate2Point(feet, width, height, obj.coordinate());
+            drawable.draw(width, height, obj, p, g);
         } catch (Exception e) {
             e.printStackTrace();
         }

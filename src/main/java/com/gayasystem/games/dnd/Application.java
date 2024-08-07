@@ -8,7 +8,6 @@ import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.World;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -23,15 +22,14 @@ import static javax.swing.GroupLayout.Alignment.CENTER;
 
 @SpringBootApplication
 public class Application extends JFrame {
-    private ApplicationContext ctx;
-
-    @Autowired
-    private MeasurementConvertor convertor;
+    private final ApplicationContext ctx;
+    private final MeasurementConvertor convertor;
 
     public Application(ApplicationContext ctx, Drawer drawer, World world) throws Exception {
         this.ctx = ctx;
+        this.convertor = ctx.getBean(MeasurementConvertor.class);
         init(world);
-        var canvas = new Canvas(drawer, world);
+        var canvas = new Canvas(400, drawer, world);
         canvas.setSize(300, 300);
         canvas.setBackground(black);
 
@@ -52,7 +50,6 @@ public class Application extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-//        SpringApplication.run(Application.class, args);
         var ctx = new SpringApplicationBuilder(Application.class)
                 .headless(false).web(WebApplicationType.NONE).run(args);
         EventQueue.invokeLater(() -> {
@@ -91,13 +88,4 @@ public class Application extends JFrame {
                 .addComponent(arg[1]));
         gl.setVerticalGroup(vGroup);
     }
-
-//    @Bean
-//    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-//        return args -> {
-//            while (true) {
-//                world.run();
-//            }
-//        };
-//    }
 }
