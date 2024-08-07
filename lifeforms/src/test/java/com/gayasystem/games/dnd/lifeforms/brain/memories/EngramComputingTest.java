@@ -27,7 +27,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingA.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
-        engramComputing.compute(moveable, memories, engrams);
+        engramComputing.compute(moveable, 10, memories, engrams);
 
         verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
     }
@@ -42,7 +42,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingB.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
-        engramComputing.compute(moveable, memories, engrams);
+        engramComputing.compute(moveable, 10, memories, engrams);
 
         verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(1.0, 0.0, 0.0));
     }
@@ -62,7 +62,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingB.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
-        engramComputing.compute(moveable, memories, engrams);
+        engramComputing.compute(moveable, 10, memories, engrams);
 
         verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
     }
@@ -79,7 +79,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingA.class),
                         new SphericalCoordinate(1.0, 0.0, 0.0)));
-        engramComputing.compute(moveable, memories, engrams);
+        engramComputing.compute(moveable, 10, memories, engrams);
 
         verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
     }

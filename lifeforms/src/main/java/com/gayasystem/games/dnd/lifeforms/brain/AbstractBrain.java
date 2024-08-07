@@ -1,6 +1,5 @@
 package com.gayasystem.games.dnd.lifeforms.brain;
 
-import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
@@ -19,7 +18,7 @@ import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion
 
 @Component
 public abstract class AbstractBrain implements Brain {
-    private final Moveable moveable;
+    private final LifeForm lifeForm;
     private final double maxSpeed;
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
     private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
@@ -30,7 +29,7 @@ public abstract class AbstractBrain implements Brain {
     protected AbstractBrain(LifeForm lifeForm, double maxSpeed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
         if (lifeForm == null)
             throw new NullPointerException("lifeForm cannot be null");
-        this.moveable = lifeForm;
+        this.lifeForm = lifeForm;
         this.maxSpeed = maxSpeed;
         rememberAttractedByMemories(attractedBy);
         rememberScaredByMemories(scaredBy);
@@ -59,7 +58,7 @@ public abstract class AbstractBrain implements Brain {
 
     @Override
     public void run() {
-        engramComputing.compute(moveable, maxSpeed, longTermMemories, shortTermMemories);
+        engramComputing.compute(lifeForm, maxSpeed, longTermMemories, shortTermMemories);
     }
 
     /* UNIT TESTS ONLY */

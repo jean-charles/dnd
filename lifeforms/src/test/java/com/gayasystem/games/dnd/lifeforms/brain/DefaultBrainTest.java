@@ -69,6 +69,6 @@ public class DefaultBrainTest {
         SphericalCoordinate coordinates = new SphericalCoordinate(10, 0, 0);
         brain.handle(new SpatialEngram(new Image(ThingA.class), coordinates));
         brain.run();
-        verify(engramComputing).compute(eq(lifeForm), ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());
+        verify(engramComputing).compute(eq(lifeForm), eq(10), ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());
     }
 }
