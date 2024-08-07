@@ -1,12 +1,14 @@
 package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.drawables.Drawer;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.World;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -22,6 +24,9 @@ import static javax.swing.GroupLayout.Alignment.CENTER;
 @SpringBootApplication
 public class Application extends JFrame {
     private ApplicationContext ctx;
+
+    @Autowired
+    private MeasurementConvertor convertor;
 
     public Application(ApplicationContext ctx, Drawer drawer, World world) throws Exception {
         this.ctx = ctx;
@@ -62,8 +67,8 @@ public class Application extends JFrame {
 
     private void init(World world) {
         var orientation = new Orientation(0, 0);
-        world.add(newThing(Almiraj.class), new Coordinate(200, 200, 0), orientation);
-        world.add(newThing(Carrot.class), new Coordinate(200, 400, 0), orientation);
+        world.add(newThing(Almiraj.class), new Coordinate(convertor.feet2Inches(-100), 0, 0), orientation);
+        world.add(newThing(Carrot.class), new Coordinate(convertor.feet2Inches(120), 0, 0), orientation);
     }
 
     private void createLayout(Component... arg) {

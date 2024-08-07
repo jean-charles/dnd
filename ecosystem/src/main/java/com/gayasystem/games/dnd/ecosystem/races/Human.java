@@ -28,6 +28,7 @@ public class Human extends Character {
                 125, // 125 to 250 lb
                 gender,
                 30,
+                3.0,
                 0.0,
                 null,
                 0.0,

@@ -52,6 +52,7 @@ public class Almiraj extends Beast {
                 9,
                 Gender.male,
                 60,
+                2.0,
                 30.0,
                 null,
                 0.0,

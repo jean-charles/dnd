@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.LifeEnvironment;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.hear.Hearing;
@@ -20,6 +21,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     private final Gender gender;
     private final double speed;
     private final double sightDistance;
+    private final double nightSightDistance;
     private final SoundSpectrum soundSpectrum;
     private final double minSoundAmplitude;
     private final Collection<Class<? extends Thing>> attractedBy;
@@ -33,11 +35,26 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     @Autowired
     private BrainFactory brainFactory;
 
-    public LifeForm(double mass, Gender gender, double speed, double sightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+    @Autowired
+    private MeasurementConvertor convertor;
+
+    /**
+     * @param mass               in pounds.
+     * @param gender
+     * @param speed
+     * @param sightDistance      in miles.
+     * @param nightSightDistance in foot.
+     * @param soundSpectrum
+     * @param minSoundAmplitude
+     * @param attractedBy
+     * @param scaredBy
+     */
+    public LifeForm(double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
         super(mass);
         this.gender = gender;
         this.speed = speed;
         this.sightDistance = sightDistance;
+        this.nightSightDistance = nightSightDistance;
         this.soundSpectrum = soundSpectrum;
         this.minSoundAmplitude = minSoundAmplitude;
         this.attractedBy = attractedBy;
@@ -48,7 +65,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     public void run() {
         if (brain == null)
             brain = brainFactory.create(this, speed, attractedBy, scaredBy);
-        environment.show(this, sightDistance);
+        environment.show(this, convertor.miles2Inches(sightDistance));
         environment.listen(this, minSoundAmplitude);
         brain.run();
     }

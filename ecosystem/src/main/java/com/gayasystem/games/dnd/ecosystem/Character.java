@@ -21,8 +21,8 @@ public abstract class Character extends LifeForm {
     private int armorClass;
     private Set<Equipment> equipments = new HashSet<>();
 
-    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, double mass, Gender gender, double speed, double sightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
-        super(mass, gender, speed, sightDistance, soundSpectrum, minSoundAmplitude, attractedBy, scaredBy);
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+        super(mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, attractedBy, scaredBy);
         this.abilityScores = abilityScores;
         this.abilityScoreIncrease = abilityScoreIncrease;
         this.alignment = alignment;

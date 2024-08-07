@@ -28,6 +28,7 @@ public class Tiefling extends Character {
                 140, // 140 to 220 lb
                 gender,
                 30,
+                3.0,
                 0.0,
                 null,
                 0.0,

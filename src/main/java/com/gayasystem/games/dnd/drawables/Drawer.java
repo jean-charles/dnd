@@ -12,11 +12,12 @@ public class Drawer {
     @Autowired
     private ApplicationContext ctx;
 
-    public void draw(Object3D obj, Graphics g) {
+    public void draw(int width, int height, Object3D obj, Graphics g) {
         try {
             String thingName = "drawable" + obj.thing().getClass().getSimpleName();
             Drawable drawable = (Drawable) ctx.getBean(thingName);
-            drawable.draw(obj, g);
+
+            drawable.draw(width, height, obj, g);
         } catch (Exception e) {
             e.printStackTrace();
         }

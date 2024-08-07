@@ -7,6 +7,6 @@ import static com.gayasystem.games.dnd.lifeforms.LifeFormTest.*;
 @Component
 public class LifeFormA extends LifeForm {
     public LifeFormA() {
-        super(MASS, GENDER, SPEED, SIGHT_DISTANCE, SOUND_SPECTRUM, MIN_SOUND_AMPLITUDE, LifeFormTest.SCARED_BY, LifeFormTest.ATTRACTED_BY);
+        super(MASS, GENDER, SPEED, SIGHT_DISTANCE, , SOUND_SPECTRUM, MIN_SOUND_AMPLITUDE, LifeFormTest.SCARED_BY, LifeFormTest.ATTRACTED_BY);
     }
 }

@@ -28,6 +28,7 @@ public class Dragonborn extends Character {
                 250,
                 gender,
                 30,
+                3.0,
                 0.0,
                 null,
                 0.0,

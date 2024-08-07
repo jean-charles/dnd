@@ -1,7 +1,9 @@
 package com.gayasystem.games.dnd.drawables.food;
 
+import com.gayasystem.games.dnd.drawables.CoordinateConvertor;
 import com.gayasystem.games.dnd.drawables.Drawable;
 import com.gayasystem.games.dnd.world.Object3D;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -11,10 +13,14 @@ import static java.awt.Color.orange;
 
 @Service
 public class DrawableCarrot implements Drawable {
+    @Autowired
+    private CoordinateConvertor convertor;
+
     @Override
-    public void draw(Object3D obj, Graphics g) {
-        int x = obj.coordinate().x().intValue();
-        int y = obj.coordinate().y().intValue();
+    public void draw(int width, int height, Object3D obj, Graphics g) {
+        var point = convertor.coordinate2Point(width, height, obj.coordinate());
+        int x = point.x;
+        int y = point.y;
 
         g.setColor(orange);
         var xs = new int[]{x - 10, x, x + 10};

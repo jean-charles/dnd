@@ -28,6 +28,7 @@ public class Dwarf extends Character {
                 150,
                 gender,
                 25,
+                3.0,
                 0.0,
                 null,
                 0.0,

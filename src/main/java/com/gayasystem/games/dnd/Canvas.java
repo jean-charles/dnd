@@ -46,6 +46,6 @@ public class Canvas extends JPanel {
     }
 
     private void draw(Object3D obj, Graphics g) {
-        drawer.draw(obj, g);
+        drawer.draw(getWidth(), getHeight(), obj, g);
     }
 }

@@ -62,7 +62,7 @@ public class World implements Runnable, LifeEnvironment {
         for (var other : things.keySet()) {
             if (sighted == other) continue;
 
-            var sightedObj = things.get((Thing) sighted);
+            var sightedObj = things.get((Thing) other);
             var coordinate = sightedObj.coordinate();
             var orientation = sightedObj.orientation();
 
