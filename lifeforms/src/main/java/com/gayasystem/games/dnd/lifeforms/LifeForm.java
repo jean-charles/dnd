@@ -19,7 +19,7 @@ import java.util.Collection;
 
 public abstract class LifeForm extends Thing implements Sighted, Hearing {
     private final Gender gender;
-    private final double speed;
+    private final double maxSpeed;
     private final double sightDistance;
     private final double nightSightDistance;
     private final SoundSpectrum soundSpectrum;
@@ -41,7 +41,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     /**
      * @param mass               in pounds.
      * @param gender
-     * @param speed
+     * @param maxSpeed in feet per hour.
      * @param sightDistance      in miles.
      * @param nightSightDistance in foot.
      * @param soundSpectrum
@@ -49,10 +49,10 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
      * @param attractedBy
      * @param scaredBy
      */
-    public LifeForm(double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+    public LifeForm(double mass, Gender gender, double maxSpeed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
         super(mass);
         this.gender = gender;
-        this.speed = speed;
+        this.maxSpeed = maxSpeed;
         this.sightDistance = sightDistance;
         this.nightSightDistance = nightSightDistance;
         this.soundSpectrum = soundSpectrum;
@@ -64,7 +64,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     @Override
     public void run() {
         if (brain == null)
-            brain = brainFactory.create(this, speed, attractedBy, scaredBy);
+            brain = brainFactory.create(this, maxSpeed, attractedBy, scaredBy);
         environment.show(this, convertor.miles2Inches(sightDistance));
         environment.listen(this, minSoundAmplitude);
         brain.run();

@@ -4,6 +4,7 @@ import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 
 public abstract class Thing implements Moveable, Runnable {
     protected double mass;
+    private double speed;
     private Velocity velocity;
 
     protected Thing(double mass) {

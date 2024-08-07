@@ -14,7 +14,7 @@ public class BrainFactoryImpl implements BrainFactory {
     private ApplicationContext ctx;
 
     @Override
-    public Brain create(LifeForm lifeForm, double speed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
-        return ctx.getBean(DefaultBrain.class, lifeForm, speed, attractedBy, scaredBy);
+    public Brain create(LifeForm lifeForm, double maxSpeed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+        return ctx.getBean(DefaultBrain.class, lifeForm, maxSpeed, attractedBy, scaredBy);
     }
 }

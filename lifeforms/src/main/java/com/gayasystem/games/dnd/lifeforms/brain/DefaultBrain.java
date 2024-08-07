@@ -10,7 +10,7 @@ import java.util.Collection;
 @Component
 @Scope("prototype")
 public class DefaultBrain extends AbstractBrain {
-    public DefaultBrain(LifeForm lifeForm, double speed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
-        super(lifeForm, speed, attractedBy, scaredBy);
+    public DefaultBrain(LifeForm lifeForm, double maxSpeed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+        super(lifeForm, maxSpeed, attractedBy, scaredBy);
     }
 }

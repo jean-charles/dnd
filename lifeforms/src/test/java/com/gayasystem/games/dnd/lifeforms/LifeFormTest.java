@@ -27,6 +27,7 @@ class LifeFormTest {
     static final Gender GENDER = female;
     static final double SPEED = 2.3;
     static final double SIGHT_DISTANCE = 100.0;
+    static final double MAX_SPEED = 60.0;
     static final SoundSpectrum SOUND_SPECTRUM = new SoundSpectrum(10, 10000);
     static final double MIN_SOUND_AMPLITUDE = 20.0;
     static final Collection<Class<? extends Thing>> SCARED_BY = List.of();

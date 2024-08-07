@@ -20,20 +20,18 @@ import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion
 @Component
 public abstract class AbstractBrain implements Brain {
     private final Moveable moveable;
-    private final double speed;
+    private final double maxSpeed;
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
     private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
-
-    private double currentSpeed = 0;
 
     @Autowired
     private EngramComputing engramComputing;
 
-    protected AbstractBrain(LifeForm lifeForm, double speed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+    protected AbstractBrain(LifeForm lifeForm, double maxSpeed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
         if (lifeForm == null)
             throw new NullPointerException("lifeForm cannot be null");
         this.moveable = lifeForm;
-        this.speed = speed;
+        this.maxSpeed = maxSpeed;
         rememberAttractedByMemories(attractedBy);
         rememberScaredByMemories(scaredBy);
     }
@@ -61,12 +59,7 @@ public abstract class AbstractBrain implements Brain {
 
     @Override
     public void run() {
-        currentSpeed = speed;
-        engramComputing.compute(moveable, longTermMemories, shortTermMemories);
-    }
-
-    public double speed() {
-        return currentSpeed;
+        engramComputing.compute(moveable, maxSpeed, longTermMemories, shortTermMemories);
     }
 
     /* UNIT TESTS ONLY */

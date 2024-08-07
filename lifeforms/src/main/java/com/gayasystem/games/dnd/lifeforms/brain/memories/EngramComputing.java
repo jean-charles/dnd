@@ -29,14 +29,14 @@ public class EngramComputing {
         return similarMemory;
     }
 
-    private void move(Moveable moveable, Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
+    private void move(Moveable moveable, double maxSpeed, Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
         var mostImportantEngram = findMostImportantEngram(spatialEmotionalEngrams);
-        var speed = computeSpeed(mostImportantEngram.emotion());
+        var speedRate = computeSpeed(mostImportantEngram.emotion());
         var orientation = computeOrientation(mostImportantEngram);
         var engram = mostImportantEngram.engram();
         if (engram != null) {
             var destination = new SphericalCoordinate(engram.origin().rho(), orientation);
-            moveable.velocity(speed, destination);
+            moveable.velocity(maxSpeed * speedRate, destination);
         }
     }
 
@@ -56,13 +56,13 @@ public class EngramComputing {
     private double computeSpeed(Emotion emotion) {
         switch (emotion) {
             case scared -> {
-                return 20;
+                return 1.0;
             }
             case attracted -> {
-                return 10;
+                return 0.75;
             }
             case neutral -> {
-                return 0;
+                return 0.5;
             }
         }
         return 0;
@@ -80,7 +80,7 @@ public class EngramComputing {
         return new Orientation(0, 0);
     }
 
-    public void compute(Moveable moveable, Collection<PersistedEngram> memories, Collection<SpatialEngram> engrams) {
+    public void compute(Moveable moveable, double maxSpeed, Collection<PersistedEngram> memories, Collection<SpatialEngram> engrams) {
         Collection<SpatialEmotionalEngram> emotionalEngrams = new ArrayList<>();
 
         for (var engram : engrams) {
@@ -93,6 +93,6 @@ public class EngramComputing {
             }
         }
 
-        move(moveable, emotionalEngrams);
+        move(moveable, maxSpeed, emotionalEngrams);
     }
 }
