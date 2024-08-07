@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Component
 public class World implements Runnable, LifeEnvironment {
-    private Map<Thing, Object3D> things = new HashMap<>();
+    private Map<Thing, InGameObject> things = new HashMap<>();
 
     private void move(Thing thing) {
         var velocity = thing.velocity();
@@ -33,7 +33,7 @@ public class World implements Runnable, LifeEnvironment {
 
             var relativeCoordinate = Coordinate.from(destination);
             var newCoordinate = coordinate.add(relativeCoordinate);
-            things.put(thing, new Object3D(thing, newCoordinate, orientation));
+            things.put(thing, new InGameObject(thing, newCoordinate, orientation));
         }
     }
 
@@ -52,7 +52,7 @@ public class World implements Runnable, LifeEnvironment {
         var originCoordinate = obj.coordinate();
         var originOrientation = obj.orientation();
         var newThingOrientation = orientation.transpose(originOrientation);
-        things.put(newThing, new Object3D(newThing, originCoordinate, newThingOrientation));
+        things.put(newThing, new InGameObject(newThing, originCoordinate, newThingOrientation));
     }
 
     @Override
@@ -87,10 +87,10 @@ public class World implements Runnable, LifeEnvironment {
         Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
         Objects.requireNonNull(orientation, "Parameter 'orientation' is null!");
 
-        things.put(thing, new Object3D(thing, coordinate, orientation));
+        things.put(thing, new InGameObject(thing, coordinate, orientation));
     }
 
-    public Collection<Object3D> objects() {
+    public Collection<InGameObject> objects() {
         return things.values();
     }
 

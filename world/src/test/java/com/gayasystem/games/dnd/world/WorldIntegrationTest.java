@@ -28,15 +28,15 @@ public class WorldIntegrationTest {
     @Test
     public void integrationTests() {
         assertNotNull(almiraj);
-        world.add(almiraj, new Coordinate(0, 0, 0), new Orientation(0, 0));
+        world.add(almiraj, new Coordinate(0, 0), new Orientation(0));
         assertNotNull(carrot);
-        world.add(carrot, new Coordinate(10, 0, 0), new Orientation(0, 0));
+        world.add(carrot, new Coordinate(10, 0), new Orientation(0));
         world.run();
         var almirajCoordinate = world.get(almiraj);
         assertNotNull(almirajCoordinate);
-        assertEquals(new Coordinate(10, 0, 0), almirajCoordinate);
+        assertEquals(new Coordinate(10, 0), almirajCoordinate);
         var carrotCoordinate = world.get(carrot);
         assertNotNull(carrotCoordinate);
-        assertEquals(new Coordinate(10, 0, 0), carrotCoordinate);
+        assertEquals(new Coordinate(10, 0), carrotCoordinate);
     }
 }

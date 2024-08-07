@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.drawables.Drawer;
-import com.gayasystem.games.dnd.world.Object3D;
+import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.World;
 
 import javax.swing.*;
@@ -47,7 +47,7 @@ public class Canvas extends JPanel {
         }
     }
 
-    private void draw(Object3D obj, Graphics g) {
+    private void draw(InGameObject obj, Graphics g) {
         drawer.draw(feet, getWidth(), getHeight(), obj, g);
     }
 }

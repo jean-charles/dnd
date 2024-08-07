@@ -64,9 +64,9 @@ class LifeFormTest {
 
     @Test
     void see() {
-        Orientation orientation = new Orientation(0, 0);
+        Orientation orientation = new Orientation(0);
         var thing = new ThingA();
-        SphericalCoordinate origin = new SphericalCoordinate(10, 0, 0);
+        SphericalCoordinate origin = new SphericalCoordinate(10, 0);
 
         lifeForm.see(thing, origin, orientation);
 
@@ -75,7 +75,7 @@ class LifeFormTest {
 
     @Test
     void ear() {
-        SphericalCoordinate origin = new SphericalCoordinate(10, 0, 0);
+        SphericalCoordinate origin = new SphericalCoordinate(10, 0);
         double amplitude = MIN_SOUND_AMPLITUDE * 2;
         var thing = new ThingA();
 

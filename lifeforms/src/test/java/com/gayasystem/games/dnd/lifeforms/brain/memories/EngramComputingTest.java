@@ -26,10 +26,10 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new SphericalCoordinate(1.0, 0.0, 0.0)));
+                        new SphericalCoordinate(1.0, 0.0)));
         engramComputing.compute(moveable, 10, memories, engrams);
 
-        verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
+        verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI));
     }
 
     @Test
@@ -41,10 +41,10 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new SphericalCoordinate(1.0, 0.0, 0.0)));
+                        new SphericalCoordinate(1.0, 0.0)));
         engramComputing.compute(moveable, 10, memories, engrams);
 
-        verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(1.0, 0.0, 0.0));
+        verify(moveable, times(1)).velocity(0.0, new SphericalCoordinate(1.0, 0.0));
     }
 
     @Test
@@ -58,13 +58,13 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new SphericalCoordinate(1.0, 0.0, 0.0)),
+                        new SphericalCoordinate(1.0, 0.0)),
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new SphericalCoordinate(1.0, 0.0, 0.0)));
+                        new SphericalCoordinate(1.0, 0.0)));
         engramComputing.compute(moveable, 10, memories, engrams);
 
-        verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
+        verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI));
     }
 
     @Test
@@ -78,9 +78,9 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new SphericalCoordinate(1.0, 0.0, 0.0)));
+                        new SphericalCoordinate(1.0, 0.0)));
         engramComputing.compute(moveable, 10, memories, engrams);
 
-        verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI, PI));
+        verify(moveable, times(1)).velocity(20.0, new SphericalCoordinate(1.0, PI));
     }
 }

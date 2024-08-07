@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.drawables.food;
 
 import com.gayasystem.games.dnd.drawables.Drawable;
-import com.gayasystem.games.dnd.world.Object3D;
+import com.gayasystem.games.dnd.world.InGameObject;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -12,7 +12,7 @@ import static java.awt.Color.white;
 @Service
 public class DrawableAlmiraj implements Drawable {
     @Override
-    public void draw(int width, int height, Object3D obj, Point point, Graphics g) {
+    public void draw(int width, int height, InGameObject obj, Point point, Graphics g) {
         int x = point.x;
         int y = point.y;
 

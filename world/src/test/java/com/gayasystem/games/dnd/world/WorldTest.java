@@ -26,7 +26,7 @@ public class WorldTest {
     public void runMove() {
         assertThat(thing).isNotNull();
         assertThat(world).isNotNull();
-        when(thing.velocity()).thenReturn(new Velocity(1, new SphericalCoordinate(10, 0, 0)));
+        when(thing.velocity()).thenReturn(new Velocity(1, new SphericalCoordinate(10, 0)));
         double originalX = world.get(thing).x().doubleValue();
 
         world.run();
@@ -41,22 +41,21 @@ public class WorldTest {
     private void assertCoordinate(double expectedX, double expectedY, double expectedZ, Coordinate actual) {
         assertEquals(expectedX, actual.x().doubleValue(), 0.000000000000001);
         assertEquals(expectedY, actual.y().doubleValue(), 0.000000000000001);
-        assertEquals(expectedZ, actual.z().doubleValue(), 0.000000000000001);
     }
 
     @Test
     void addFrom() {
         Thing parent = new ThingA();
         Thing child = new ThingB();
-        Orientation orientation = new Orientation(0, 0);
+        Orientation orientation = new Orientation(0);
         world.addFrom(parent, child, orientation);
     }
 
     @Test
     void add() {
         ThingA thing = new ThingA();
-        Coordinate coordinate = new Coordinate(0, 0, 0);
-        Orientation orientation = new Orientation(0, 0);
+        Coordinate coordinate = new Coordinate(0, 0);
+        Orientation orientation = new Orientation(0);
 
         world.add(thing, coordinate, orientation);
 
@@ -67,19 +66,19 @@ public class WorldTest {
     @Test
     void addNulls() {
         try {
-            world.add(null, new Coordinate(0, 0, 0), new Orientation(0, 0));
+            world.add(null, new Coordinate(0, 0), new Orientation(0));
             fail();
         } catch (Exception e) {
             assertEquals("Parameter 'thing' is null!", e.getLocalizedMessage());
         }
         try {
-            world.add(new ThingA(), null, new Orientation(0, 0));
+            world.add(new ThingA(), null, new Orientation(0));
             fail();
         } catch (Exception e) {
             assertEquals("Parameter 'coordinate' is null!", e.getLocalizedMessage());
         }
         try {
-            world.add(new ThingA(), new Coordinate(0, 0, 0), null);
+            world.add(new ThingA(), new Coordinate(0, 0), null);
             fail();
         } catch (Exception e) {
             assertEquals("Parameter 'orientation' is null!", e.getLocalizedMessage());

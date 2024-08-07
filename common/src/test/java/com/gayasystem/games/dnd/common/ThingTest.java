@@ -18,12 +18,11 @@ class ThingTest {
     @Test
     void velocity() {
         var thing = new ThingA(0.0);
-        thing.velocity(1.2, new SphericalCoordinate(1, 2, 3));
-        var expected = new Velocity(1.2, new SphericalCoordinate(1, 2, 3));
+        thing.velocity(1.2, new SphericalCoordinate(1, 2));
+        var expected = new Velocity(1.2, new SphericalCoordinate(1, 2));
         var actual = thing.velocity();
         assertEquals(expected.speed(), actual.speed());
         assertEquals(expected.destination().rho(), actual.destination().rho());
-        assertEquals(expected.destination().orientation().theta(), actual.destination().orientation().theta());
         assertEquals(expected.destination().orientation().phi(), actual.destination().orientation().phi());
     }
 

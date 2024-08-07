@@ -66,7 +66,7 @@ public class DefaultBrainTest {
 
     @Test
     public void shortTermMemoriesMemoriesAttracted() {
-        SphericalCoordinate coordinates = new SphericalCoordinate(10, 0, 0);
+        SphericalCoordinate coordinates = new SphericalCoordinate(10, 0);
         brain.handle(new SpatialEngram(new Image(ThingA.class), coordinates));
         brain.run();
         verify(engramComputing).compute(eq(lifeForm), eq(10), ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());

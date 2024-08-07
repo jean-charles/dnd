@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.drawables;
 
-import com.gayasystem.games.dnd.world.Object3D;
+import com.gayasystem.games.dnd.world.InGameObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class Drawer {
     @Autowired
     private CoordinateConvertor convertor;
 
-    public void draw(int feet, int width, int height, Object3D obj, Graphics g) {
+    public void draw(int feet, int width, int height, InGameObject obj, Graphics g) {
         try {
             String thingName = "drawable" + obj.thing().getClass().getSimpleName();
             Drawable drawable = (Drawable) ctx.getBean(thingName);

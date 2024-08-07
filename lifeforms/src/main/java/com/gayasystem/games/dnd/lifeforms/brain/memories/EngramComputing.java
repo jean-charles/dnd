@@ -77,7 +77,7 @@ public class EngramComputing {
                 return engram.engram().origin().orientation();
             }
         }
-        return new Orientation(0, 0);
+        return new Orientation(00);
     }
 
     public void compute(Moveable moveable, double maxSpeed, Collection<PersistedEngram> memories, Collection<SpatialEngram> engrams) {
