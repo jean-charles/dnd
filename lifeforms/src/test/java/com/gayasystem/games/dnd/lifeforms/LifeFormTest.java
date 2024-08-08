@@ -7,11 +7,11 @@ import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.Map;
 
 import static com.gayasystem.games.dnd.lifeforms.Gender.female;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,8 +27,7 @@ class LifeFormTest {
     static final double MAX_SPEED = 60.0;
     static final SoundSpectrum SOUND_SPECTRUM = new SoundSpectrum(10, 10000);
     static final double MIN_SOUND_AMPLITUDE = 20.0;
-    static final Collection<Class<? extends Thing>> SCARED_BY = List.of();
-    static final Collection<Class<? extends Thing>> ATTRACTED_BY = List.of();
+    static final Map<Class<? extends Thing>, Emotion> MEMORIES = Map.of();
 
     @MockBean
     BrainFactory brainFactory;
@@ -41,7 +40,7 @@ class LifeFormTest {
 
     //    @BeforeEach
     void setUp() {
-        when(brainFactory.create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY)).thenReturn(brain);
+        when(brainFactory.create(lifeForm, SPEED, MEMORIES)).thenReturn(brain);
         lifeForm.run();
     }
 
@@ -55,7 +54,7 @@ class LifeFormTest {
     //    @Test
     void run() {
         lifeForm.run();
-        verify(brainFactory, times(0)).create(lifeForm, SPEED, SCARED_BY, ATTRACTED_BY);
+        verify(brainFactory, times(0)).create(lifeForm, SPEED, MEMORIES);
         verify(brain, times(2)).run();
     }
 

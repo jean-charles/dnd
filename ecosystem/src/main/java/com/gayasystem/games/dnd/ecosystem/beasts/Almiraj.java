@@ -8,10 +8,11 @@ import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Map;
 
 @Component
 @Scope("prototype")
@@ -56,8 +57,10 @@ public class Almiraj extends Beast {
                 30.0,
                 null,
                 0.0,
-                List.of(Carrot.class),
-                List.of(Thing.class)
+                Map.of(
+                        Carrot.class, Emotion.hungry,
+                        Thing.class, Emotion.scared
+                )
         );
     }
 }

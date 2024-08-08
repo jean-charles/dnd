@@ -7,14 +7,15 @@ import com.gayasystem.games.dnd.gametools.dices.Dice;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 
-import java.util.Collection;
+import java.util.Map;
 
 public abstract class Beast extends Character {
     private Dice hitDice;
 
-    public Beast(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, Dice hitDice, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
-        super(abilityScores, abilityScoreIncrease, alignment, skills, armorClass, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, attractedBy, scaredBy);
+    public Beast(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, Dice hitDice, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+        super(abilityScores, abilityScoreIncrease, alignment, skills, armorClass, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, longTermMemories);
         this.hitDice = hitDice;
     }
 }

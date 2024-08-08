@@ -7,14 +7,13 @@ import com.gayasystem.games.dnd.lifeforms.brain.memories.Engram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.EngramComputing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.PersistedEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
-import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.attracted;
-import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.scared;
+import java.util.Map;
 
 @Component
 public abstract class AbstractBrain implements Brain {
@@ -26,28 +25,20 @@ public abstract class AbstractBrain implements Brain {
     @Autowired
     private EngramComputing engramComputing;
 
-    protected AbstractBrain(LifeForm lifeForm, double maxSpeed, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+    protected AbstractBrain(LifeForm lifeForm, double maxSpeed, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         if (lifeForm == null)
             throw new NullPointerException("lifeForm cannot be null");
         this.lifeForm = lifeForm;
         this.maxSpeed = maxSpeed;
-        rememberAttractedByMemories(attractedBy);
-        rememberScaredByMemories(scaredBy);
+        rememberLongTermMemories(longTermMemories);
     }
 
-    private void rememberAttractedByMemories(Collection<Class<? extends Thing>> attractedBy) {
-        for (var thingClass : attractedBy) {
+    private void rememberLongTermMemories(Map<Class<? extends Thing>, Emotion> longTermMemories) {
+        for (var thingClass : longTermMemories.keySet()) {
+            var emotion = longTermMemories.get(thingClass);
             Engram engram = new Image(thingClass);
-            var persistedEngram = new PersistedEngram(attracted, engram);
-            longTermMemories.add(persistedEngram);
-        }
-    }
-
-    private void rememberScaredByMemories(Collection<Class<? extends Thing>> scaredBy) {
-        for (var thingClass : scaredBy) {
-            Engram engram = new Image(thingClass);
-            var persistedEngram = new PersistedEngram(scared, engram);
-            longTermMemories.add(persistedEngram);
+            var persistedEngram = new PersistedEngram(emotion, engram);
+            this.longTermMemories.add(persistedEngram);
         }
     }
 

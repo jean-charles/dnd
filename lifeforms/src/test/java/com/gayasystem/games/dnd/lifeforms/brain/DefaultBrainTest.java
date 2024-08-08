@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
@@ -40,7 +41,7 @@ public class DefaultBrainTest {
 
     //    @Test
     public void noMemories() {
-        var brain = new DefaultBrain(lifeForm, 10, List.of(), List.of());
+        var brain = new DefaultBrain(lifeForm, 10, Map.of());
         assertNotNull(brain);
         assertEquals(0, brain.getLongTermMemories().size());
         assertEquals(0, brain.getShortTermMemories().size());

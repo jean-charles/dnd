@@ -8,9 +8,10 @@ import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class Character extends LifeForm {
@@ -21,8 +22,8 @@ public abstract class Character extends LifeForm {
     private int armorClass;
     private Set<Equipment> equipments = new HashSet<>();
 
-    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
-        super(mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, attractedBy, scaredBy);
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+        super(mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, longTermMemories);
         this.abilityScores = abilityScores;
         this.abilityScoreIncrease = abilityScoreIncrease;
         this.alignment = alignment;

@@ -12,10 +12,11 @@ import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collection;
+import java.util.Map;
 
 public abstract class LifeForm extends Thing implements Sighted, Hearing {
     private final Gender gender;
@@ -24,8 +25,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     private final double nightSightDistance;
     private final SoundSpectrum soundSpectrum;
     private final double minSoundAmplitude;
-    private final Collection<Class<? extends Thing>> attractedBy;
-    private final Collection<Class<? extends Thing>> scaredBy;
+    private final Map<Class<? extends Thing>, Emotion> longTermMemories;
 
     private Brain brain;
 
@@ -46,10 +46,9 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
      * @param nightSightDistance in foot.
      * @param soundSpectrum
      * @param minSoundAmplitude
-     * @param attractedBy
-     * @param scaredBy
+     * @param longTermMemories
      */
-    public LifeForm(double mass, Gender gender, double maxSpeed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Collection<Class<? extends Thing>> attractedBy, Collection<Class<? extends Thing>> scaredBy) {
+    public LifeForm(double mass, Gender gender, double maxSpeed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         super(mass);
         this.gender = gender;
         this.maxSpeed = maxSpeed;
@@ -57,14 +56,13 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
         this.nightSightDistance = nightSightDistance;
         this.soundSpectrum = soundSpectrum;
         this.minSoundAmplitude = minSoundAmplitude;
-        this.attractedBy = attractedBy;
-        this.scaredBy = scaredBy;
+        this.longTermMemories = longTermMemories;
     }
 
     @Override
     public void run() {
         if (brain == null)
-            brain = brainFactory.create(this, maxSpeed, attractedBy, scaredBy);
+            brain = brainFactory.create(this, maxSpeed, longTermMemories);
         environment.show(this, convertor.miles2Inches(sightDistance));
         environment.listen(this, minSoundAmplitude);
         brain.run();
@@ -82,5 +80,9 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
         if (sound.spectrum().equals(soundSpectrum) && sound.amplitude() >= minSoundAmplitude) {
             brain.handle(new SpatialEngram(sound, origin));
         }
+    }
+
+    public void eat(Thing food) {
+
     }
 }

@@ -32,7 +32,6 @@ public class HalfOrc extends Character {
                 0.0,
                 null,
                 0.0,
-                null,
                 null
         );
     }
