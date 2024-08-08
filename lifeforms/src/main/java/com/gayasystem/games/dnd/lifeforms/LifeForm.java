@@ -25,6 +25,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     private final double nightSightDistance;
     private final SoundSpectrum soundSpectrum;
     private final double minSoundAmplitude;
+    private final Emotion defaultEmotion;
     private final Map<Class<? extends Thing>, Emotion> longTermMemories;
 
     private Brain brain;
@@ -48,7 +49,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
      * @param minSoundAmplitude
      * @param longTermMemories
      */
-    public LifeForm(double mass, Gender gender, double maxSpeed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+    public LifeForm(double mass, Gender gender, double maxSpeed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         super(mass);
         this.gender = gender;
         this.maxSpeed = maxSpeed;
@@ -56,13 +57,14 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
         this.nightSightDistance = nightSightDistance;
         this.soundSpectrum = soundSpectrum;
         this.minSoundAmplitude = minSoundAmplitude;
+        this.defaultEmotion = defaultEmotion;
         this.longTermMemories = longTermMemories;
     }
 
     @Override
     public void run() {
         if (brain == null)
-            brain = brainFactory.create(this, maxSpeed, longTermMemories);
+            brain = brainFactory.create(this, maxSpeed, defaultEmotion, longTermMemories);
         environment.show(this, convertor.miles2Inches(sightDistance));
         environment.listen(this, minSoundAmplitude);
         brain.run();

@@ -41,7 +41,7 @@ public class DefaultBrainTest {
 
     //    @Test
     public void noMemories() {
-        var brain = new DefaultBrain(lifeForm, 10, Map.of());
+        var brain = new DefaultBrain(lifeForm, 10, Emotion.neutral, Map.of());
         assertNotNull(brain);
         assertEquals(0, brain.getLongTermMemories().size());
         assertEquals(0, brain.getShortTermMemories().size());
@@ -69,6 +69,6 @@ public class DefaultBrainTest {
         CircularCoordinate coordinates = new CircularCoordinate(10, 0);
         brain.handle(new SpatialEngram(new Image(ThingA.class), coordinates));
         brain.run();
-        verify(engramComputing).compute(eq(lifeForm), eq(10), ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());
+        verify(engramComputing).compute(eq(lifeForm), eq(10), Emotion.neutral, ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());
     }
 }

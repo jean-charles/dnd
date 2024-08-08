@@ -15,7 +15,7 @@ public class BrainFactoryImpl implements BrainFactory {
     private ApplicationContext ctx;
 
     @Override
-    public Brain create(LifeForm lifeForm, double maxSpeed, Map<Class<? extends Thing>, Emotion> longTermMemories) {
-        return ctx.getBean(DefaultBrain.class, lifeForm, maxSpeed, longTermMemories);
+    public Brain create(LifeForm lifeForm, double maxSpeed, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+        return ctx.getBean(DefaultBrain.class, lifeForm, maxSpeed, defaultEmotion, longTermMemories);
     }
 }

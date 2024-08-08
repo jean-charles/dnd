@@ -14,8 +14,8 @@ import java.util.Map;
 public abstract class Beast extends Character {
     private Dice hitDice;
 
-    public Beast(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, Dice hitDice, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Map<Class<? extends Thing>, Emotion> longTermMemories) {
-        super(abilityScores, abilityScoreIncrease, alignment, skills, armorClass, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, longTermMemories);
+    public Beast(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, Dice hitDice, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+        super(abilityScores, abilityScoreIncrease, alignment, skills, armorClass, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, defaultEmotion, longTermMemories);
         this.hitDice = hitDice;
     }
 }

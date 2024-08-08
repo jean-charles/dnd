@@ -1,6 +1,5 @@
 package com.gayasystem.games.dnd.ecosystem.beasts;
 
-import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.ecosystem.Beast;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.gametools.dices.Dice1d6;
@@ -57,9 +56,9 @@ public class Almiraj extends Beast {
                 30.0,
                 null,
                 0.0,
+                Emotion.scared,
                 Map.of(
-                        Carrot.class, Emotion.hungry,
-                        Thing.class, Emotion.scared
+                        Carrot.class, Emotion.hungry
                 )
         );
     }

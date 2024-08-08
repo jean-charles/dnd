@@ -7,5 +7,5 @@ import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import java.util.Map;
 
 public interface BrainFactory {
-    Brain create(LifeForm lifeForm, double maxSpeed, Map<Class<? extends Thing>, Emotion> longTermMemories);
+    Brain create(LifeForm lifeForm, double maxSpeed, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories);
 }

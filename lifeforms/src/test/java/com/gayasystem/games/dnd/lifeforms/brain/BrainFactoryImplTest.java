@@ -21,7 +21,7 @@ class BrainFactoryImplTest {
     //    @Test
     void create() {
         LifeForm lifeForm = new LifeFormA();
-        var brain = brainFactory.create(lifeForm, SPEED, MEMORIES);
+        var brain = brainFactory.create(lifeForm, SPEED, Emotion.neutral, MEMORIES);
         assertTrue(brain instanceof DefaultBrain);
     }
 }

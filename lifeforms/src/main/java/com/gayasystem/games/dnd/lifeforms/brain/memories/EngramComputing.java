@@ -80,7 +80,7 @@ public class EngramComputing {
         return new Orientation(0);
     }
 
-    public void compute(Moveable moveable, double maxSpeed, Collection<PersistedEngram> memories, Collection<SpatialEngram> engrams) {
+    public void compute(Moveable moveable, double maxSpeed, Emotion defaultEmotion, Collection<PersistedEngram> memories, Collection<SpatialEngram> engrams) {
         Collection<SpatialEmotionalEngram> emotionalEngrams = new ArrayList<>();
 
         for (var engram : engrams) {
@@ -89,7 +89,7 @@ public class EngramComputing {
                 var emotion = foundMemory.emotion();
                 emotionalEngrams.add(new SpatialEmotionalEngram(engram, emotion));
             } else {
-                emotionalEngrams.add(new SpatialEmotionalEngram(engram, neutral));
+                emotionalEngrams.add(new SpatialEmotionalEngram(engram, defaultEmotion));
             }
         }
 

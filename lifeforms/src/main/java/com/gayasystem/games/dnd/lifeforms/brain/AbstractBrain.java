@@ -19,17 +19,19 @@ import java.util.Map;
 public abstract class AbstractBrain implements Brain {
     private final LifeForm lifeForm;
     private final double maxSpeed;
+    private final Emotion defaultEmotion;
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
     private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
 
     @Autowired
     private EngramComputing engramComputing;
 
-    protected AbstractBrain(LifeForm lifeForm, double maxSpeed, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+    protected AbstractBrain(LifeForm lifeForm, double maxSpeed, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         if (lifeForm == null)
             throw new NullPointerException("lifeForm cannot be null");
         this.lifeForm = lifeForm;
         this.maxSpeed = maxSpeed;
+        this.defaultEmotion = defaultEmotion;
         rememberLongTermMemories(longTermMemories);
     }
 
@@ -49,7 +51,7 @@ public abstract class AbstractBrain implements Brain {
 
     @Override
     public void run() {
-        engramComputing.compute(lifeForm, maxSpeed, longTermMemories, shortTermMemories);
+        engramComputing.compute(lifeForm, maxSpeed, defaultEmotion, longTermMemories, shortTermMemories);
     }
 
     /* UNIT TESTS ONLY */

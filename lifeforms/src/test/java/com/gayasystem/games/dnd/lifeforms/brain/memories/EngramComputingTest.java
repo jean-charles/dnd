@@ -6,6 +6,7 @@ import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.lifeforms.ThingA;
 import com.gayasystem.games.dnd.lifeforms.ThingB;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -27,7 +28,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingA.class),
                         new CircularCoordinate(1.0, 0.0)));
-        engramComputing.compute(moveable, 10, memories, engrams);
+        engramComputing.compute(moveable, 10, Emotion.neutral, memories, engrams);
 
         verify(moveable, times(1)).velocity(10.0, new CircularCoordinate(1.0, PI));
     }
@@ -42,7 +43,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingB.class),
                         new CircularCoordinate(1.0, 0.0)));
-        engramComputing.compute(moveable, 10, memories, engrams);
+        engramComputing.compute(moveable, 10, Emotion.neutral, memories, engrams);
 
         verify(moveable, times(1)).velocity(5.0, new CircularCoordinate(1.0, 0.0));
     }
@@ -62,7 +63,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingB.class),
                         new CircularCoordinate(1.0, 0.0)));
-        engramComputing.compute(moveable, 10, memories, engrams);
+        engramComputing.compute(moveable, 10, Emotion.neutral, memories, engrams);
 
         verify(moveable, times(1)).velocity(10.0, new CircularCoordinate(1.0, PI));
     }
@@ -79,7 +80,7 @@ class EngramComputingTest {
                 new SpatialEngram(
                         new Image(ThingA.class),
                         new CircularCoordinate(1.0, 0.0)));
-        engramComputing.compute(moveable, 10, memories, engrams);
+        engramComputing.compute(moveable, 10, Emotion.neutral, memories, engrams);
 
         verify(moveable, times(1)).velocity(10.0, new CircularCoordinate(1.0, PI));
     }

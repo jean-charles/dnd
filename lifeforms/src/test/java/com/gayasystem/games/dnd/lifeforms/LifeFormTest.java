@@ -27,6 +27,7 @@ class LifeFormTest {
     static final double MAX_SPEED = 60.0;
     static final SoundSpectrum SOUND_SPECTRUM = new SoundSpectrum(10, 10000);
     static final double MIN_SOUND_AMPLITUDE = 20.0;
+    static final Emotion DEFAULT_EMOTION = Emotion.neutral;
     static final Map<Class<? extends Thing>, Emotion> MEMORIES = Map.of();
 
     @MockBean
@@ -40,7 +41,7 @@ class LifeFormTest {
 
     //    @BeforeEach
     void setUp() {
-        when(brainFactory.create(lifeForm, SPEED, MEMORIES)).thenReturn(brain);
+        when(brainFactory.create(lifeForm, SPEED, Emotion.neutral, MEMORIES)).thenReturn(brain);
         lifeForm.run();
     }
 
@@ -54,7 +55,7 @@ class LifeFormTest {
     //    @Test
     void run() {
         lifeForm.run();
-        verify(brainFactory, times(0)).create(lifeForm, SPEED, MEMORIES);
+        verify(brainFactory, times(0)).create(lifeForm, SPEED, Emotion.neutral, MEMORIES);
         verify(brain, times(2)).run();
     }
 

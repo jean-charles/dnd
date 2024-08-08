@@ -11,7 +11,7 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class DefaultBrain extends AbstractBrain {
-    public DefaultBrain(LifeForm lifeForm, double maxSpeed, Map<Class<? extends Thing>, Emotion> longTermMemories) {
-        super(lifeForm, maxSpeed, longTermMemories);
+    public DefaultBrain(LifeForm lifeForm, double maxSpeed, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+        super(lifeForm, maxSpeed, defaultEmotion, longTermMemories);
     }
 }
