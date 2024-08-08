@@ -2,8 +2,8 @@ package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,7 +26,7 @@ public class WorldTest {
     public void runMove() {
         assertThat(thing).isNotNull();
         assertThat(world).isNotNull();
-        when(thing.velocity()).thenReturn(new Velocity(1, new SphericalCoordinate(10, 0)));
+        when(thing.velocity()).thenReturn(new Velocity(1, new CircularCoordinate(10, 0)));
         double originalX = world.get(thing).x().doubleValue();
 
         world.run();

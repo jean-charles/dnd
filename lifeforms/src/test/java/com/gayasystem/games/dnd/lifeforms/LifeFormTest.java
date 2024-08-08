@@ -1,8 +1,8 @@
 package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
@@ -66,7 +66,7 @@ class LifeFormTest {
     void see() {
         Orientation orientation = new Orientation(0);
         var thing = new ThingA();
-        SphericalCoordinate origin = new SphericalCoordinate(10, 0);
+        CircularCoordinate origin = new CircularCoordinate(10, 0);
 
         lifeForm.see(thing, origin, orientation);
 
@@ -75,7 +75,7 @@ class LifeFormTest {
 
     @Test
     void ear() {
-        SphericalCoordinate origin = new SphericalCoordinate(10, 0);
+        CircularCoordinate origin = new CircularCoordinate(10, 0);
         double amplitude = MIN_SOUND_AMPLITUDE * 2;
         var thing = new ThingA();
 

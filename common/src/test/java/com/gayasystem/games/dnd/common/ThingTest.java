@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.common;
 
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,8 +18,8 @@ class ThingTest {
     @Test
     void velocity() {
         var thing = new ThingA(0.0);
-        thing.velocity(1.2, new SphericalCoordinate(1, 2));
-        var expected = new Velocity(1.2, new SphericalCoordinate(1, 2));
+        thing.velocity(1.2, new CircularCoordinate(1, 2));
+        var expected = new Velocity(1.2, new CircularCoordinate(1, 2));
         var actual = thing.velocity();
         assertEquals(expected.speed(), actual.speed());
         assertEquals(expected.destination().rho(), actual.destination().rho());

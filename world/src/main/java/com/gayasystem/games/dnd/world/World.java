@@ -2,8 +2,8 @@ package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.LifeEnvironment;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class World implements Runnable, LifeEnvironment {
             var destination = velocity.destination();
             if (speed < destination.rho().doubleValue()) {
                 var rho = BigDecimal.valueOf(speed);
-                destination = new SphericalCoordinate(rho, destination.orientation());
+                destination = new CircularCoordinate(rho, destination.orientation());
             }
             var obj = things.get(thing);
             var coordinate = obj.coordinate();
@@ -70,7 +70,7 @@ public class World implements Runnable, LifeEnvironment {
 
             var distance = coordinate.distanceFrom(lifeFormCoordinate);
             if (distance <= sightDistance) {
-                var finalRelativePosition = new SphericalCoordinate(BigDecimal.valueOf(distance), orientation);
+                var finalRelativePosition = new CircularCoordinate(BigDecimal.valueOf(distance), orientation);
                 var relativeOrientation = lifeFormOrientation.transpose(orientation);
                 sighted.see(other, finalRelativePosition, relativeOrientation);
             }

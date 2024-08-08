@@ -2,9 +2,9 @@ package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.LifeEnvironment;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.common.sight.Sighted;
@@ -71,13 +71,13 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     }
 
     @Override
-    public void see(Thing thing, SphericalCoordinate origin, Orientation orientation) {
+    public void see(Thing thing, CircularCoordinate origin, Orientation orientation) {
         Image image = new Image(thing.getClass());
         brain.handle(new SpatialEngram(image, origin));
     }
 
     @Override
-    public void ear(Thing thing, SoundSpectrum spectrum, double amplitude, SphericalCoordinate origin) {
+    public void ear(Thing thing, SoundSpectrum spectrum, double amplitude, CircularCoordinate origin) {
         var sound = new Sound(thing.getClass(), spectrum, amplitude);
         if (sound.spectrum().equals(soundSpectrum) && sound.amplitude() >= minSoundAmplitude) {
             brain.handle(new SpatialEngram(sound, origin));

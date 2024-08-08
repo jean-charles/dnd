@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.world;
 
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 
 import java.math.BigDecimal;
 
@@ -11,7 +11,7 @@ public record Coordinate(BigDecimal x, BigDecimal y) {
         this(BigDecimal.valueOf(x), BigDecimal.valueOf(y));
     }
 
-    public static Coordinate from(SphericalCoordinate sc) {
+    public static Coordinate from(CircularCoordinate sc) {
         double rho = sc.rho().doubleValue();
         double phi = sc.orientation().phi().doubleValue();
 
@@ -31,14 +31,14 @@ public record Coordinate(BigDecimal x, BigDecimal y) {
         return new Coordinate(x, y);
     }
 
-    public SphericalCoordinate to() {
+    public CircularCoordinate to() {
         double x = this.x.doubleValue();
         double y = this.y.doubleValue();
 
         double rho = sqrt(x * x + y * y);
         double phi = atan(y / x);
 
-        return new SphericalCoordinate(rho, phi);
+        return new CircularCoordinate(rho, phi);
     }
 
     public double distanceFrom(Coordinate formCoordinate) {

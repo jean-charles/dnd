@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.common;
 
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 
 public interface Moveable {
     /**
@@ -9,7 +9,7 @@ public interface Moveable {
      * @param speed The speed of the velocity in feet per hour.
      * @param destination The spherical coordinate destination.
      */
-    void velocity(double speed, SphericalCoordinate destination);
+    void velocity(double speed, CircularCoordinate destination);
 
     /**
      * Current velocity of the thing.

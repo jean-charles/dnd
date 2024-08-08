@@ -2,8 +2,8 @@ package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
 import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class EngramComputing {
         var orientation = computeOrientation(mostImportantEngram);
         var engram = mostImportantEngram.engram();
         if (engram != null) {
-            var destination = new SphericalCoordinate(engram.origin().rho(), orientation);
+            var destination = new CircularCoordinate(engram.origin().rho(), orientation);
             moveable.velocity(maxSpeed * speedRate, destination);
         }
     }

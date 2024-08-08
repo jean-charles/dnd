@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.world;
 
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.PI;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CoordinateTest {
     @Test
     void from() {
-        SphericalCoordinate sc = new SphericalCoordinate(8, PI / 3);
+        CircularCoordinate sc = new CircularCoordinate(8, PI / 3);
         Coordinate c = Coordinate.from(sc);
 
         assertEquals(2, c.x().doubleValue(), 0.0);
@@ -20,9 +20,9 @@ class CoordinateTest {
     @Test
     void to() {
         Coordinate c = new Coordinate(2, 2 * sqrt(3));
-        SphericalCoordinate sphericalCoordinate = c.to();
-        assertEquals(8, sphericalCoordinate.rho().doubleValue(), 0.000000000000001);
-        assertEquals(PI / 6, sphericalCoordinate.orientation().phi().doubleValue(), 0.0000000000000002);
+        CircularCoordinate circularCoordinate = c.to();
+        assertEquals(8, circularCoordinate.rho().doubleValue(), 0.000000000000001);
+        assertEquals(PI / 6, circularCoordinate.orientation().phi().doubleValue(), 0.0000000000000002);
     }
 
     @Test

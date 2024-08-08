@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.common;
 
-import com.gayasystem.games.dnd.common.coordinates.SphericalCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 
 public abstract class Thing implements Moveable, Runnable {
     protected double mass;
@@ -21,7 +21,7 @@ public abstract class Thing implements Moveable, Runnable {
     }
 
     @Override
-    public void velocity(double speed, SphericalCoordinate destination) {
+    public void velocity(double speed, CircularCoordinate destination) {
         velocity = new Velocity(speed, destination);
     }
 
