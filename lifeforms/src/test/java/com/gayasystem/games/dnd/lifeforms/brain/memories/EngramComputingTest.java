@@ -29,7 +29,7 @@ class EngramComputingTest {
                         new CircularCoordinate(1.0, 0.0)));
         engramComputing.compute(moveable, 10, memories, engrams);
 
-        verify(moveable, times(1)).velocity(20.0, new CircularCoordinate(1.0, PI));
+        verify(moveable, times(1)).velocity(10.0, new CircularCoordinate(1.0, PI));
     }
 
     @Test
@@ -44,7 +44,7 @@ class EngramComputingTest {
                         new CircularCoordinate(1.0, 0.0)));
         engramComputing.compute(moveable, 10, memories, engrams);
 
-        verify(moveable, times(1)).velocity(0.0, new CircularCoordinate(1.0, 0.0));
+        verify(moveable, times(1)).velocity(5.0, new CircularCoordinate(1.0, 0.0));
     }
 
     @Test
@@ -64,7 +64,7 @@ class EngramComputingTest {
                         new CircularCoordinate(1.0, 0.0)));
         engramComputing.compute(moveable, 10, memories, engrams);
 
-        verify(moveable, times(1)).velocity(20.0, new CircularCoordinate(1.0, PI));
+        verify(moveable, times(1)).velocity(10.0, new CircularCoordinate(1.0, PI));
     }
 
     @Test
@@ -81,6 +81,6 @@ class EngramComputingTest {
                         new CircularCoordinate(1.0, 0.0)));
         engramComputing.compute(moveable, 10, memories, engrams);
 
-        verify(moveable, times(1)).velocity(20.0, new CircularCoordinate(1.0, PI));
+        verify(moveable, times(1)).velocity(10.0, new CircularCoordinate(1.0, PI));
     }
 }

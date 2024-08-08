@@ -4,25 +4,35 @@ import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.PI;
-import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CoordinateTest {
-    @Test
-    void from() {
-        CircularCoordinate sc = new CircularCoordinate(8, PI / 3);
+    private void assertFrom(double expectedX, double expectedY, CircularCoordinate sc) {
         Coordinate c = Coordinate.from(sc);
+        assertEquals(expectedX, c.x().doubleValue(), 0.000000000000001);
+        assertEquals(expectedY, c.y().doubleValue(), 0.000000000000001);
+    }
 
-        assertEquals(2, c.x().doubleValue(), 0.0);
-        assertEquals(2 * sqrt(3), c.y().doubleValue(), 0.0000000000001);
+    private void assertTo(double expectedRho, double expectedPhi, Coordinate c) {
+        CircularCoordinate circularCoordinate = c.to();
+        assertEquals(expectedRho, circularCoordinate.rho().doubleValue(), 0.000000000000001);
+        assertEquals(expectedPhi, circularCoordinate.orientation().phi().doubleValue(), 0.000000000000001);
+    }
+
+    @Test
+    void assertFrom() {
+        assertFrom(1, 0, new CircularCoordinate(1, 0));
+        assertFrom(0, 1, new CircularCoordinate(1, PI / 2));
+        assertFrom(-1, 0, new CircularCoordinate(1, PI));
+        assertFrom(0, -1, new CircularCoordinate(1, 3 * PI / 2));
     }
 
     @Test
     void to() {
-        Coordinate c = new Coordinate(2, 2 * sqrt(3));
-        CircularCoordinate circularCoordinate = c.to();
-        assertEquals(8, circularCoordinate.rho().doubleValue(), 0.000000000000001);
-        assertEquals(PI / 6, circularCoordinate.orientation().phi().doubleValue(), 0.0000000000000002);
+        assertTo(1, 0, new Coordinate(1, 0));
+        assertTo(1, PI / 2, new Coordinate(0, 1));
+        assertTo(1, PI, new Coordinate(-1, 0));
+        assertTo(1, -PI / 2, new Coordinate(0, -1));
     }
 
     @Test

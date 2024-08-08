@@ -26,19 +26,20 @@ public class WorldTest {
     public void runMove() {
         assertThat(thing).isNotNull();
         assertThat(world).isNotNull();
-        when(thing.velocity()).thenReturn(new Velocity(1, new CircularCoordinate(10, 0)));
+        when(thing.velocity()).thenReturn(new Velocity(1, new CircularCoordinate(1, 0)));
+        world.add(thing, new Coordinate(1, 0), new Orientation(0));
         double originalX = world.get(thing).x().doubleValue();
 
         world.run();
         verify(thing, times(1)).run();
-        assertCoordinate(originalX, 0, 1, world.get(thing));
+        assertCoordinate(originalX + 1, 0, world.get(thing));
 
         world.run();
         verify(thing, times(2)).run();
-        assertCoordinate(originalX, 0, 2, world.get(thing));
+        assertCoordinate(originalX + 2, 0, world.get(thing));
     }
 
-    private void assertCoordinate(double expectedX, double expectedY, double expectedZ, Coordinate actual) {
+    private void assertCoordinate(double expectedX, double expectedY, Coordinate actual) {
         assertEquals(expectedX, actual.x().doubleValue(), 0.000000000000001);
         assertEquals(expectedY, actual.y().doubleValue(), 0.000000000000001);
     }
@@ -46,6 +47,7 @@ public class WorldTest {
     @Test
     void addFrom() {
         Thing parent = new ThingA();
+        world.add(parent, new Coordinate(0, 0), new Orientation(0));
         Thing child = new ThingB();
         Orientation orientation = new Orientation(0);
         world.addFrom(parent, child, orientation);

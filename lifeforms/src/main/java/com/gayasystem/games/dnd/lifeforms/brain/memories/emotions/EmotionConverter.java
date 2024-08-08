@@ -13,7 +13,7 @@ public class EmotionConverter {
     }
 
     public static Orientation orientation(Orientation origin, Emotion emotion) {
-        Orientation orientation = new Orientation(0.0, 0.0);
+        Orientation orientation = new Orientation(0.0);
         switch (emotion) {
             case scared -> orientation = origin.opposite();
             case attracted -> orientation = origin;

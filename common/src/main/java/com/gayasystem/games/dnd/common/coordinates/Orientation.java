@@ -8,12 +8,15 @@ import static java.lang.Math.PI;
  * @param phi   latitudinal radian angle
  */
 public record Orientation(BigDecimal phi) {
+    private static final BigDecimal MAX_PHI = BigDecimal.valueOf(2 * PI);
     public Orientation(double phi) {
         this(BigDecimal.valueOf(phi));
     }
 
     public Orientation add(Orientation origin) {
-        BigDecimal phi = this.phi().add(origin.phi());
+        var phi = this.phi().add(origin.phi());
+        if (phi.compareTo(MAX_PHI) > 1)
+            phi = phi.subtract(MAX_PHI);
         return new Orientation(phi);
     }
 
@@ -22,8 +25,7 @@ public record Orientation(BigDecimal phi) {
     }
 
     public Orientation transpose(Orientation from) {
-        var fromPhi = (from.phi().doubleValue() >= 0) ? from.phi() : BigDecimal.valueOf(2 * PI + from.phi().doubleValue());
-        var transposedPhi = fromPhi.subtract(this.phi());
+        var transposedPhi = phi.subtract(from.phi());
         return new Orientation(transposedPhi);
     }
 }
