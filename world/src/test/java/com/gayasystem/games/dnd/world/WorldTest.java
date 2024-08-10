@@ -22,26 +22,26 @@ public class WorldTest {
     @Autowired
     private World world;
 
-    //    @Test()
+    private void assertCoordinate(double expectedX, double expectedY, Coordinate actual) {
+        assertEquals(expectedX, actual.x().doubleValue(), 0.000000000000001);
+        assertEquals(expectedY, actual.y().doubleValue(), 0.000000000000001);
+    }
+
+    @Test()
     public void runMove() {
         assertThat(thing).isNotNull();
         assertThat(world).isNotNull();
         when(thing.velocity()).thenReturn(new Velocity(1, new CircularCoordinate(1, 0)));
-        world.add(thing, new Coordinate(1, 0), new Orientation(0));
-        double originalX = world.get(thing).x().doubleValue();
+        double originalX = 0;
+        world.add(thing, new Coordinate(originalX, 0), new Orientation(0));
 
         world.run();
         verify(thing, times(1)).run();
-        assertCoordinate(originalX + 1, 0, world.get(thing));
+        assertCoordinate(originalX + 1, 0, world.getThingCoordinate(thing));
 
         world.run();
         verify(thing, times(2)).run();
-        assertCoordinate(originalX + 2, 0, world.get(thing));
-    }
-
-    private void assertCoordinate(double expectedX, double expectedY, Coordinate actual) {
-        assertEquals(expectedX, actual.x().doubleValue(), 0.000000000000001);
-        assertEquals(expectedY, actual.y().doubleValue(), 0.000000000000001);
+        assertCoordinate(originalX + 2, 0, world.getThingCoordinate(thing));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class WorldTest {
 
         world.add(thing, coordinate, orientation);
 
-        Coordinate actual = world.get(thing);
+        Coordinate actual = world.getThingCoordinate(thing);
         assertEquals(coordinate, actual);
     }
 

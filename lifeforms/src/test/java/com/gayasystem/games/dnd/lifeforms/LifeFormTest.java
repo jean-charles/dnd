@@ -2,13 +2,17 @@ package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Map;
@@ -18,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-//@SpringBootTest(classes = {LifeFormTestConfig.class})
+@SpringBootTest(classes = {LifeFormA.class})
 class LifeFormTest {
     static final double MASS = 1.2;
     static final Gender GENDER = female;
@@ -31,7 +35,13 @@ class LifeFormTest {
     static final Map<Class<? extends Thing>, Emotion> MEMORIES = Map.of();
 
     @MockBean
+    LifeEnvironment environment;
+
+    @MockBean
     BrainFactory brainFactory;
+
+    @MockBean
+    MeasurementConvertor convertor;
 
     @MockBean
     Brain brain;
@@ -39,27 +49,27 @@ class LifeFormTest {
     @Autowired
     LifeForm lifeForm;
 
-    //    @BeforeEach
+    @BeforeEach
     void setUp() {
         when(brainFactory.create(lifeForm, SPEED, Emotion.neutral, MEMORIES)).thenReturn(brain);
         lifeForm.run();
     }
 
-    //    @Test
+    @Test
     void mass() {
         assertThat(brainFactory).isNotNull();
         assertThat(lifeForm).isNotNull();
         assertEquals(MASS, lifeForm.mass());
     }
 
-    //    @Test
+    @Test
     void run() {
         lifeForm.run();
         verify(brainFactory, times(0)).create(lifeForm, SPEED, Emotion.neutral, MEMORIES);
         verify(brain, times(2)).run();
     }
 
-    //    @Test
+    @Test
     void see() {
         Orientation orientation = new Orientation(0);
         var thing = new ThingA();
@@ -70,7 +80,7 @@ class LifeFormTest {
         verify(brain).handle(any(SpatialEngram.class));
     }
 
-    //    @Test
+    @Test
     void ear() {
         CircularCoordinate origin = new CircularCoordinate(10, 0);
         double amplitude = MIN_SOUND_AMPLITUDE * 2;

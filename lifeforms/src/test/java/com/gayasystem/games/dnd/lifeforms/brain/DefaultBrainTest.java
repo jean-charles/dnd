@@ -1,52 +1,72 @@
 package com.gayasystem.games.dnd.lifeforms.brain;
 
+import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
+import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.ThingA;
 import com.gayasystem.games.dnd.lifeforms.ThingB;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.Action;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.EngramComputing;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.PersistedEngram;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.NextAction;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
-import org.mockito.ArgumentMatchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
+import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.Mockito.when;
 
-//@SpringBootTest(classes = {LifeFormTestConfig.class, LifeFormA.class, DefaultBrain.class})
+@SpringBootTest(classes = {DefaultBrain.class})
 public class DefaultBrainTest {
+    private static final Map<Class<? extends Thing>, Emotion> LONG_TERM_MEMORIES = Map.of(
+            ThingA.class, attracted,
+            ThingB.class, scared
+    );
+
+    @MockBean
+    LifeEnvironment environment;
+
+    @MockBean
+    BrainFactory brainFactory;
+
     @MockBean
     EngramComputing engramComputing;
 
-    @Autowired
+    @MockBean
     LifeForm lifeForm;
+
+    @Autowired
+    ApplicationContext ctx;
 
     DefaultBrain brain;
 
-    //    @BeforeEach
-    public void setUp(ApplicationContext ctx) {
+    @BeforeEach
+    public void setUp() {
         assertNotNull(engramComputing);
         assertNotNull(lifeForm);
-        brain = ctx.getBean(DefaultBrain.class, lifeForm, 10, List.of(ThingA.class), List.of(ThingB.class));
+        brain = ctx.getBean(DefaultBrain.class, lifeForm, 10, neutral, LONG_TERM_MEMORIES);
+        assertNotNull(brain);
     }
 
-    //    @Test
+    @Test
     public void noMemories() {
-        var brain = new DefaultBrain(lifeForm, 10, Emotion.neutral, Map.of());
-        assertNotNull(brain);
+        var brain = ctx.getBean(DefaultBrain.class, lifeForm, 10, neutral, Map.of());
         assertEquals(0, brain.getLongTermMemories().size());
         assertEquals(0, brain.getShortTermMemories().size());
     }
 
-    //    @Test
+    @Test
     public void longTermMemoriesMemories() {
         var engrams = brain.getLongTermMemories();
         assertEquals(2, engrams.size());
@@ -63,11 +83,11 @@ public class DefaultBrainTest {
         }
     }
 
-    //    @Test
+    @Test
     public void shortTermMemoriesMemoriesAttracted() {
+        when(engramComputing.compute(any(), anyCollection(), anyCollection())).thenReturn(new NextAction(Action.doNothing));
         CircularCoordinate coordinates = new CircularCoordinate(10, 0);
         brain.handle(new SpatialEngram(new Image(ThingA.class), coordinates));
         brain.run();
-        verify(engramComputing).compute(Emotion.neutral, ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());
     }
 }

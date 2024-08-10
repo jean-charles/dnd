@@ -24,7 +24,9 @@ public class World implements Runnable, LifeEnvironment {
     private Map<Coordinate, Thing> thingsByCoordinate = new HashMap<>();
 
     private void addThing(Thing thing, Coordinate newCoordinate, Orientation orientation) {
-        inGameObjects.put(thing, new InGameObject(thing, newCoordinate, orientation));
+        var previous = inGameObjects.put(thing, new InGameObject(thing, newCoordinate, orientation));
+        if (previous != null)
+            thingsByCoordinate.remove(previous.coordinate());
         thingsByCoordinate.put(newCoordinate, thing);
     }
 
@@ -47,7 +49,7 @@ public class World implements Runnable, LifeEnvironment {
             var orientation = obj.orientation();
 
             var relativeCoordinate = coordinate.from(destination);
-            var newCoordinate = coordinate.add(relativeCoordinate);
+            var newCoordinate = relativeCoordinate;//coordinate.add(relativeCoordinate);
             addThing(thing, newCoordinate, orientation);
         }
     }
@@ -135,7 +137,7 @@ public class World implements Runnable, LifeEnvironment {
     /**
      * TEST ONLY
      */
-    Coordinate get(Thing thing) {
+    Coordinate getThingCoordinate(Thing thing) {
         return inGameObjects.get(thing).coordinate();
     }
 }

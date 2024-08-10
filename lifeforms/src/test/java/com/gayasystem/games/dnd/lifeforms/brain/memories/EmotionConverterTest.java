@@ -9,7 +9,6 @@ import static java.lang.Math.PI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EmotionConverterTest {
-
     @Test
     void weight() {
         assertEquals(1.0, EmotionConverter.weight(Emotion.scared));
@@ -18,15 +17,15 @@ public class EmotionConverterTest {
 
     @Test
     void directionScared() {
-        Orientation d;
-        d = EmotionConverter.orientation(new Orientation(0), Emotion.scared);
-//        assertEquals(new Direction(-180, 0, 0), d);
+        Orientation o;
+        o = EmotionConverter.orientation(new Orientation(0), Emotion.scared);
+        assertEquals(new Orientation(PI), o);
 
-        d = EmotionConverter.orientation(new Orientation(0), Emotion.scared);
-//        assertEquals(new Direction(-135, 0, 0), d);
+        o = EmotionConverter.orientation(new Orientation(PI / 2), Emotion.scared);
+        assertEquals(new Orientation(3 * PI / 2).phi().doubleValue(), o.phi().doubleValue(), 0.00000000000001);
 
-        d = EmotionConverter.orientation(new Orientation(PI / 4), Emotion.scared);
-//        assertEquals(new Direction(-135, -45, 0), d);
+        o = EmotionConverter.orientation(new Orientation(PI / 4), Emotion.scared);
+        assertEquals(new Orientation(5 * PI / 4).phi().doubleValue(), o.phi().doubleValue(), 0.00000000000001);
     }
 
     @Test

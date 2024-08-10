@@ -26,10 +26,10 @@ public class WorldIntegrationTest {
         assertNotNull(carrot);
         world.add(carrot, new Coordinate(10, 0), new Orientation(0));
         world.run();
-        var almirajCoordinate = world.get(almiraj);
+        var almirajCoordinate = world.getThingCoordinate(almiraj);
         assertNotNull(almirajCoordinate);
         assertEquals(new Coordinate(10, 0), almirajCoordinate);
-        var carrotCoordinate = world.get(carrot);
+        var carrotCoordinate = world.getThingCoordinate(carrot);
         assertNotNull(carrotCoordinate);
         assertEquals(new Coordinate(10, 0), carrotCoordinate);
     }
