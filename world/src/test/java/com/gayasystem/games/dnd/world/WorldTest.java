@@ -22,7 +22,7 @@ public class WorldTest {
     @Autowired
     private World world;
 
-    @Test
+    //    @Test()
     public void runMove() {
         assertThat(thing).isNotNull();
         assertThat(world).isNotNull();

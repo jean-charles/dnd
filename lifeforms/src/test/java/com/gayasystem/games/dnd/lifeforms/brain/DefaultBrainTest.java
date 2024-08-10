@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 //@SpringBootTest(classes = {LifeFormTestConfig.class, LifeFormA.class, DefaultBrain.class})
@@ -69,6 +68,6 @@ public class DefaultBrainTest {
         CircularCoordinate coordinates = new CircularCoordinate(10, 0);
         brain.handle(new SpatialEngram(new Image(ThingA.class), coordinates));
         brain.run();
-        verify(engramComputing).compute(eq(lifeForm), eq(10), Emotion.neutral, ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());
+        verify(engramComputing).compute(Emotion.neutral, ArgumentMatchers.<Collection<PersistedEngram>>any(), ArgumentMatchers.<Collection<SpatialEngram>>any());
     }
 }

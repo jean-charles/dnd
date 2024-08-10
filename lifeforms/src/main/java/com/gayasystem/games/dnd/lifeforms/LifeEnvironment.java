@@ -1,5 +1,6 @@
-package com.gayasystem.games.dnd.common;
+package com.gayasystem.games.dnd.lifeforms;
 
+import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;

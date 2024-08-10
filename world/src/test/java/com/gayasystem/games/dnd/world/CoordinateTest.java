@@ -7,8 +7,8 @@ import static java.lang.Math.PI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CoordinateTest {
-    private void assertFrom(double expectedX, double expectedY, CircularCoordinate sc) {
-        Coordinate c = Coordinate.from(sc);
+    private void assertFrom(double expectedX, double expectedY, Coordinate from, CircularCoordinate sc) {
+        Coordinate c = from.from(sc);
         assertEquals(expectedX, c.x().doubleValue(), 0.000000000000001);
         assertEquals(expectedY, c.y().doubleValue(), 0.000000000000001);
     }
@@ -21,10 +21,11 @@ class CoordinateTest {
 
     @Test
     void assertFrom() {
-        assertFrom(1, 0, new CircularCoordinate(1, 0));
-        assertFrom(0, 1, new CircularCoordinate(1, PI / 2));
-        assertFrom(-1, 0, new CircularCoordinate(1, PI));
-        assertFrom(0, -1, new CircularCoordinate(1, 3 * PI / 2));
+        var c = new Coordinate(0, 0);
+        assertFrom(1, 0, c, new CircularCoordinate(1, 0));
+        assertFrom(0, 1, c, new CircularCoordinate(1, PI / 2));
+        assertFrom(-1, 0, c, new CircularCoordinate(1, PI));
+        assertFrom(0, -1, c, new CircularCoordinate(1, 3 * PI / 2));
     }
 
     @Test

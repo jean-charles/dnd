@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.lifeforms;
 
-import com.gayasystem.games.dnd.common.LifeEnvironment;
+import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-public abstract class LifeForm extends Thing implements Sighted, Hearing {
+public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater {
     private final Gender gender;
     private final double maxSpeed;
     private final double sightDistance;
@@ -29,6 +29,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
     private final Map<Class<? extends Thing>, Emotion> longTermMemories;
 
     private Brain brain;
+    private CircularCoordinate foodCoordinate;
 
     @Autowired
     private LifeEnvironment environment;
@@ -84,7 +85,17 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing {
         }
     }
 
-    public void eat(Thing food) {
+    @Override
+    public void foodCoordinate(CircularCoordinate coordinate) {
+        this.foodCoordinate = coordinate;
+    }
 
+    @Override
+    public CircularCoordinate foodCoordinate() {
+        return foodCoordinate;
+    }
+
+    @Override
+    public void eat(Food food) {
     }
 }

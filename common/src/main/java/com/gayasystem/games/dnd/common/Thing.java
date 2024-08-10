@@ -21,6 +21,11 @@ public abstract class Thing implements Moveable, Runnable {
     }
 
     @Override
+    public void velocity(Velocity velocity) {
+        this.velocity = velocity;
+    }
+
+    @Override
     public void velocity(double speed, CircularCoordinate destination) {
         velocity = new Velocity(speed, destination);
     }

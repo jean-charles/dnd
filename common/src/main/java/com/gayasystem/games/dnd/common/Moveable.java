@@ -6,6 +6,13 @@ public interface Moveable {
     /**
      * Set the velocity of the thing. Could be set by itself or external.
      *
+     * @param velocity The velocity of the thing.
+     */
+    void velocity(Velocity velocity);
+
+    /**
+     * Set the velocity of the thing. Could be set by itself or external.
+     *
      * @param speed The speed of the velocity in feet per hour.
      * @param destination The spherical coordinate destination.
      */

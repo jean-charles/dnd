@@ -11,22 +11,22 @@ public record Coordinate(BigDecimal x, BigDecimal y) {
         this(BigDecimal.valueOf(x), BigDecimal.valueOf(y));
     }
 
-    public static Coordinate from(CircularCoordinate sc) {
-        double rho = sc.rho().doubleValue();
-        double phi = sc.orientation().phi().doubleValue();
-
-        double x = rho * cos(phi);
-        double y = rho * sin(phi);
-
-        return new Coordinate(x, y);
-    }
-
     public Coordinate add(Coordinate relativeCoordinate) {
         var x = relativeCoordinate.x.doubleValue();
         var y = relativeCoordinate.y.doubleValue();
 
         x += this.x.doubleValue();
         y += this.y.doubleValue();
+
+        return new Coordinate(x, y);
+    }
+
+    public Coordinate from(CircularCoordinate sc) {
+        double rho = sc.rho().doubleValue();
+        double phi = sc.orientation().phi().doubleValue();
+
+        double x = this.x.doubleValue() + rho * cos(phi);
+        double y = this.y.doubleValue() + rho * sin(phi);
 
         return new Coordinate(x, y);
     }
