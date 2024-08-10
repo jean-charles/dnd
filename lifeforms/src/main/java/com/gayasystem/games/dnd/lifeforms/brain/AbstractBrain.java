@@ -63,7 +63,7 @@ public abstract class AbstractBrain implements Brain {
             case scared -> {
                 return 1.0;
             }
-            case attracted -> {
+            case attracted, hungry -> {
                 return 0.75;
             }
             case neutral -> {

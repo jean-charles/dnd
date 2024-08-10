@@ -59,6 +59,8 @@ public class World implements Runnable, LifeEnvironment {
             return;
         var lifeForm = (LifeForm) thing;
         var foodCoordinate = lifeForm.foodCoordinate();
+        if (foodCoordinate == null)
+            return;
         var food = catchThing(lifeForm, foodCoordinate);
         if (food == null)
             return;
