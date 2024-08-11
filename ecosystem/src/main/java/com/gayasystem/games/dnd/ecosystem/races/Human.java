@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.ecosystem.races;
 
 import com.gayasystem.games.dnd.ecosystem.Character;
+import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.gametools.alignments.Alignment;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
@@ -9,10 +10,12 @@ import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 @Scope("prototype")
 public class Human extends Character {
-    public Human(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
+    public Human(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -25,7 +28,6 @@ public class Human extends Character {
                 ),
                 alignment,
                 null,
-                armorClass,
                 125, // 125 to 250 lb
                 gender,
                 30,
@@ -34,7 +36,9 @@ public class Human extends Character {
                 null,
                 0.0,
                 Emotion.neutral,
-                null
+                Map.of(
+                        Almiraj.class, Emotion.hungry
+                )
         );
     }
 }

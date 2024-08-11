@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Dwarf extends Character {
-    public Dwarf(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
+    public Dwarf(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -25,7 +25,6 @@ public class Dwarf extends Character {
                 ),
                 alignment,
                 null,
-                armorClass,
                 150,
                 gender,
                 25,

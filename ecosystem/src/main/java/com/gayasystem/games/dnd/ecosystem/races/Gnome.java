@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Gnome extends Character {
-    public Gnome(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
+    public Gnome(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -25,7 +25,6 @@ public class Gnome extends Character {
                 ),
                 alignment,
                 null,
-                armorClass,
                 40, // 40 to 45 lb
                 gender,
                 25,

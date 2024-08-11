@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Tiefling extends Character {
-    public Tiefling(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
+    public Tiefling(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -25,7 +25,6 @@ public class Tiefling extends Character {
                 ),
                 alignment,
                 null,
-                armorClass,
                 140, // 140 to 220 lb
                 gender,
                 30,

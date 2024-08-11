@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class HalfOrc extends Character {
-    public HalfOrc(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
+    public HalfOrc(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -25,7 +25,6 @@ public class HalfOrc extends Character {
                 ),
                 alignment,
                 null,
-                armorClass,
                 155, // 155 to 225 lb
                 gender,
                 30,

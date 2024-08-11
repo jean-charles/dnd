@@ -7,4 +7,7 @@ public record AbilityScores(
         Ability intelligence,
         Ability wisdom,
         Ability charisma) {
+    public AbilityScores() {
+        this(new Ability(), new Ability(), new Ability(), new Ability(), new Ability(), new Ability());
+    }
 }

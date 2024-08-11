@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Dragonborn extends Character {
-    public Dragonborn(AbilityScores abilityScores, Alignment alignment, int armorClass, Gender gender) {
+    public Dragonborn(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -25,7 +25,6 @@ public class Dragonborn extends Character {
                 ),
                 alignment,
                 null,
-                armorClass,
                 250,
                 gender,
                 30,

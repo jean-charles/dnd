@@ -16,18 +16,27 @@ import java.util.Set;
 
 public abstract class Character extends LifeForm {
     private AbilityScores abilityScores;
-    private AbilityScores abilityScoreIncrease;
     private Alignment alignment;
     private Skills skills;
     private int armorClass;
     private Set<Equipment> equipments = new HashSet<>();
 
-    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, int armorClass, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         super(mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, defaultEmotion, longTermMemories);
-        this.abilityScores = abilityScores;
-        this.abilityScoreIncrease = abilityScoreIncrease;
+        this.abilityScores = calculate(abilityScores, abilityScoreIncrease);
         this.alignment = alignment;
         this.skills = skills;
-        this.armorClass = armorClass;
+        this.armorClass = 10 + this.abilityScores.dexterity().modifier();
+    }
+
+    private AbilityScores calculate(AbilityScores abilityScores, AbilityScores abilityScoreIncrease) {
+        return new AbilityScores(
+                abilityScores.strength().add(abilityScoreIncrease.strength()),
+                abilityScores.dexterity().add(abilityScoreIncrease.dexterity()),
+                abilityScores.constitution().add(abilityScoreIncrease.constitution()),
+                abilityScores.intelligence().add(abilityScoreIncrease.intelligence()),
+                abilityScores.wisdom().add(abilityScoreIncrease.wisdom()),
+                abilityScores.charisma().add(abilityScoreIncrease.charisma())
+        );
     }
 }
