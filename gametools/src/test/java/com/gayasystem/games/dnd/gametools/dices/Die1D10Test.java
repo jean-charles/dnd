@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 public class Die1D10Test extends AbstractDie {
     @BeforeEach
     public void setUp() {
-        die = Die1D10.dice;
+        die = Die1D10.die;
         max = 10;
     }
 }
