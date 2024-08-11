@@ -46,7 +46,7 @@ public abstract class AbstractBrain implements Brain {
         }
     }
 
-    private Velocity move(SpatialEmotionalEngram mostImportantEngram) {
+    private Velocity computeVelocity(SpatialEmotionalEngram mostImportantEngram) {
         var speedRate = computeSpeed(mostImportantEngram.emotion());
         var orientation = computeOrientation(mostImportantEngram);
         var engram = mostImportantEngram.engram();
@@ -98,7 +98,7 @@ public abstract class AbstractBrain implements Brain {
             case doNothing -> {
             }
             case eat -> body.foodCoordinate(engram.origin());
-            case move -> body.velocity(move(engram));
+            case move -> body.velocity(computeVelocity(engram));
         }
     }
 

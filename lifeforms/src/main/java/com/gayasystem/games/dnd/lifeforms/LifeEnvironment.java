@@ -11,4 +11,8 @@ public interface LifeEnvironment {
     void show(Sighted sighted, double sightDistance);
 
     void listen(Hearing hearing, double minSoundAmplitude);
+
+    void eat(LifeForm lifeForm);
+
+    void move(Thing thing);
 }

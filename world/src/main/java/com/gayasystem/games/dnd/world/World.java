@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static java.math.BigDecimal.ZERO;
+import static java.math.BigDecimal.TEN;
 
 @Component
 public class World implements Runnable, LifeEnvironment {
@@ -35,41 +35,8 @@ public class World implements Runnable, LifeEnvironment {
         thingsByCoordinate.remove(inGameObject.coordinate());
     }
 
-    private void move(Thing thing) {
-        var velocity = thing.velocity();
-        if (velocity != null) {
-            var speed = velocity.speed();
-            var destination = velocity.destination();
-            if (speed < destination.rho().doubleValue()) {
-                var rho = BigDecimal.valueOf(speed);
-                destination = new CircularCoordinate(rho, destination.orientation());
-            }
-            var obj = inGameObjects.get(thing);
-            var coordinate = obj.coordinate();
-            var orientation = obj.orientation();
-
-            var relativeCoordinate = coordinate.from(destination);
-            var newCoordinate = relativeCoordinate;//coordinate.add(relativeCoordinate);
-            addThing(thing, newCoordinate, orientation);
-        }
-    }
-
-    private void eat(Thing thing) {
-        if (!(thing instanceof LifeForm))
-            return;
-        var lifeForm = (LifeForm) thing;
-        var foodCoordinate = lifeForm.foodCoordinate();
-        if (foodCoordinate == null)
-            return;
-        var food = catchThing(lifeForm, foodCoordinate);
-        if (food == null)
-            return;
-        removeThing(food);
-        lifeForm.eat((Food) food);
-    }
-
     private Thing catchThing(LifeForm lifeForm, CircularCoordinate targetRelativeCoordinate) {
-        if (targetRelativeCoordinate.rho().compareTo(ZERO) != 0)
+        if (targetRelativeCoordinate.rho().compareTo(TEN) > 0)
             return null;
         var catcher = inGameObjects.get(lifeForm);
         var catcherCoordinate = catcher.coordinate();
@@ -82,8 +49,6 @@ public class World implements Runnable, LifeEnvironment {
     public void run() {
         for (var thing : inGameObjects.keySet()) {
             thing.run();
-            move(thing);
-            eat(thing);
         }
     }
 
@@ -122,6 +87,40 @@ public class World implements Runnable, LifeEnvironment {
         var newThingOrientation = orientation.transpose(originOrientation);
 
         addThing(newThing, originCoordinate, newThingOrientation);
+    }
+
+    @Override
+    public void move(Thing thing) {
+        var velocity = thing.velocity();
+        if (velocity != null) {
+            var speed = velocity.speed();
+            var destination = velocity.destination();
+            var rho = destination.rho().doubleValue();
+            if (speed < rho)
+                rho = speed;
+            else
+                rho -= 10;
+            destination = new CircularCoordinate(rho, destination.orientation());
+            var obj = inGameObjects.get(thing);
+            var coordinate = obj.coordinate();
+            var orientation = obj.orientation();
+
+            var relativeCoordinate = coordinate.from(destination);
+            var newCoordinate = relativeCoordinate;//coordinate.add(relativeCoordinate);
+            addThing(thing, newCoordinate, orientation);
+        }
+    }
+
+    @Override
+    public void eat(LifeForm lifeForm) {
+        var foodCoordinate = lifeForm.foodCoordinate();
+        if (foodCoordinate == null)
+            return;
+        var food = catchThing(lifeForm, foodCoordinate);
+        if (food == null)
+            return;
+        removeThing(food);
+        lifeForm.eat((Food) food);
     }
 
     public void add(Thing thing, Coordinate coordinate, Orientation orientation) {

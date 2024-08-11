@@ -1,6 +1,5 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
-import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import java.util.Collection;
 
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.Action.*;
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.neutral;
-import static java.math.BigDecimal.ZERO;
+import static java.math.BigDecimal.TEN;
 
 @Service
 public class EngramComputing {
@@ -31,11 +30,11 @@ public class EngramComputing {
 
     private SpatialEmotionalEngram findMostImportantEngram(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
         var mostImportantEngram = new SpatialEmotionalEngram(null, neutral);
-        double closedDistance = Double.MAX_VALUE;
+        double closestDistance = Double.MAX_VALUE;
         for (var spatialEmotionalEngram : spatialEmotionalEngrams) {
             var distance = spatialEmotionalEngram.engram().origin().rho().doubleValue();
-            if (distance < closedDistance) {
-                closedDistance = distance;
+            if (distance < closestDistance) {
+                closestDistance = distance;
                 mostImportantEngram = spatialEmotionalEngram;
             }
         }
@@ -47,9 +46,8 @@ public class EngramComputing {
             case attracted, scared -> move;
             case hungry -> {
                 var spatialEngram = mostImportantEngram.engram();
-                var thingClass = spatialEngram.engram().thingClass();
                 var distance = spatialEngram.origin().rho();
-                if (thingClass.isAssignableFrom(Food.class) && distance.compareTo(ZERO) == 0)
+                if (distance.compareTo(TEN) <= 0)
                     yield eat;
                 yield move;
             }

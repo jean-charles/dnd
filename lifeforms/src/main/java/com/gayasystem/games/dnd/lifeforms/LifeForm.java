@@ -66,9 +66,17 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
     public void run() {
         if (brain == null)
             brain = brainFactory.create(this, maxSpeed, defaultEmotion, longTermMemories);
+
+        foodCoordinate = null;
+        velocity(null);
+
         environment.show(this, convertor.miles2Inches(sightDistance));
         environment.listen(this, minSoundAmplitude);
         brain.run();
+        if (foodCoordinate != null)
+            environment.eat(this);
+        if (velocity() != null)
+            environment.move(this);
     }
 
     @Override
@@ -97,5 +105,6 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
 
     @Override
     public void eat(Food food) {
+        food.nourishment();
     }
 }
