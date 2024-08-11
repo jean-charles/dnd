@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public abstract class AbstractDice {
+public abstract class AbstractDie {
     protected static final int NB_ROLLS = 1000000;
 
-    protected Dice dice;
+    protected Die die;
     protected int max;
 
     @Test
     public void roll() {
         int rolls = 0;
         for (int i = 0; i < NB_ROLLS; i++) {
-            int roll = dice.roll();
+            int roll = die.roll();
             rolls += roll;
             assertTrue(roll >= 1);
             assertTrue(roll <= max);

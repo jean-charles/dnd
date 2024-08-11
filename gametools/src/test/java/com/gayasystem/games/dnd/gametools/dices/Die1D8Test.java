@@ -2,10 +2,10 @@ package com.gayasystem.games.dnd.gametools.dices;
 
 import org.junit.jupiter.api.BeforeEach;
 
-public class Dice1d12Test extends AbstractDice {
+public class Die1D8Test extends AbstractDie {
     @BeforeEach
     public void setUp() {
-        dice = Dice1d12.dice;
-        max = 12;
+        die = Die1D8.dice;
+        max = 8;
     }
 }

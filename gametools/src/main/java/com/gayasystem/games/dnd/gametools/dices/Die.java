@@ -1,9 +1,9 @@
 package com.gayasystem.games.dnd.gametools.dices;
 
-public abstract class Dice {
+public abstract class Die {
     private final int max;
 
-    protected Dice(int max) {
+    protected Die(int max) {
         this.max = max;
     }
 

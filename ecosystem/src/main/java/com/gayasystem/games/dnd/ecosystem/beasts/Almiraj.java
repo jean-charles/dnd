@@ -2,7 +2,7 @@ package com.gayasystem.games.dnd.ecosystem.beasts;
 
 import com.gayasystem.games.dnd.ecosystem.Beast;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
-import com.gayasystem.games.dnd.gametools.dices.Dice1d6;
+import com.gayasystem.games.dnd.gametools.dices.Die1D6;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
@@ -48,7 +48,7 @@ public class Almiraj extends Beast {
                         0,
                         0),
                 0,
-                Dice1d6.dice,
+                Die1D6.dice,
                 9,
                 Gender.male,
                 60,
