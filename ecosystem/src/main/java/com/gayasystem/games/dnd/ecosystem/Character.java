@@ -30,6 +30,8 @@ public abstract class Character extends LifeForm {
     }
 
     private AbilityScores calculate(AbilityScores abilityScores, AbilityScores abilityScoreIncrease) {
+        if (abilityScoreIncrease == null)
+            return abilityScores;
         return new AbilityScores(
                 abilityScores.strength().add(abilityScoreIncrease.strength()),
                 abilityScores.dexterity().add(abilityScoreIncrease.dexterity()),

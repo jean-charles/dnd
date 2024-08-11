@@ -29,6 +29,8 @@ public record Ability(int score, int modifier) {
     }
 
     public Ability add(Ability ability) {
+        if (ability == null)
+            return this;
         var score = this.score;
         score += ability.score;
         return new Ability(score);

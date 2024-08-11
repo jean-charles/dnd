@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.drawables.food;
+package com.gayasystem.games.dnd.races;
 
 import com.gayasystem.games.dnd.drawables.Drawable;
 import com.gayasystem.games.dnd.world.InGameObject;
@@ -10,9 +10,9 @@ import static java.awt.Color.darkGray;
 import static java.awt.Color.white;
 
 @Service
-public class DrawableAlmiraj implements Drawable {
+public class DrawableHuman implements Drawable {
     @Override
-    public void draw(int width, int height, InGameObject obj, Point point, Graphics g) {
+    public void draw(int width, int height, InGameObject obj, Point point, Graphics2D g) {
         int x = point.x;
         int y = point.y;
 

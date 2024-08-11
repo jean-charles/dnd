@@ -21,7 +21,7 @@ public class Drawer {
             Drawable drawable = (Drawable) ctx.getBean(thingName);
 
             var p = convertor.coordinate2Point(feet, width, height, obj.coordinate());
-            drawable.draw(width, height, obj, p, g);
+            drawable.draw(width, height, obj, p, (Graphics2D) g);
         } catch (Exception e) {
             e.printStackTrace();
         }
