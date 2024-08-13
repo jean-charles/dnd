@@ -11,10 +11,7 @@ import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static java.math.BigDecimal.TEN;
 
@@ -22,6 +19,7 @@ import static java.math.BigDecimal.TEN;
 public class World implements Runnable, LifeEnvironment {
     private Map<Thing, InGameObject> inGameObjects = new HashMap<>();
     private Map<Coordinate, Thing> thingsByCoordinate = new HashMap<>();
+    private Collection<Thing> thingsToRemove = new ArrayList<>();
 
     private void addThing(Thing thing, Coordinate newCoordinate, Orientation orientation) {
         var previous = inGameObjects.put(thing, new InGameObject(thing, newCoordinate, orientation));
@@ -31,8 +29,15 @@ public class World implements Runnable, LifeEnvironment {
     }
 
     private void removeThing(Thing thing) {
-        var inGameObject = inGameObjects.remove(thing);
-        thingsByCoordinate.remove(inGameObject.coordinate());
+        thingsToRemove.add(thing);
+    }
+
+    private void cleanThings() {
+        for (var thing : thingsToRemove) {
+            var inGameObject = inGameObjects.remove(thing);
+            thingsByCoordinate.remove(inGameObject.coordinate());
+        }
+        thingsToRemove.clear();
     }
 
     private Thing catchThing(LifeForm lifeForm, CircularCoordinate targetRelativeCoordinate) {
@@ -50,6 +55,7 @@ public class World implements Runnable, LifeEnvironment {
         for (var thing : inGameObjects.keySet()) {
             thing.run();
         }
+        cleanThings();
     }
 
     @Override
