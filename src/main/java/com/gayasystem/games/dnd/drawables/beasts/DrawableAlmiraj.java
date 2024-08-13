@@ -4,26 +4,33 @@ import com.gayasystem.games.dnd.drawables.Drawable;
 import com.gayasystem.games.dnd.world.InGameObject;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.io.IOException;
+import java.util.Objects;
 
-import static java.awt.Color.darkGray;
-import static java.awt.Color.white;
+import static java.lang.Math.PI;
 
 @Service
 public class DrawableAlmiraj implements Drawable {
+    private final Image image;
+
+    public DrawableAlmiraj() throws IOException {
+        var img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/beasts/Almiraj.png")));
+        image = img.getScaledInstance(80, 100, Image.SCALE_SMOOTH);
+    }
+
     @Override
     public void draw(int width, int height, InGameObject obj, Point point, Graphics2D g) {
+        var orientation = obj.orientation().phi().doubleValue();
+        orientation += PI / 2;
         int x = point.x;
         int y = point.y;
 
-        g.setColor(darkGray);
-        Polygon p = new Polygon(new int[]{x - 5, x, x + 5}, new int[]{y - 25, y - 60, y - 25}, 3);
-        g.drawPolygon(p);
-        g.fillPolygon(p);
-
-        g.setColor(white);
-        g.fillOval(x - 20, y - 25, 40, 50);
-        g.fillOval(x - 20, y - 50, 15, 50);
-        g.fillOval(x + 5, y - 50, 15, 50);
+        var at = new AffineTransform();
+        at.translate(x - (double) image.getWidth(null) / 2, y - (double) image.getHeight(null) / 2);
+        at.rotate(orientation, (double) image.getWidth(null) / 2, (double) image.getHeight(null) / 2);
+        ((Graphics2D) g).drawImage(image, at, null);
     }
 }
