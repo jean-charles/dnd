@@ -10,7 +10,6 @@ import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import static java.math.BigDecimal.TEN;
@@ -68,14 +67,15 @@ public class World implements Runnable, LifeEnvironment {
             if (sighted == other) continue;
 
             var sightedObj = inGameObjects.get((Thing) other);
-            var coordinate = sightedObj.coordinate();
-            var orientation = sightedObj.orientation();
+            var targetCcoordinate = sightedObj.coordinate();
 
-            var distance = coordinate.distanceFrom(lifeFormCoordinate);
+            var distance = targetCcoordinate.distanceFrom(lifeFormCoordinate);
             if (distance <= sightDistance) {
-                var finalRelativePosition = new CircularCoordinate(BigDecimal.valueOf(distance), orientation);
-                var relativeOrientation = lifeFormOrientation.transpose(orientation);
-                sighted.see(other, finalRelativePosition, relativeOrientation);
+                var targetOrientation = sightedObj.orientation();
+
+                var finalRelativeCoordinate = lifeFormCoordinate.to(targetCcoordinate);
+                var relativeOrientation = lifeFormOrientation.transpose(targetOrientation);
+                sighted.see(other, finalRelativeCoordinate, relativeOrientation);
             }
         }
     }

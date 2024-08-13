@@ -4,6 +4,7 @@ import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.PI;
+import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CoordinateTest {
@@ -19,6 +20,11 @@ class CoordinateTest {
         assertEquals(expectedPhi, circularCoordinate.orientation().phi().doubleValue(), 0.000000000000001);
     }
 
+    private void assertTo(double expectedRho, double expectedPhi, CircularCoordinate actual) {
+        assertEquals(expectedRho, actual.rho().doubleValue(), 0.000000000000001);
+        assertEquals(expectedPhi, actual.orientation().phi().doubleValue(), 0.000000000000001);
+    }
+
     @Test
     void assertFrom() {
         var c = new Coordinate(0, 0);
@@ -26,6 +32,21 @@ class CoordinateTest {
         assertFrom(0, 1, c, new CircularCoordinate(1, PI / 2));
         assertFrom(-1, 0, c, new CircularCoordinate(1, PI));
         assertFrom(0, -1, c, new CircularCoordinate(1, 3 * PI / 2));
+    }
+
+    @Test
+    void toCoordinates() {
+        var from = new Coordinate(1, 1);
+        var to = new Coordinate(2, 2);
+        assertTo(sqrt(2), PI / 4, from.to(to));
+
+        from = new Coordinate(2, 2);
+        to = new Coordinate(1, 1);
+        assertTo(sqrt(2), -3 * PI / 4, from.to(to));
+
+        from = new Coordinate(950, 0);
+        to = new Coordinate(960, 0);
+        assertTo(10, 0, from.to(to));
     }
 
     @Test

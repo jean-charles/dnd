@@ -11,16 +11,6 @@ public record Coordinate(BigDecimal x, BigDecimal y) {
         this(BigDecimal.valueOf(x), BigDecimal.valueOf(y));
     }
 
-    public Coordinate add(Coordinate relativeCoordinate) {
-        var x = relativeCoordinate.x.doubleValue();
-        var y = relativeCoordinate.y.doubleValue();
-
-        x += this.x.doubleValue();
-        y += this.y.doubleValue();
-
-        return new Coordinate(x, y);
-    }
-
     public Coordinate from(CircularCoordinate sc) {
         double rho = sc.rho().doubleValue();
         double phi = sc.orientation().phi().doubleValue();
@@ -32,22 +22,15 @@ public record Coordinate(BigDecimal x, BigDecimal y) {
     }
 
     public CircularCoordinate to() {
-        double x = this.x.doubleValue();
-        double y = this.y.doubleValue();
+        return to(new Coordinate(0, 0));
+    }
 
-        double rho = sqrt(x * x + y * y);
-        double phi = 0;
-        if (x == 0 && y > 0)
-            phi = PI / 2;
-        else if (x == 0)
-            phi = -PI / 2;
-        else if (y == 0 && x > 0)
-            phi = 0;
-        else if (y == 0)
-            phi = PI;
-        else
-            phi = atan(y / x);
+    public CircularCoordinate to(Coordinate coordinate) {
+        double x = coordinate.x.subtract(this.x).doubleValue();
+        double y = coordinate.y.subtract(this.y).doubleValue();
 
+        double rho = hypot(x, y);
+        double phi = atan2(y, x);
         return new CircularCoordinate(rho, phi);
     }
 

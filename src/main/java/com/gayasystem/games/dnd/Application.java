@@ -18,6 +18,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import static java.awt.Color.black;
+import static java.lang.Math.PI;
 import static javax.swing.GroupLayout.Alignment.CENTER;
 
 @SpringBootApplication
@@ -65,7 +66,7 @@ public class Application extends JFrame {
     private void init(World world) {
         var orientation = new Orientation(0);
         world.add(newThing(Almiraj.class), new Coordinate(convertor.feet2Inches(0), 0), orientation);
-//        orientation = new Orientation(PI/2);
+        orientation = new Orientation(PI / 2);
         world.add(newThing(Carrot.class), new Coordinate(convertor.feet2Inches(80), 0), orientation);
     }
 
