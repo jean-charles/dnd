@@ -3,6 +3,9 @@ package com.gayasystem.games.dnd.ecosystem.races;
 import com.gayasystem.games.dnd.ecosystem.Character;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.gametools.alignments.Alignment;
+import com.gayasystem.games.dnd.gametools.alignments.Ethical;
+import com.gayasystem.games.dnd.gametools.alignments.Moral;
+import com.gayasystem.games.dnd.gametools.dices.Die1D20;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.lifeforms.Gender;
@@ -15,6 +18,23 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class Human extends Character {
+    public Human() {
+        this(
+                new AbilityScores(
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll())
+                ),
+                new Alignment(
+                        Ethical.neutral,
+                        Moral.neutral
+                ),
+                Gender.female
+        );
+    }
     public Human(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
                 abilityScores,

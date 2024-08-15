@@ -15,7 +15,7 @@ public class CoordinateConvertor {
     public Point coordinate2Point(int feet, int width, int height, Coordinate coordinate) {
         var pixelSizeInInches = width / convertor.feet2Inches(feet);
         int x = (int) (width / 2.0 + coordinate.x().doubleValue() * pixelSizeInInches);
-        int y = (int) (height / 2.0 + coordinate.y().doubleValue() * pixelSizeInInches);
+        int y = (int) (height / 2.0 - coordinate.y().doubleValue() * pixelSizeInInches);
         return new Point(x, y);
     }
 }

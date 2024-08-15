@@ -107,4 +107,8 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
     public void eat(Food food) {
         food.nourishment();
     }
+
+    public Gender gender() {
+        return gender;
+    }
 }

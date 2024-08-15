@@ -6,6 +6,7 @@ import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.drawables.Drawer;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
+import com.gayasystem.games.dnd.ecosystem.races.Human;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.World;
 import org.springframework.boot.WebApplicationType;
@@ -31,7 +32,7 @@ public class Application extends JFrame {
         this.convertor = ctx.getBean(MeasurementConvertor.class);
         init(world);
         var canvas = new Canvas(400, drawer, world);
-        canvas.setSize(300, 300);
+        canvas.setSize(100, 100);
         canvas.setBackground(black);
 
         var quitButton = new JButton("Quit");
@@ -41,7 +42,7 @@ public class Application extends JFrame {
 
         createLayout(canvas, quitButton);
 
-        setSize(800, 600);
+        setSize(200, 200);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -64,10 +65,9 @@ public class Application extends JFrame {
     }
 
     private void init(World world) {
-        var orientation = new Orientation(0);
-        world.add(newThing(Almiraj.class), new Coordinate(convertor.feet2Inches(0), 0), orientation);
-        orientation = new Orientation(PI / 2);
-        world.add(newThing(Carrot.class), new Coordinate(convertor.feet2Inches(80), 0), orientation);
+        world.add(newThing(Human.class), new Coordinate(convertor.feet2Inches(-180), convertor.feet2Inches(100)), new Orientation(PI / 4));
+        world.add(newThing(Almiraj.class), new Coordinate(convertor.feet2Inches(-180), convertor.feet2Inches(0)), new Orientation(0));
+        world.add(newThing(Carrot.class), new Coordinate(convertor.feet2Inches(180), convertor.feet2Inches(0)), new Orientation(PI / 2));
     }
 
     private void createLayout(Component... arg) {
