@@ -7,7 +7,7 @@ public class EmotionConverter {
         double weight = 0.0;
         switch (emotion) {
             case scared -> weight = 1.0;
-            case attracted -> weight = 0.5;
+            case hungry, attracted -> weight = 0.5;
         }
         return weight;
     }
@@ -16,7 +16,7 @@ public class EmotionConverter {
         Orientation orientation = new Orientation(0.0);
         switch (emotion) {
             case scared -> orientation = origin.opposite();
-            case attracted -> orientation = origin;
+            case hungry, attracted -> orientation = origin;
         }
         return orientation;
     }

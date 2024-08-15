@@ -63,7 +63,7 @@ public abstract class AbstractBrain implements Brain {
             case scared -> {
                 return 1.0;
             }
-            case attracted, hungry -> {
+            case hungry, attracted -> {
                 return 0.75;
             }
             case neutral -> {
@@ -78,7 +78,7 @@ public abstract class AbstractBrain implements Brain {
             case scared -> {
                 return engram.engram().origin().orientation().opposite();
             }
-            case attracted -> {
+            case hungry, attracted -> {
                 return engram.engram().origin().orientation();
             }
         }
