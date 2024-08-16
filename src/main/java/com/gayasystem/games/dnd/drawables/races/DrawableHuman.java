@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static com.gayasystem.games.dnd.lifeforms.Gender.female;
-import static java.lang.Math.PI;
 
 @Service
 public class DrawableHuman implements Drawable {
@@ -21,16 +20,15 @@ public class DrawableHuman implements Drawable {
 
     public DrawableHuman() throws IOException {
         var img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanFemale.png")));
-        imageFemale = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        imageFemale = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
 
         img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanMale.png")));
-        imageMale = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        imageMale = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
     }
 
     @Override
     public void draw(int width, int height, InGameObject obj, Point point, Graphics2D g) {
         var orientation = obj.orientation().phi().doubleValue();
-        orientation += PI / 2;
         int x = point.x;
         int y = point.y;
 

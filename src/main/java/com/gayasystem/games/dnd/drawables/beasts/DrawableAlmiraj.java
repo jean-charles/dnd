@@ -10,21 +10,18 @@ import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.Objects;
 
-import static java.lang.Math.PI;
-
 @Service
 public class DrawableAlmiraj implements Drawable {
     private final Image image;
 
     public DrawableAlmiraj() throws IOException {
         var img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/beasts/Almiraj.png")));
-        image = img.getScaledInstance(80, 100, Image.SCALE_SMOOTH);
+        image = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
     }
 
     @Override
     public void draw(int width, int height, InGameObject obj, Point point, Graphics2D g) {
         var orientation = obj.orientation().phi().doubleValue();
-        orientation += PI / 2;
         int x = point.x;
         int y = point.y;
 
