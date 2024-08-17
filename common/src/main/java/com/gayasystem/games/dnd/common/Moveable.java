@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.common;
 
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.Orientation;
 
 public interface Moveable {
     /**
@@ -23,4 +24,8 @@ public interface Moveable {
      * @return {@link Velocity}
      */
     Velocity velocity();
+
+    void rotation(Orientation orientation);
+
+    Orientation rotation();
 }

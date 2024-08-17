@@ -1,11 +1,12 @@
 package com.gayasystem.games.dnd.common;
 
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.Orientation;
 
 public abstract class Thing implements Moveable, Runnable {
     protected double mass;
-    private double speed;
     private Velocity velocity;
+    private Orientation rotation;
 
     protected Thing(double mass) {
         this.mass = mass;
@@ -33,5 +34,15 @@ public abstract class Thing implements Moveable, Runnable {
     @Override
     public Velocity velocity() {
         return velocity;
+    }
+
+    @Override
+    public void rotation(Orientation orientation) {
+        this.rotation = orientation;
+    }
+
+    @Override
+    public Orientation rotation() {
+        return rotation;
     }
 }

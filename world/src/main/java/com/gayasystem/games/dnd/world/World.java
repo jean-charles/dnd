@@ -109,10 +109,11 @@ public class World implements Runnable, LifeEnvironment {
             destination = new CircularCoordinate(rho, destination.orientation());
             var obj = inGameObjects.get(thing);
             var coordinate = obj.coordinate();
-            var orientation = obj.orientation();
+//            var orientation = obj.orientation();
 
             var relativeCoordinate = coordinate.from(destination);
             var newCoordinate = relativeCoordinate;//coordinate.add(relativeCoordinate);
+            var orientation = thing.rotation();
             addThing(thing, newCoordinate, orientation);
         }
     }

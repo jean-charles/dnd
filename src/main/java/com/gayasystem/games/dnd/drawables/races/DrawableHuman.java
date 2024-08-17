@@ -35,7 +35,7 @@ public class DrawableHuman implements Drawable {
         var at = new AffineTransform();
         Image image = ((Human) obj.thing()).gender() == female ? imageFemale : imageMale;
         at.translate(x - (double) image.getWidth(null) / 2, y - (double) image.getHeight(null) / 2);
-        at.rotate(orientation, (double) image.getWidth(null) / 2, (double) image.getHeight(null) / 2);
+        at.rotate(-orientation, (double) image.getWidth(null) / 2, (double) image.getHeight(null) / 2);
         ((Graphics2D) g).drawImage(image, at, null);
     }
 }

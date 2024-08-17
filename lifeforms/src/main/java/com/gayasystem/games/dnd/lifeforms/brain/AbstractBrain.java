@@ -98,7 +98,11 @@ public abstract class AbstractBrain implements Brain {
             case doNothing -> {
             }
             case eat -> body.foodCoordinate(engram.origin());
-            case move -> body.velocity(computeVelocity(engram));
+            case move -> {
+                Velocity velocity = computeVelocity(engram);
+                body.velocity(velocity);
+                body.rotation(velocity.destination().orientation());
+            }
         }
     }
 
