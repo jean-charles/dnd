@@ -37,7 +37,7 @@ public class DrawableHuman implements Drawable {
 
         var at = new AffineTransform();
         Image image;
-        var pixels = (int) (pixelsPerFoot * 4.0);
+        var pixels = (int) (pixelsPerFoot * 6.0);
         if (((Human) obj.thing()).gender() == female)
             image = imgFemale.getScaledInstance(pixels, pixels, Image.SCALE_SMOOTH);
         else

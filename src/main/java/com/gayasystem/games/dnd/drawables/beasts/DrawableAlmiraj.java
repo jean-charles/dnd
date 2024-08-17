@@ -32,7 +32,7 @@ public class DrawableAlmiraj implements Drawable {
 
         var at = new AffineTransform();
         int pixels = (int) (pixelsPerFoot * 3.0);
-        var image = img.getScaledInstance(pixels, pixels, Image.SCALE_SMOOTH);
+        var image = img.getScaledInstance(pixels, (int) (pixels * 0.75), Image.SCALE_SMOOTH);
         at.translate(x - (double) image.getWidth(null) / 2, y - (double) image.getHeight(null) / 2);
         at.rotate(-orientation, (double) image.getWidth(null) / 2, (double) image.getHeight(null) / 2);
         ((Graphics2D) g).drawImage(image, at, null);

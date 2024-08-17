@@ -6,6 +6,7 @@ import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.drawables.Drawer;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
+import com.gayasystem.games.dnd.ecosystem.races.Human;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.World;
 import org.springframework.boot.WebApplicationType;
@@ -64,7 +65,7 @@ public class Application extends JFrame {
     }
 
     private void init(World world) {
-//        world.add(newThing(Human.class), new Coordinate(0, 15, new Orientation(PI / 4));
+        world.add(newThing(Human.class), new Coordinate(20, 15), new Orientation(-3 * PI / 4));
         world.add(newThing(Almiraj.class), new Coordinate(-20, 0), new Orientation(0));
         world.add(newThing(Carrot.class), new Coordinate(20, 0), new Orientation(-PI / 2));
     }
