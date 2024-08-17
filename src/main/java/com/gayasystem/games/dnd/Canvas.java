@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Canvas extends JPanel {
-    private final int feet;
+    private final int feetWidth;
     private final Drawer drawer;
     private final World world;
     private Thread worker = new Thread() {
@@ -26,9 +26,9 @@ public class Canvas extends JPanel {
         }
     };
 
-    public Canvas(int feet, Drawer drawer, World world) {
+    public Canvas(int feetWidth, Drawer drawer, World world) {
         super(true);
-        this.feet = feet;
+        this.feetWidth = feetWidth;
         this.drawer = drawer;
         this.world = world;
         worker.start();
@@ -48,6 +48,6 @@ public class Canvas extends JPanel {
     }
 
     private void draw(InGameObject obj, Graphics g) {
-        drawer.draw(feet, getWidth(), getHeight(), obj, g);
+        drawer.draw(feetWidth, getWidth(), getHeight(), obj, g);
     }
 }

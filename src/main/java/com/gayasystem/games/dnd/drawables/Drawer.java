@@ -15,12 +15,12 @@ public class Drawer {
     @Autowired
     private CoordinateConvertor convertor;
 
-    public void draw(int feet, int width, int height, InGameObject obj, Graphics g) {
+    public void draw(int feetWidth, int width, int height, InGameObject obj, Graphics g) {
         try {
             String thingName = "drawable" + obj.thing().getClass().getSimpleName();
             Drawable drawable = (Drawable) ctx.getBean(thingName);
 
-            var p = convertor.coordinate2Point(feet, width, height, obj.coordinate());
+            var p = convertor.coordinate2Point(feetWidth, width, height, obj.coordinate());
             drawable.draw(width, height, obj, p, (Graphics2D) g);
         } catch (Exception e) {
             e.printStackTrace();
