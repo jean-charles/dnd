@@ -13,7 +13,7 @@ public class Drawer {
     private ApplicationContext ctx;
 
     @Autowired
-    private CoordinateConvertor convertor;
+    private SizeConvertor convertor;
 
     public void draw(int feetWidth, int width, int height, InGameObject obj, Graphics g) {
         try {
@@ -21,7 +21,7 @@ public class Drawer {
             Drawable drawable = (Drawable) ctx.getBean(thingName);
 
             var p = convertor.coordinate2Point(feetWidth, width, height, obj.coordinate());
-            drawable.draw(width, height, obj, p, (Graphics2D) g);
+            drawable.draw(feetWidth, width, height, obj, p, (Graphics2D) g);
         } catch (Exception e) {
             e.printStackTrace();
         }

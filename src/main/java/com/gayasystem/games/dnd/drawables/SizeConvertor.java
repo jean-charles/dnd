@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.awt.*;
 
 @Service
-public class CoordinateConvertor {
+public class SizeConvertor {
     @Autowired
     MeasurementConvertor convertor;
 
@@ -17,5 +17,11 @@ public class CoordinateConvertor {
         int x = (int) (width / 2.0 + coordinate.x().doubleValue() * pixelSizeInInches);
         int y = (int) (height / 2.0 - coordinate.y().doubleValue() * pixelSizeInInches);
         return new Point(x, y);
+    }
+
+    public int feet2Pixels(int feetWidth, int width, double feetLength) {
+        var pixelSizeInInches = width / convertor.feet2Inches(feetWidth);
+        var length = convertor.feet2Inches(feetLength);
+        return (int) (length * pixelSizeInInches);
     }
 }
