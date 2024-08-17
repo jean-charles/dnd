@@ -4,12 +4,13 @@ import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.gayasystem.games.dnd.lifeforms.LifeForm.CATCHING_DISTANCE;
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.Action.*;
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.neutral;
-import static java.math.BigDecimal.TEN;
 
 @Service
 public class EngramComputing {
@@ -47,7 +48,7 @@ public class EngramComputing {
             case hungry -> {
                 var spatialEngram = mostImportantEngram.engram();
                 var distance = spatialEngram.origin().rho();
-                if (distance.compareTo(TEN) <= 0)
+                if (distance.compareTo(BigDecimal.valueOf(CATCHING_DISTANCE)) <= 0)
                     yield eat;
                 yield move;
             }

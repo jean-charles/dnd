@@ -31,6 +31,9 @@ class DrawableCarrotTest extends SwingTestCase {
     private InGameObject carrotObj;
 
     @Autowired
+    private MeasurementConvertor convertor;
+
+    @Autowired
     private ApplicationContext ctx;
 
     @BeforeEach
@@ -40,8 +43,9 @@ class DrawableCarrotTest extends SwingTestCase {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Point p = new Point(getWidth() / 2, getHeight() / 2);
+                int pixelPerInch = (int) convertor.feet2Inches(getWidth() / feetWidth);
                 if (carrotObj != null)
-                    drawableCarrot.draw(feetWidth, getWidth(), getHeight(), carrotObj, p, (Graphics2D) g);
+                    drawableCarrot.draw(pixelPerInch, carrotObj, p, (Graphics2D) g);
             }
         };
         panel.setSize(400, 400);

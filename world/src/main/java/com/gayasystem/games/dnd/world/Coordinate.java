@@ -6,6 +6,12 @@ import java.math.BigDecimal;
 
 import static java.lang.Math.*;
 
+/**
+ * Scalar coordinate in feet.
+ *
+ * @param x in feet.
+ * @param y in feet.
+ */
 public record Coordinate(BigDecimal x, BigDecimal y) {
     public Coordinate(double x, double y) {
         this(BigDecimal.valueOf(x), BigDecimal.valueOf(y));

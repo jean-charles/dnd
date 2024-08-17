@@ -16,11 +16,10 @@ public class Canvas extends JPanel {
         public void run() {
             try {
                 while (true) {
-                    Thread.sleep(250);
                     world.run();
                     repaint();
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }

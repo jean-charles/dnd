@@ -20,7 +20,7 @@ public abstract class AbstractBrain implements Brain {
     private static final Velocity NO_VELOCITY = new Velocity(0, new CircularCoordinate(0, 0));
 
     private final LifeForm body;
-    private final double maxSpeed;
+    private final double maxSpeedPerSecond;
     private final Emotion defaultEmotion;
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
     private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
@@ -28,11 +28,11 @@ public abstract class AbstractBrain implements Brain {
     @Autowired
     private EngramComputing engramComputing;
 
-    protected AbstractBrain(LifeForm body, double maxSpeed, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+    protected AbstractBrain(LifeForm body, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         if (body == null)
             throw new NullPointerException("body cannot be null");
         this.body = body;
-        this.maxSpeed = maxSpeed;
+        this.maxSpeedPerSecond = maxSpeedPerSecond;
         this.defaultEmotion = defaultEmotion;
         rememberLongTermMemories(longTermMemories);
     }
@@ -47,30 +47,25 @@ public abstract class AbstractBrain implements Brain {
     }
 
     private Velocity computeVelocity(SpatialEmotionalEngram mostImportantEngram) {
-        var speedRate = computeSpeed(mostImportantEngram.emotion());
+        var speed = computeSpeed(mostImportantEngram.emotion());
         var orientation = computeOrientation(mostImportantEngram);
         var engram = mostImportantEngram.engram();
         if (engram != null) {
             double rho = engram.origin().rho().doubleValue();
             var destination = new CircularCoordinate(rho, orientation);
-            return new Velocity(maxSpeed * speedRate, destination);
+            return new Velocity(speed, destination);
         }
         return NO_VELOCITY;
     }
 
     private double computeSpeed(Emotion emotion) {
-        switch (emotion) {
-            case scared -> {
-                return 1.0;
-            }
-            case hungry, attracted -> {
-                return 0.75;
-            }
-            case neutral -> {
-                return 0.5;
-            }
-        }
-        return 0;
+        double speedRate = switch (emotion) {
+            case scared -> 1.0;
+            case hungry, attracted -> 0.75;
+            case neutral -> 0.5;
+            default -> 0;
+        };
+        return speedRate * maxSpeedPerSecond;
     }
 
     private Orientation computeOrientation(SpatialEmotionalEngram engram) {

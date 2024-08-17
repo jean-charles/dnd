@@ -19,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
 
 public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater {
+    public static final double CATCHING_DISTANCE = 0.5;
+
     private final Gender gender;
-    private final double maxSpeed;
+    private final double maxSpeedPerSecond;
     private final double sightDistance;
     private final double nightSightDistance;
     private final SoundSpectrum soundSpectrum;
@@ -42,18 +44,18 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
 
     /**
      * @param mass               in pounds.
-     * @param gender
-     * @param maxSpeed in feet per hour.
+     * @param gender             female or male.
+     * @param speed              in feet.
      * @param sightDistance      in miles.
-     * @param nightSightDistance in foot.
+     * @param nightSightDistance in feet.
      * @param soundSpectrum
      * @param minSoundAmplitude
-     * @param longTermMemories
+     * @param longTermMemories   list of long term memories.
      */
-    public LifeForm(double mass, Gender gender, double maxSpeed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+    public LifeForm(double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         super(mass);
         this.gender = gender;
-        this.maxSpeed = maxSpeed;
+        this.maxSpeedPerSecond = speed / 6;
         this.sightDistance = sightDistance;
         this.nightSightDistance = nightSightDistance;
         this.soundSpectrum = soundSpectrum;
@@ -65,7 +67,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
     @Override
     public void run() {
         if (brain == null)
-            brain = brainFactory.create(this, maxSpeed, defaultEmotion, longTermMemories);
+            brain = brainFactory.create(this, maxSpeedPerSecond, defaultEmotion, longTermMemories);
 
         foodCoordinate = null;
         velocity(null);

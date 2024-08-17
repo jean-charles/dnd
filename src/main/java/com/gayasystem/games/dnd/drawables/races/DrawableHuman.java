@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.drawables.races;
 
+import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.drawables.Drawable;
-import com.gayasystem.games.dnd.drawables.SizeConvertor;
 import com.gayasystem.games.dnd.ecosystem.races.Human;
 import com.gayasystem.games.dnd.world.InGameObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class DrawableHuman implements Drawable {
     private final BufferedImage imgMale;
 
     @Autowired
-    private SizeConvertor convertor;
+    private MeasurementConvertor convertor;
 
     public DrawableHuman() throws IOException {
         imgFemale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanFemale.png")));
@@ -30,14 +30,14 @@ public class DrawableHuman implements Drawable {
     }
 
     @Override
-    public void draw(int feetWidth, int width, int height, InGameObject obj, Point point, Graphics2D g) {
+    public void draw(int pixelsPerFoot, InGameObject obj, Point point, Graphics2D g) {
         var orientation = obj.orientation().phi().doubleValue();
         int x = point.x;
         int y = point.y;
 
         var at = new AffineTransform();
         Image image;
-        var pixels = convertor.feet2Pixels(feetWidth, width, 5);
+        var pixels = (int) (pixelsPerFoot * 4.0);
         if (((Human) obj.thing()).gender() == female)
             image = imgFemale.getScaledInstance(pixels, pixels, Image.SCALE_SMOOTH);
         else

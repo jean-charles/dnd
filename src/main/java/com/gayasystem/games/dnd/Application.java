@@ -64,9 +64,9 @@ public class Application extends JFrame {
     }
 
     private void init(World world) {
-//        world.add(newThing(Human.class), new Coordinate(convertor.feet2Inches(-10), convertor.feet2Inches(10)), new Orientation(PI / 4));
-        world.add(newThing(Almiraj.class), new Coordinate(convertor.feet2Inches(-10), convertor.feet2Inches(0)), new Orientation(0));
-        world.add(newThing(Carrot.class), new Coordinate(convertor.feet2Inches(10), convertor.feet2Inches(0)), new Orientation(-PI / 2));
+//        world.add(newThing(Human.class), new Coordinate(0, 15, new Orientation(PI / 4));
+        world.add(newThing(Almiraj.class), new Coordinate(-20, 0), new Orientation(0));
+        world.add(newThing(Carrot.class), new Coordinate(20, 0), new Orientation(-PI / 2));
     }
 
     private void createLayout(Component... arg) {
