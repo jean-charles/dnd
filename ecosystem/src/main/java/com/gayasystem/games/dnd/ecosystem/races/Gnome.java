@@ -25,6 +25,8 @@ public class Gnome extends Character {
                 ),
                 alignment,
                 null,
+                0,
+                0,
                 40, // 40 to 45 lb
                 gender,
                 25,

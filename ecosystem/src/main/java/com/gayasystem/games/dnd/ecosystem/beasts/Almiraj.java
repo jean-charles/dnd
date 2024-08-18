@@ -48,6 +48,8 @@ public class Almiraj extends Beast {
                         0,
                         0),
                 Die1D6.die,
+                0,
+                0,
                 9,
                 Gender.male,
                 60,

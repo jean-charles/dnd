@@ -48,6 +48,8 @@ public class Human extends Character {
                 ),
                 alignment,
                 null,
+                1.8,
+                1.1,
                 125, // 125 to 250 lb
                 gender,
                 30,

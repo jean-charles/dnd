@@ -25,6 +25,8 @@ public class HalfElf extends Character {
                 ),
                 alignment,
                 null,
+                0,
+                0,
                 100, // 100 to 180 lb
                 gender,
                 30,

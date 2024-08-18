@@ -11,8 +11,8 @@ public abstract class Food extends Thing {
      * @param timeToDecompose in days
      * @param nourishment
      */
-    protected Food(double mass, int timeToDecompose, double nourishment) {
-        super(mass);
+    protected Food(double width, double depth, double mass, int timeToDecompose, double nourishment) {
+        super(width, depth, mass);
         this.massDecay = (mass * PERCENT_MASS_LOST) / timeToDecompose;
         this.nourishmentDecay = nourishment / timeToDecompose;
         this.nourishment = nourishment;

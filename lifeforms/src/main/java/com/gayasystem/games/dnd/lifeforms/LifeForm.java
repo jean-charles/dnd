@@ -52,8 +52,8 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
      * @param minSoundAmplitude
      * @param longTermMemories   list of long term memories.
      */
-    public LifeForm(double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
-        super(mass);
+    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+        super(width, depth, mass);
         this.gender = gender;
         this.maxSpeedPerSecond = speed / 6;
         this.sightDistance = sightDistance;
