@@ -1,40 +1,38 @@
 package com.gayasystem.games.dnd.drawables.beasts;
 
-import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
-import com.gayasystem.games.dnd.drawables.Drawable;
+import com.gayasystem.games.dnd.drawables.AbstractDrawable;
 import com.gayasystem.games.dnd.world.InGameObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
 @Service
-public class DrawableAlmiraj implements Drawable {
+public class DrawableAlmiraj extends AbstractDrawable {
     private final BufferedImage img;
-
-    @Autowired
-    private MeasurementConvertor convertor;
+    private final int width;
+    private final double heightRatio;
 
     public DrawableAlmiraj() throws IOException {
         img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/beasts/Almiraj.png")));
+        width = 3;
+        heightRatio = 0.75;
     }
 
     @Override
-    public void draw(int pixelsPerFoot, InGameObject obj, Point point, Graphics2D g) {
-        var orientation = obj.orientation().phi().doubleValue();
-        int x = point.x;
-        int y = point.y;
+    protected BufferedImage image(InGameObject obj) {
+        return img;
+    }
 
-        var at = new AffineTransform();
-        int pixels = (int) (pixelsPerFoot * 3.0);
-        var image = img.getScaledInstance(pixels, (int) (pixels * 0.75), Image.SCALE_SMOOTH);
-        at.translate(x - (double) image.getWidth(null) / 2, y - (double) image.getHeight(null) / 2);
-        at.rotate(-orientation, (double) image.getWidth(null) / 2, (double) image.getHeight(null) / 2);
-        ((Graphics2D) g).drawImage(image, at, null);
+    @Override
+    protected int pixelsWidth(int pixelsPerFoot) {
+        return pixelsPerFoot * width;
+    }
+
+    @Override
+    protected int pixelsHeight(int pixelsPerFoot) {
+        return (int) (pixelsPerFoot * width * heightRatio);
     }
 }

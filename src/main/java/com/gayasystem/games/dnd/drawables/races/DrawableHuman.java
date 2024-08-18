@@ -1,15 +1,13 @@
 package com.gayasystem.games.dnd.drawables.races;
 
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
-import com.gayasystem.games.dnd.drawables.Drawable;
+import com.gayasystem.games.dnd.drawables.AbstractDrawable;
 import com.gayasystem.games.dnd.ecosystem.races.Human;
 import com.gayasystem.games.dnd.world.InGameObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -17,9 +15,10 @@ import java.util.Objects;
 import static com.gayasystem.games.dnd.lifeforms.Gender.female;
 
 @Service
-public class DrawableHuman implements Drawable {
+public class DrawableHuman extends AbstractDrawable {
     private final BufferedImage imgFemale;
     private final BufferedImage imgMale;
+    private final int size;
 
     @Autowired
     private MeasurementConvertor convertor;
@@ -27,23 +26,22 @@ public class DrawableHuman implements Drawable {
     public DrawableHuman() throws IOException {
         imgFemale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanFemale.png")));
         imgMale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanMale.png")));
+        size = 6;
     }
 
     @Override
-    public void draw(int pixelsPerFoot, InGameObject obj, Point point, Graphics2D g) {
-        var orientation = obj.orientation().phi().doubleValue();
-        int x = point.x;
-        int y = point.y;
+    protected BufferedImage image(InGameObject obj) {
+        var gender = ((Human) obj.thing()).gender();
+        return gender == female ? imgFemale : imgMale;
+    }
 
-        var at = new AffineTransform();
-        Image image;
-        var pixels = (int) (pixelsPerFoot * 6.0);
-        if (((Human) obj.thing()).gender() == female)
-            image = imgFemale.getScaledInstance(pixels, pixels, Image.SCALE_SMOOTH);
-        else
-            image = imgMale.getScaledInstance(pixels, pixels, Image.SCALE_SMOOTH);
-        at.translate(x - (double) image.getWidth(null) / 2, y - (double) image.getHeight(null) / 2);
-        at.rotate(-orientation, (double) image.getWidth(null) / 2, (double) image.getHeight(null) / 2);
-        ((Graphics2D) g).drawImage(image, at, null);
+    @Override
+    protected int pixelsWidth(int pixelsPerFoot) {
+        return pixelsPerFoot * size;
+    }
+
+    @Override
+    protected int pixelsHeight(int pixelsPerFoot) {
+        return pixelsPerFoot * size;
     }
 }
