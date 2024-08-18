@@ -32,14 +32,22 @@ public class EngramComputing {
     private SpatialEmotionalEngram findMostImportantEngram(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
         var mostImportantEngram = new SpatialEmotionalEngram(null, neutral);
         double closestDistance = Double.MAX_VALUE;
+        Emotion mostImportantEmotion = neutral;
         for (var spatialEmotionalEngram : spatialEmotionalEngrams) {
             var distance = spatialEmotionalEngram.engram().origin().rho().doubleValue();
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                mostImportantEngram = spatialEmotionalEngram;
+            if (mostImportantEmotion(spatialEmotionalEngram.emotion(), mostImportantEmotion)) {
+                if (distance < closestDistance) {
+                    mostImportantEngram = spatialEmotionalEngram;
+                    closestDistance = distance;
+                    mostImportantEmotion = spatialEmotionalEngram.emotion();
+                }
             }
         }
         return mostImportantEngram;
+    }
+
+    private boolean mostImportantEmotion(Emotion e1, Emotion e2) {
+        return e1.ordinal() <= e2.ordinal();
     }
 
     private Action next(SpatialEmotionalEngram mostImportantEngram) {

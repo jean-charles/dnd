@@ -99,6 +99,7 @@ public abstract class AbstractBrain implements Brain {
                 body.rotation(velocity.destination().orientation());
             }
         }
+        shortTermMemories.clear();
     }
 
     /* UNIT TESTS ONLY */
