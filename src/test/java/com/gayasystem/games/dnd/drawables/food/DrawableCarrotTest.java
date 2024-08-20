@@ -45,7 +45,7 @@ class DrawableCarrotTest extends SwingTestCase {
                 Point p = new Point(getWidth() / 2, getHeight() / 2);
                 int pixelPerInch = (int) convertor.feet2Inches(getWidth() / feetWidth);
                 if (carrotObj != null)
-                    drawableCarrot.draw(pixelPerInch, carrotObj, p, (Graphics2D) g);
+                    drawableCarrot.draw(pixelPerInch, carrotObj, p, g, null);
             }
         };
         panel.setSize(400, 400);

@@ -1,14 +1,13 @@
 package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.drawables.Drawer;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
-import com.gayasystem.games.dnd.ecosystem.races.Human;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.World;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -16,40 +15,17 @@ import org.springframework.context.ApplicationContext;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import static java.awt.Color.black;
 import static java.lang.Math.PI;
-import static javax.swing.GroupLayout.Alignment.CENTER;
 
 @SpringBootApplication
-public class Application extends JFrame {
+public class Application extends JFrame implements KeyListener {
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
     private final ApplicationContext ctx;
-    private final MeasurementConvertor convertor;
-
-    public Application(ApplicationContext ctx, Drawer drawer, World world) throws Exception {
-        this.ctx = ctx;
-        this.convertor = ctx.getBean(MeasurementConvertor.class);
-        init(world);
-        var canvas = new Canvas(60, drawer, world);
-        canvas.setSize(100, 100);
-        canvas.setBackground(black);
-
-        var quitButton = new JButton("Quit");
-        quitButton.addActionListener((ActionEvent event) -> {
-            System.exit(0);
-        });
-
-        createLayout(canvas, quitButton);
-
-        setSize(200, 200);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setUndecorated(true);
-        setVisible(true);
-    }
+    private final World world;
 
     public static void main(String[] args) throws Exception {
         var ctx = new SpringApplicationBuilder(Application.class)
@@ -60,34 +36,59 @@ public class Application extends JFrame {
         });
     }
 
-    private Thing newThing(Class<? extends Thing> clazz) {
-        return ctx.getBean(clazz);
+    public Application(ApplicationContext ctx, World world) throws Exception {
+        this.ctx = ctx;
+        this.world = world;
+        gameSetUp();
+        setUpUI();
+        setFullScreen();
+        addKeyListener(this);
     }
 
-    private void init(World world) {
-        world.add(newThing(Human.class), new Coordinate(20, 15), new Orientation(-3 * PI / 4));
+    private void gameSetUp() {
+//        world.add(newThing(Human.class), new Coordinate(20, 15), new Orientation(-3 * PI / 4));
         world.add(newThing(Almiraj.class), new Coordinate(-20, 0), new Orientation(0));
         world.add(newThing(Carrot.class), new Coordinate(20, 0), new Orientation(-PI / 2));
     }
 
-    private void createLayout(Component... arg) {
-        var pane = getContentPane();
-        var gl = new GroupLayout(pane);
-        pane.setLayout(gl);
+    private Thing newThing(Class<? extends Thing> clazz) {
+        return ctx.getBean(clazz);
+    }
 
-        gl.setAutoCreateContainerGaps(true);
+    private void setUpUI() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        var hGroup = gl.createSequentialGroup();
-        hGroup.addGroup(gl.createParallelGroup()
-                .addComponent(arg[0])
-                .addComponent(arg[1], CENTER));
-        gl.setHorizontalGroup(hGroup);
+        var canvas = ctx.getBean(Canvas.class, 60);
+        add(canvas);
+        addKeyListener(canvas);
+    }
 
-        var vGroup = gl.createSequentialGroup();
-        vGroup.addGroup(gl.createParallelGroup()
-                .addComponent(arg[0]));
-        vGroup.addGroup(gl.createParallelGroup()
-                .addComponent(arg[1]));
-        gl.setVerticalGroup(vGroup);
+    private void setFullScreen() {
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
+        if (gd.isFullScreenSupported()) {
+            setUndecorated(true);
+            gd.setFullScreenWindow(this);
+        } else {
+            log.error("Full screen not supported");
+            setSize(100, 100); // just something to let you see the window
+            setVisible(true);
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }

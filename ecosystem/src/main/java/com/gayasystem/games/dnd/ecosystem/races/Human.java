@@ -32,7 +32,7 @@ public class Human extends Character {
                         Ethical.neutral,
                         Moral.neutral
                 ),
-                Gender.female
+                Gender.male
         );
     }
     public Human(AbilityScores abilityScores, Alignment alignment, Gender gender) {

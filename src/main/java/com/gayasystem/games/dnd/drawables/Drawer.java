@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 @Service
 public class Drawer {
@@ -26,14 +27,14 @@ public class Drawer {
      * @param obj       {@link InGameObject} to draw in the Canvas.
      * @param g         {@link Graphics} to use to draw the {@link InGameObject}.
      */
-    public void draw(int feetWidth, int width, int height, InGameObject obj, Graphics g) {
+    public void draw(int feetWidth, int width, int height, InGameObject obj, Graphics g, ImageObserver observer) {
         try {
             String thingName = "drawable" + obj.thing().getClass().getSimpleName();
             Drawable drawable = (Drawable) ctx.getBean(thingName);
 
-            int pixelsPerFoot = (int) (width / feetWidth);
+            int pixelsPerFoot = width / feetWidth;
             var p = sizeConvertor.coordinate2Point(pixelsPerFoot, width, height, obj.coordinate());
-            drawable.draw(pixelsPerFoot, obj, p, (Graphics2D) g);
+            drawable.draw(pixelsPerFoot, obj, p, (Graphics2D) g, observer);
         } catch (Exception e) {
             e.printStackTrace();
         }
