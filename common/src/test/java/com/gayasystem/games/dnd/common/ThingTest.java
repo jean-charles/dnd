@@ -28,7 +28,7 @@ class ThingTest {
 
     private class ThingA extends Thing {
         public ThingA(double mass) {
-            super(mass);
+            super(0, 0, mass);
         }
 
         @Override

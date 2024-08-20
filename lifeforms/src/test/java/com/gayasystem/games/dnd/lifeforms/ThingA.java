@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ThingA extends Thing {
     public ThingA() {
-        super(100);
+        super(0, 0, 100);
     }
 
     @Override

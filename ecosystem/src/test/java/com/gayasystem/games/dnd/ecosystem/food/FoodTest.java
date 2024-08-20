@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class FoodTest {
     private class FoodA extends Food {
         FoodA() {
-            super(125, 10, 100);
+            super(0, 0, 125, 10, 100);
         }
 
         @Override

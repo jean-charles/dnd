@@ -4,7 +4,7 @@ import com.gayasystem.games.dnd.common.Thing;
 
 public class ThingB extends Thing {
     protected ThingB() {
-        super(1);
+        super(0, 0, 1);
     }
 
     @Override
