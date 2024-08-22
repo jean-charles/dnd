@@ -10,6 +10,11 @@ public abstract class Thing implements Moveable, Runnable {
     private Velocity velocity;
     private Orientation rotation;
 
+    /**
+     * @param width thing width in feet.
+     * @param depth thing depth in feet.
+     * @param mass  thing mass in pounds.
+     */
     protected Thing(double width, double depth, double mass) {
         this.width = width;
         this.depth = depth;
@@ -35,9 +40,9 @@ public abstract class Thing implements Moveable, Runnable {
     }
 
     /**
-     * The mass of the thing in pound (lb).
+     * The mass of the thing in pounds (lb).
      *
-     * @return the mass in pound
+     * @return the mass in pounds.
      */
     public double mass() {
         return mass;

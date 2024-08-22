@@ -48,23 +48,11 @@ public class Player {
     }
 
     public void keyPressed(KeyEvent e) {
-        // every keyboard get has a certain code. get the value of that code from the
-        // keyboard event so that we can compare it to KeyEvent constants
-        int key = e.getKeyCode();
-
-        // depending on which arrow key was pressed, we're going to move the player by
-        // one whole tile for this input
-        if (key == KeyEvent.VK_UP) {
-            position.translate(0, -1);
-        }
-        if (key == KeyEvent.VK_RIGHT) {
-            position.translate(1, 0);
-        }
-        if (key == KeyEvent.VK_DOWN) {
-            position.translate(0, 1);
-        }
-        if (key == KeyEvent.VK_LEFT) {
-            position.translate(-1, 0);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_LEFT:
         }
     }
 

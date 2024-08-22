@@ -2,6 +2,8 @@ package com.gayasystem.games.dnd.drawables.beasts;
 
 import com.gayasystem.games.dnd.drawables.AbstractDrawable;
 import com.gayasystem.games.dnd.world.InGameObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -11,13 +13,16 @@ import java.util.Objects;
 
 @Service
 public class DrawableAlmiraj extends AbstractDrawable {
+    private static final Logger log = LoggerFactory.getLogger(DrawableAlmiraj.class);
+
     private final BufferedImage img;
-    private final int width;
+    private final double width;
     private final double heightRatio;
 
     public DrawableAlmiraj() throws IOException {
+        super(log);
         img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/beasts/Almiraj.png")));
-        width = 3;
+        width = 1.9;
         heightRatio = 0.75;
     }
 
@@ -28,11 +33,21 @@ public class DrawableAlmiraj extends AbstractDrawable {
 
     @Override
     protected int pixelsWidth(int pixelsPerFoot) {
-        return pixelsPerFoot * width;
+        return (int) (pixelsPerFoot * width);
+    }
+
+    @Override
+    protected int pixelsWidthOffset(int pixelsPerFoot) {
+        return 0;
     }
 
     @Override
     protected int pixelsHeight(int pixelsPerFoot) {
         return (int) (pixelsPerFoot * width * heightRatio);
+    }
+
+    @Override
+    protected int pixelsHeightOffset(int pixelsPerFoot) {
+        return 0;
     }
 }

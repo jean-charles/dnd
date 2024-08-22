@@ -4,6 +4,8 @@ import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.drawables.AbstractDrawable;
 import com.gayasystem.games.dnd.ecosystem.races.Human;
 import com.gayasystem.games.dnd.world.InGameObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +18,20 @@ import static com.gayasystem.games.dnd.lifeforms.Gender.female;
 
 @Service
 public class DrawableHuman extends AbstractDrawable {
+    private static final Logger log = LoggerFactory.getLogger(DrawableHuman.class);
+
     private final BufferedImage imgFemale;
     private final BufferedImage imgMale;
-    private final int size;
+    private final double size;
 
     @Autowired
     private MeasurementConvertor convertor;
 
     public DrawableHuman() throws IOException {
+        super(log);
         imgFemale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanFemale.png")));
         imgMale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanMale.png")));
-        size = 6;
+        size = 2.8;
     }
 
     @Override
@@ -37,11 +42,21 @@ public class DrawableHuman extends AbstractDrawable {
 
     @Override
     protected int pixelsWidth(int pixelsPerFoot) {
-        return pixelsPerFoot * size;
+        return (int) (pixelsPerFoot * size);
+    }
+
+    @Override
+    protected int pixelsWidthOffset(int pixelsPerFoot) {
+        return (int) (0.43 * pixelsPerFoot);
     }
 
     @Override
     protected int pixelsHeight(int pixelsPerFoot) {
-        return pixelsPerFoot * size;
+        return (int) (pixelsPerFoot * size);
+    }
+
+    @Override
+    protected int pixelsHeightOffset(int pixelsPerFoot) {
+        return (int) (0.2 * pixelsPerFoot);
     }
 }

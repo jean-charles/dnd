@@ -43,7 +43,9 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
     private MeasurementConvertor convertor;
 
     /**
-     * @param mass               in pounds.
+     * @param width  width in feet.
+     * @param depth  depth in feet.
+     * @param mass  mass in pounds.
      * @param gender             female or male.
      * @param speed              in feet.
      * @param sightDistance      in miles.

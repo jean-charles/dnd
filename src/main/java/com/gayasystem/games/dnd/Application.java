@@ -4,6 +4,7 @@ import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
+import com.gayasystem.games.dnd.ecosystem.races.Human;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.World;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import static java.lang.Math.PI;
+import static java.awt.event.KeyEvent.*;
 
 @SpringBootApplication
 public class Application extends JFrame implements KeyListener {
@@ -27,7 +28,22 @@ public class Application extends JFrame implements KeyListener {
     private final ApplicationContext ctx;
     private final World world;
 
+    private boolean isFullScreen = false;
+
+    public Application(ApplicationContext ctx, World world) throws Exception {
+        this.ctx = ctx;
+        this.world = world;
+        setJMenuBar(menuBar());
+
+        gameSetUp();
+        setUpUI();
+        addKeyListener(this);
+        setUpScreen();
+    }
+
     public static void main(String[] args) throws Exception {
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+
         var ctx = new SpringApplicationBuilder(Application.class)
                 .headless(false).web(WebApplicationType.NONE).run(args);
         EventQueue.invokeLater(() -> {
@@ -36,19 +52,18 @@ public class Application extends JFrame implements KeyListener {
         });
     }
 
-    public Application(ApplicationContext ctx, World world) throws Exception {
-        this.ctx = ctx;
-        this.world = world;
-        gameSetUp();
-        setUpUI();
-        setFullScreen();
-        addKeyListener(this);
+    private JMenuBar menuBar() {
+        var menuBar = new JMenuBar();
+        var menu = new JMenu();
+        menu.add("Yo!");
+        menuBar.add(menu);
+        return null;
     }
 
     private void gameSetUp() {
-//        world.add(newThing(Human.class), new Coordinate(20, 15), new Orientation(-3 * PI / 4));
-        world.add(newThing(Almiraj.class), new Coordinate(-20, 0), new Orientation(0));
-        world.add(newThing(Carrot.class), new Coordinate(20, 0), new Orientation(-PI / 2));
+        world.add(newThing(Human.class), new Coordinate(20, 20), new Orientation(0));
+        world.add(newThing(Almiraj.class), new Coordinate(-10, -10), new Orientation(0));
+        world.add(newThing(Carrot.class), new Coordinate(20, -10), new Orientation(0));
     }
 
     private Thing newThing(Class<? extends Thing> clazz) {
@@ -58,22 +73,32 @@ public class Application extends JFrame implements KeyListener {
     private void setUpUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        var canvas = ctx.getBean(Canvas.class, 60);
+        var canvas = ctx.getBean(Canvas.class, 50);
         add(canvas);
         addKeyListener(canvas);
     }
 
-    private void setFullScreen() {
+    private void fullScreen() {
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
         if (gd.isFullScreenSupported()) {
-            setUndecorated(true);
-            gd.setFullScreenWindow(this);
-        } else {
-            log.error("Full screen not supported");
-            setSize(100, 100); // just something to let you see the window
-            setVisible(true);
+            isFullScreen = !isFullScreen;
+            if (isFullScreen) {
+//                setUndecorated(true);
+                gd.setFullScreenWindow(this);
+//                setVisible(true);
+            } else {
+//                setVisible(false);
+//                setUndecorated(false);
+                gd.setFullScreenWindow(null);
+            }
         }
+    }
+
+    private void setUpScreen() {
+        setSize(getMaximumSize());
+//        setUndecorated(true);
+        setVisible(true);
     }
 
     @Override
@@ -82,9 +107,13 @@ public class Application extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-        if (key == KeyEvent.VK_ESCAPE) {
-            System.exit(0);
+        switch (e.getKeyCode()) {
+            case VK_ESCAPE, VK_SPACE:
+                System.exit(0);
+                break;
+            case VK_F:
+                fullScreen();
+                break;
         }
     }
 
