@@ -2,9 +2,7 @@ package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
-import com.gayasystem.games.dnd.ecosystem.food.Carrot;
-import com.gayasystem.games.dnd.ecosystem.races.Human;
+import com.gayasystem.games.dnd.ecosystem.houses.Wall;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.World;
 import org.slf4j.Logger;
@@ -61,13 +59,15 @@ public class Application extends JFrame implements KeyListener {
     }
 
     private void gameSetUp() {
-        world.add(newThing(Human.class), new Coordinate(20, 20), new Orientation(0));
-        world.add(newThing(Almiraj.class), new Coordinate(-10, -10), new Orientation(0));
-        world.add(newThing(Carrot.class), new Coordinate(20, -10), new Orientation(0));
+//        world.add(newThing(Human.class), new Coordinate(20, 20), new Orientation(0));
+//        world.add(newThing(Almiraj.class), new Coordinate(-10, -10), new Orientation(0));
+//        world.add(newThing(Carrot.class), new Coordinate(20, -10), new Orientation(PI/2));
+        world.add(newThing(Wall.class, 29, 1), new Coordinate(-20, 0), new Orientation(0));
+        world.add(newThing(Wall.class, 1, 39), new Coordinate(0, -14), new Orientation(0));
     }
 
-    private Thing newThing(Class<? extends Thing> clazz) {
-        return ctx.getBean(clazz);
+    private Thing newThing(Class<? extends Thing> clazz, Object... args) {
+        return ctx.getBean(clazz, args);
     }
 
     private void setUpUI() {
