@@ -24,7 +24,7 @@ public class DrawableWall extends AbstractDrawable {
     private MeasurementConvertor convertor;
 
     public DrawableWall() throws IOException {
-        super(log);
+        super(log, true);
         image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/houses/Wall.jpeg")));
         size = 4;
     }
@@ -45,12 +45,12 @@ public class DrawableWall extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsHeight(int pixelsPerFoot) {
+    protected int pixelsDepth(int pixelsPerFoot) {
         return (int) (pixelsPerFoot * size);
     }
 
     @Override
-    protected int pixelsHeightOffset(int pixelsPerFoot) {
+    protected int pixelsDepthOffset(int pixelsPerFoot) {
         return 0;
     }
 }

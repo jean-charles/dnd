@@ -64,7 +64,7 @@ public class World implements Runnable, LifeEnvironment {
             double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
             var distance = interval * speed;
             rho = destination.rho().doubleValue();
-            log.info(format("speed=%.2f', interval=%.2fs, distance=%.2f', rho=%.2f'", speed, interval * 1000, distance, rho));
+            log.debug(format("speed=%.2f', interval=%.2fs, distance=%.2f', rho=%.2f'", speed, interval * 1000, distance, rho));
             rho = (rho <= distance) ? rho - CATCHING_DISTANCE : distance;
         }
         return rho;

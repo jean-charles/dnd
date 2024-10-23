@@ -24,7 +24,7 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
 
     private final int feetWidth;
     // controls the delay between each tick in ms
-    private final int DELAY = 25;
+    private final int DELAY = 25 * 400;
 
     // keep a reference to the timer object that triggers actionPerformed() in
     // case we need access to it in another method

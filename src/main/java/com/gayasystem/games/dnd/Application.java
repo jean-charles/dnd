@@ -61,9 +61,9 @@ public class Application extends JFrame implements KeyListener {
     private void gameSetUp() {
 //        world.add(newThing(Human.class), new Coordinate(20, 20), new Orientation(0));
 //        world.add(newThing(Almiraj.class), new Coordinate(-10, -10), new Orientation(0));
-//        world.add(newThing(Carrot.class), new Coordinate(20, -10), new Orientation(PI/2));
-        world.add(newThing(Wall.class, 29, 1), new Coordinate(-20, 0), new Orientation(0));
-        world.add(newThing(Wall.class, 1, 39), new Coordinate(0, -14), new Orientation(0));
+//        world.add(newThing(Carrot.class), new Coordinate(20, -10), new Orientation(-PI/2));
+//        world.add(newThing(Wall.class, 29, 1), new Coordinate(-20, 0), new Orientation(0));
+        world.add(newThing(Wall.class, 1, 10), new Coordinate(-20, 0), new Orientation(0));
     }
 
     private Thing newThing(Class<? extends Thing> clazz, Object... args) {

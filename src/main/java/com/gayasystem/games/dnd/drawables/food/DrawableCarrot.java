@@ -43,12 +43,12 @@ public class DrawableCarrot extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsHeight(int pixelsPerFoot) {
+    protected int pixelsDepth(int pixelsPerFoot) {
         return (int) (pixelsPerFoot * height);
     }
 
     @Override
-    protected int pixelsHeightOffset(int pixelsPerFoot) {
+    protected int pixelsDepthOffset(int pixelsPerFoot) {
         return 0;
     }
 }

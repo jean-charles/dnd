@@ -5,8 +5,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ThingA extends Thing {
+    public ThingA(double width, double depth) {
+        super(width, depth, 100);
+    }
+
     public ThingA() {
-        super(0, 0, 100);
+        this(0, 0);
     }
 
     @Override
