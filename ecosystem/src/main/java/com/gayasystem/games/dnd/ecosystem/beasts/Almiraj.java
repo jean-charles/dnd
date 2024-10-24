@@ -1,7 +1,6 @@
 package com.gayasystem.games.dnd.ecosystem.beasts;
 
 import com.gayasystem.games.dnd.ecosystem.Beast;
-import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.gametools.dices.Die1D6;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
@@ -48,8 +47,8 @@ public class Almiraj extends Beast {
                         0,
                         0),
                 Die1D6.die,
-                0.75,
                 1.6,
+                0.75,
                 9,
                 Gender.male,
                 60,
@@ -57,9 +56,9 @@ public class Almiraj extends Beast {
                 30.0,
                 null,
                 0.0,
-                Emotion.scared,
+                Emotion.neutral,
                 Map.of(
-                        Carrot.class, Emotion.hungry
+//                        Carrot.class, Emotion.hungry
                 )
         );
     }

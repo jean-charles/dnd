@@ -56,7 +56,8 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
     }
 
     private void drawThing(InGameObject thing, Graphics g) {
-        drawer.draw(feetWidth, getWidth(), getHeight(), thing, g, this);
+        var size = getSize();
+        drawer.draw(feetWidth, size, thing, g, this);
     }
 
     private void drawScore(Graphics g) {

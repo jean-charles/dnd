@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class Carrot extends Food {
     public Carrot() {
-        super(0.3, 0.8, 0.13, 4, 20);
+        super(0.8, 0.3, 0.13, 4, 20);
     }
 }

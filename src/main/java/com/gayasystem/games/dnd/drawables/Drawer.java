@@ -27,13 +27,13 @@ public class Drawer {
      * @param obj       {@link InGameObject} to draw in the Canvas.
      * @param g         {@link Graphics} to use to draw the {@link InGameObject}.
      */
-    public void draw(int feetWidth, int width, int height, InGameObject obj, Graphics g, ImageObserver observer) {
+    public void draw(int feetWidth, Dimension size, InGameObject obj, Graphics g, ImageObserver observer) {
         try {
             String thingName = "drawable" + obj.thing().getClass().getSimpleName();
             Drawable drawable = (Drawable) ctx.getBean(thingName);
 
-            int pixelsPerFoot = width / feetWidth;
-            var p = sizeConvertor.coordinate2Point(pixelsPerFoot, width, height, obj.coordinate());
+            int pixelsPerFoot = size.width / feetWidth;
+            var p = sizeConvertor.coordinate2Point(pixelsPerFoot, size.width, size.height, obj.coordinate());
             drawable.draw(pixelsPerFoot, obj, p, (Graphics2D) g, observer);
         } catch (Exception e) {
             e.printStackTrace();

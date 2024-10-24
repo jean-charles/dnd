@@ -94,7 +94,7 @@ public abstract class AbstractDrawable implements Drawable {
         }
     }
 
-    private void drawBorderCollision(int pixelsPerFoot, InGameObject obj, Point point, Graphics2D g) {
+    private void drawCollisionBorder(int pixelsPerFoot, InGameObject obj, Point point, Graphics2D g) {
         log.debug(format("Draw Border Collision: %s", g.toString()));
         var thing = obj.thing();
         int x = point.x;
@@ -115,6 +115,6 @@ public abstract class AbstractDrawable implements Drawable {
             drawRepeatedImage(pixelsPerFoot, obj, point, (Graphics2D) g, observer);
         else
             drawImage(pixelsPerFoot, obj, point, (Graphics2D) g, observer);
-        drawBorderCollision(pixelsPerFoot, obj, point, (Graphics2D) g);
+        drawCollisionBorder(pixelsPerFoot, obj, point, (Graphics2D) g);
     }
 }
