@@ -94,6 +94,7 @@ public class World implements Runnable, LifeEnvironment {
         var lifeFormCoordinate = obj.coordinate();
         var lifeFormOrientation = obj.orientation();
 
+        // TODO: Select only object in sight distance
         for (var other : inGameObjects.keySet()) {
             if (sighted == other) continue;
 
@@ -106,6 +107,7 @@ public class World implements Runnable, LifeEnvironment {
 
                 var finalRelativeCoordinate = lifeFormCoordinate.to(targetCcoordinate);
                 var relativeOrientation = lifeFormOrientation.transpose(targetOrientation);
+                // TODO: see only visible things
                 sighted.see(other, finalRelativeCoordinate, relativeOrientation);
             }
         }
