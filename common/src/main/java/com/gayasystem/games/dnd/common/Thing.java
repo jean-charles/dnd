@@ -7,7 +7,7 @@ public abstract class Thing implements Moveable, Runnable {
     protected double width;
     protected double depth;
     protected double mass;
-    private Velocity velocity;
+    protected Velocity velocity;
     private Orientation rotation;
 
     /**
