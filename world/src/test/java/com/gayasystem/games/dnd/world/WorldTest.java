@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringJUnitConfig(classes = World.class)
@@ -29,8 +27,8 @@ public class WorldTest {
 
     @Test()
     public void runMove() {
-        assertThat(thing).isNotNull();
-        assertThat(world).isNotNull();
+        assertNotNull(thing);
+        assertNotNull(world);
         when(thing.velocity()).thenReturn(new Velocity(1, new CircularCoordinate(1, 0)));
         double originalX = 0;
         world.add(thing, new Coordinate(originalX, 0), new Orientation(0));
