@@ -38,6 +38,7 @@ public class World implements Runnable, LifeEnvironment {
         if (previous != null)
             thingsByCoordinate.remove(previous.coordinate());
         thingsByCoordinate.put(newCoordinate, thing);
+        thingsLastMove.computeIfAbsent(thing, k -> new Date());
     }
 
     private void removeThing(Thing thing) {
@@ -48,6 +49,7 @@ public class World implements Runnable, LifeEnvironment {
         for (var thing : thingsToRemove) {
             var inGameObject = inGameObjects.remove(thing);
             thingsByCoordinate.remove(inGameObject.coordinate());
+            thingsLastMove.remove(thing);
         }
         thingsToRemove.clear();
     }
