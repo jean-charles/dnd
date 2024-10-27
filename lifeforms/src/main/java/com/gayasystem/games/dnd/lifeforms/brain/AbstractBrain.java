@@ -28,6 +28,12 @@ public abstract class AbstractBrain implements Brain {
     @Autowired
     private EngramComputing engramComputing;
 
+    /**
+     * @param body              body that contain the brain
+     * @param maxSpeedPerSecond max speed in feet per second
+     * @param defaultEmotion    default emotion for unknown things
+     * @param longTermMemories  predetermined memories
+     */
     protected AbstractBrain(LifeForm body, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         if (body == null)
             throw new NullPointerException("body cannot be null");

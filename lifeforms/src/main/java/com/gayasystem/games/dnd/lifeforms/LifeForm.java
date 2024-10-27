@@ -20,8 +20,10 @@ import java.util.Map;
 
 public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater {
     public static final double CATCHING_DISTANCE = 0.5;
+    public static final double SPEED_TO_FEET_PER_SECOND = 0.12;
 
     private final Gender gender;
+    // Speed in feet per second
     private final double maxSpeedPerSecond;
     private final double sightDistance;
     private final double nightSightDistance;
@@ -43,21 +45,21 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
     private MeasurementConvertor convertor;
 
     /**
-     * @param width  width in feet.
-     * @param depth  depth in feet.
-     * @param mass  mass in pounds.
+     * @param width              width in feet.
+     * @param depth              depth in feet.
+     * @param mass               mass in pounds.
      * @param gender             female or male.
      * @param speed              in feet.
      * @param sightDistance      in miles.
      * @param nightSightDistance in feet.
-     * @param soundSpectrum
-     * @param minSoundAmplitude
+     * @param soundSpectrum      TBD
+     * @param minSoundAmplitude  TBD
      * @param longTermMemories   list of long term memories.
      */
     public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         super(width, depth, mass);
         this.gender = gender;
-        this.maxSpeedPerSecond = speed / 6;
+        this.maxSpeedPerSecond = speed * SPEED_TO_FEET_PER_SECOND;
         this.sightDistance = sightDistance;
         this.nightSightDistance = nightSightDistance;
         this.soundSpectrum = soundSpectrum;
@@ -79,7 +81,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
         brain.run();
         if (foodCoordinate != null)
             environment.eat(this);
-        if (velocity() != null)
+        if (velocity != null)
             environment.move(this);
     }
 
