@@ -139,4 +139,21 @@ public class InGameObjectsManager {
         var target = (Food) this.getThing(targetCoordinate);
         return target;
     }
+
+    /* TESTS ONLY */
+    int sizeOfInGameObjects() {
+        return inGameObjects.size();
+    }
+
+    int sizeOfThingsByCoordinate() {
+        return thingsByCoordinate.size();
+    }
+
+    int sizeOfThingsLastMove() {
+        return thingsLastMove.size();
+    }
+
+    int sizeOfThingsToRemove() {
+        return thingsToRemove.size();
+    }
 }
