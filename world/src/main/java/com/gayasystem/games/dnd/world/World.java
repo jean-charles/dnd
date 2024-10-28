@@ -2,7 +2,6 @@ package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;
@@ -73,17 +72,7 @@ public class World implements Runnable, LifeEnvironment {
 
     @Override
     public void move(Thing thing) {
-        var velocity = thing.velocity();
-        if (velocity != null) {
-            var rho = manager.distance(thing, velocity);
-            var destination = new CircularCoordinate(rho, velocity.destination().orientation());
-            var obj = manager.get(thing);
-            var coordinate = obj.coordinate();
-
-            var newCoordinate = coordinate.from(destination);
-            var orientation = thing.rotation();
-            manager.add(thing, newCoordinate, orientation);
-        }
+        manager.move(thing);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
@@ -99,27 +98,34 @@ public class InGameObjectsManager {
     }
 
     /**
-     * Calculate the distance to the destination relatively to the elapsed time since the last move.
+     * Move the {@link Thing thing} to the destination relatively to the elapsed time since the last move and others
+     * {@link Thing things}.
      *
-     * @param thing    {@link Thing} witch to calculate the distance.
-     * @param velocity {@link Velocity} of the {@link Thing}.
-     * @return the distance to move.
+     * @param thing {@link Thing} witch to calculate the distance.
      */
-    public double distance(Thing thing, Velocity velocity) {
+    public void move(Thing thing) {
         var timestamps = new Date();
         var lastTimestamps = thingsLastMove.get(thing);
         thingsLastMove.put(thing, timestamps);
 
-        var destination = velocity.destination();
-        var speed = velocity.speed();
-        var rho = speed;
-        if (lastTimestamps != null) {
-            double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
-            var distance = interval * speed;
-            rho = destination.rho().doubleValue();
-            rho = (rho <= distance) ? rho - CATCHING_DISTANCE : distance;
+        var velocity = thing.velocity();
+        if (velocity != null) {
+            var rho = velocity.speed();
+            if (lastTimestamps != null) {
+                double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
+                var distance = interval * rho;
+                rho = velocity.destination().rho().doubleValue();
+                rho = (rho <= distance) ? rho - CATCHING_DISTANCE : distance;
+            }
+
+            var newDestination = new CircularCoordinate(rho, velocity.destination().orientation());
+            var obj = this.get(thing);
+            var coordinate = obj.coordinate();
+
+            var newCoordinate = coordinate.from(newDestination);
+            var orientation = thing.rotation();
+            this.add(thing, newCoordinate, orientation);
         }
-        return rho;
     }
 
     /**
@@ -155,5 +161,9 @@ public class InGameObjectsManager {
 
     int sizeOfThingsToRemove() {
         return thingsToRemove.size();
+    }
+
+    Date getLastTimestamp(Thing of) {
+        return thingsLastMove.get(of);
     }
 }

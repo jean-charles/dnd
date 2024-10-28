@@ -1,6 +1,8 @@
 package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.Velocity;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.ThingA;
@@ -113,5 +115,26 @@ class InGameObjectsManagerTest {
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
         assertEquals(ori, igo.orientation());
+    }
+
+    @Test
+    void move() {
+        CircularCoordinate ccoo = new CircularCoordinate(60, 0);
+        Velocity velocity = new Velocity(60, ccoo);
+
+        var t0 = manager.getLastTimestamp(theThing);
+        theThing.velocity(velocity);
+
+        manager.move(theThing);
+
+        var t1 = manager.getLastTimestamp(theThing);
+        var igo = manager.get(theThing);
+        var coo = igo.coordinate();
+        var distance = coo.x().doubleValue();
+
+        double interval = (t1.getTime() - t0.getTime()) / 1000.0;
+        var expectedDistance = interval * velocity.speed();
+        assertEquals(expectedDistance, distance, 0.0);
+        assertEquals(new Coordinate(expectedDistance, 0), igo.coordinate());
     }
 }
