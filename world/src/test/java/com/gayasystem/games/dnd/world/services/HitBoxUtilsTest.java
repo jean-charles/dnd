@@ -42,26 +42,27 @@ public class HitBoxUtilsTest {
     }
 
     @Test
-    void rotatePointWithO() {
-        var c = new Coordinate(0, 0);
-        var o = new Orientation(0);
-        var x = BigDecimal.TEN;
-        var y = BigDecimal.TWO;
-        var actual = utils.rotate(c, o, x, y);
-        var expected = new Point(BigDecimal.TEN, BigDecimal.TWO);
+    void rotatePointAtCenterOfPi() {
+        var x = 0.0;
+        var y = 0.0;
+        var xOrig = 10.0;
+        var yOrig = 2.0;
+        var actual = utils.rotate(x, y, PI, xOrig, yOrig);
+        var expected = new Point(BigDecimal.valueOf(-10), BigDecimal.valueOf(-2));
         assertEquals(expected.x().doubleValue(), actual.x().doubleValue(), 0.00000000000001);
         assertEquals(expected.y().doubleValue(), actual.y().doubleValue(), 0.00000000000001);
     }
 
     @Test
-    void rotatePointWithHalfPI() {
-        var c = new Coordinate(10, 5);
-        var o = new Orientation(PI / 2);
-        var x = BigDecimal.valueOf(7);
-        var y = BigDecimal.valueOf(9);
-        var actual = utils.rotate(c, o, x, y);
-        assertEquals(6, actual.x().doubleValue(), 0.00000000000001);
-        assertEquals(2, actual.y().doubleValue(), 0.00000000000001);
+    void rotatePointOfHalfPi() {
+        var x = 10.0;
+        var y = 10.0;
+        var xOrig = x + 10.0;
+        var yOrig = y + 2.0;
+        var actual = utils.rotate(x, y, PI, xOrig, yOrig);
+        var expected = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(8));
+        assertEquals(expected.x().doubleValue(), actual.x().doubleValue(), 0.00000000000001);
+        assertEquals(expected.y().doubleValue(), actual.y().doubleValue(), 0.00000000000001);
     }
 
     @Test

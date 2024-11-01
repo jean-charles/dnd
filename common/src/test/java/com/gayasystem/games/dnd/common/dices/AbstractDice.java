@@ -1,9 +1,9 @@
 package com.gayasystem.games.dnd.common.dices;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class AbstractDice {
     protected static final int NB_ROLLS = 1000000;

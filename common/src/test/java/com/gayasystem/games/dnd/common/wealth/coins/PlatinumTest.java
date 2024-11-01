@@ -1,8 +1,8 @@
 package com.gayasystem.games.dnd.common.wealth.coins;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlatinumTest {
     private Platinum platinum = Coin.platinum;

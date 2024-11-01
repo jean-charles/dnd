@@ -5,6 +5,7 @@ import com.gayasystem.games.dnd.world.InGameObject;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 import static java.awt.Color.darkGray;
 import static java.awt.Color.white;
@@ -12,7 +13,7 @@ import static java.awt.Color.white;
 @Service
 public class DrawableHuman implements Drawable {
     @Override
-    public void draw(int width, int height, InGameObject obj, Point point, Graphics2D g) {
+    public void draw(int pixelsPerFoot, InGameObject obj, Point point, Graphics g, ImageObserver observer) {
         int x = point.x;
         int y = point.y;
 

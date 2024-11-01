@@ -1,17 +1,13 @@
 package com.gayasystem.games.dnd.world.services;
 
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.services.domains.AlignedRectangle;
-import com.gayasystem.games.dnd.world.services.domains.Corner;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
 import com.gayasystem.games.dnd.world.services.domains.Point;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
-import static com.gayasystem.games.dnd.world.services.domains.Corner.*;
 import static java.lang.Math.*;
 
 @Service
@@ -25,60 +21,54 @@ public class HitBoxUtils {
 
     public HitBox hitBox(InGameObject obj) {
         var c = obj.coordinate();
-        var o = obj.orientation();
+        var x = c.x().doubleValue();
+        var y = c.y().doubleValue();
+        var o = obj.orientation().phi().doubleValue();
         var thing = obj.thing();
-        var width = thing.width();
-        var depth = thing.depth();
+        var halfWidth = thing.width() / 2;
+        var halfDepth = thing.depth() / 2;
 
-        var p1 = rotate(topRight, c, o, width, depth);
-        var p2 = rotate(bottomRight, c, o, width, depth);
-        var p3 = rotate(bottomLeft, c, o, width, depth);
-        var p4 = rotate(topLeft, c, o, width, depth);
+        var p1 = rotateFrontLeft(x, y, o, halfWidth, halfDepth);
+        var p2 = rotateFrontRight(x, y, o, halfWidth, halfDepth);
+        var p3 = rotateRearRight(x, y, o, halfWidth, halfDepth);
+        var p4 = rotateRearLeft(x, y, o, halfWidth, halfDepth);
 
         return new HitBox(p1, p2, p3, p4);
     }
 
-    public Point rotate(Corner corner, Coordinate c, Orientation o, double width, double depth) {
-        switch (corner) {
-            case topLeft -> {
-                var x1 = c.x().subtract(BigDecimal.valueOf(depth / 2));
-                var y1 = c.y().add(BigDecimal.valueOf(width / 2));
-                return rotate(c, o, x1, y1);
-            }
-            case topRight -> {
-                var x1 = c.x().add(BigDecimal.valueOf(depth / 2));
-                var y1 = c.y().add(BigDecimal.valueOf(width / 2));
-                return rotate(c, o, x1, y1);
-            }
-            case bottomLeft -> {
-                var x1 = c.x().subtract(BigDecimal.valueOf(depth / 2));
-                var y1 = c.y().subtract(BigDecimal.valueOf(width / 2));
-                return rotate(c, o, x1, y1);
-            }
-            case bottomRight -> {
-                var x1 = c.x().add(BigDecimal.valueOf(depth / 2));
-                var y1 = c.y().subtract(BigDecimal.valueOf(width / 2));
-                return rotate(c, o, x1, y1);
-            }
-        }
-        return null;
+    public Point rotateFrontLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
+        var x1 = x + halfDepth;
+        var y1 = y + halfWidth;
+        return rotate(x, y, phi, x1, y1);
     }
 
-    public Point rotate(Coordinate c, Orientation o, BigDecimal x, BigDecimal y) {
-        var tmpX = x.subtract(c.x());
-        var tmpY = y.subtract(c.y());
+    public Point rotateFrontRight(double x, double y, double phi, double halfWidth, double halfDepth) {
+        var x1 = x + halfDepth;
+        var y1 = y - halfWidth;
+        return rotate(x, y, phi, x1, y1);
+    }
 
-        var hyp = sqrt(tmpX.multiply(tmpX).add(tmpY.multiply(tmpY)).doubleValue());
+    public Point rotateRearRight(double x, double y, double phi, double halfWidth, double halfDepth) {
+        var x1 = x - halfDepth;
+        var y1 = y - halfWidth;
+        return rotate(x, y, phi, x1, y1);
+    }
 
-        var angleCos = acos(tmpX.doubleValue() / hyp);
-        var angleSin = asin(tmpY.doubleValue() / hyp);
-        var angle = angleCos < angleSin ? angleCos : angleSin;
-        var newAngle = angle + o.phi().doubleValue();
+    public Point rotateRearLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
+        var x1 = x - halfDepth;
+        var y1 = y + halfWidth;
+        return rotate(x, y, phi, x1, y1);
+    }
 
-        var newX = hyp * cos(newAngle);
-        var newY = hyp * sin(newAngle);
+    public Point rotate(double xCenter, double yCenter, double phi, double xOrig, double yOrig) {
+        var x = xOrig - xCenter;
+        var y = yOrig - yCenter;
+        double xDest = x * cos(phi) + y * sin(phi);
+        double yDest = -x * sin(phi) + y * cos(phi);
+        xDest += xCenter;
+        yDest += yCenter;
 
-        return new Point(c.x().add(BigDecimal.valueOf(newX)), c.y().add(BigDecimal.valueOf(newY)));
+        return new Point(BigDecimal.valueOf(xDest), BigDecimal.valueOf(yDest));
     }
 
     public BigDecimal minX(Point p1, Point p2, Point p3, Point p4) {
