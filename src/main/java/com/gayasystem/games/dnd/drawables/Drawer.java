@@ -21,9 +21,8 @@ public class Drawer {
     private SizeConvertor sizeConvertor;
 
     /**
-     * @param feetWidth Canvas size in feet.
-     * @param width     Canvas width in pixels.
-     * @param height    Canvas height in pixels.
+     * @param feetWidth Canvas width in feet.
+     * @param size      Canvas {@link Dimension dimension}.
      * @param obj       {@link InGameObject} to draw in the Canvas.
      * @param g         {@link Graphics} to use to draw the {@link InGameObject}.
      */

@@ -42,21 +42,21 @@ public class DrawableHuman extends AbstractDrawable {
 
     @Override
     protected int pixelsWidth(int pixelsPerFoot) {
-        return (int) (pixelsPerFoot * size);
+        return 0;
     }
 
     @Override
-    protected int pixelsWidthOffset(int pixelsPerFoot) {
-        return (int) (0.43 * pixelsPerFoot);
+    protected double widthOffset() {
+        return 0;
     }
 
     @Override
     protected int pixelsDepth(int pixelsPerFoot) {
-        return (int) (pixelsPerFoot * size);
+        return 0;
     }
 
     @Override
-    protected int pixelsDepthOffset(int pixelsPerFoot) {
-        return (int) (0.2 * pixelsPerFoot);
+    protected double depthOffset() {
+        return 0;
     }
 }

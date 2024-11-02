@@ -16,6 +16,9 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class Almiraj extends Beast {
+    public static final double WIDTH = 0.75;
+    public static final double DEPTH = 1.6;
+
     public Almiraj() {
         super(
                 new AbilityScores(
@@ -48,8 +51,8 @@ public class Almiraj extends Beast {
                         0,
                         0),
                 Die1D6.die,
-                0.75,
-                1.6,
+                WIDTH,
+                DEPTH,
                 9,
                 Gender.male,
                 60,

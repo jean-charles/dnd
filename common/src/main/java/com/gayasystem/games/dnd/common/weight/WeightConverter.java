@@ -1,14 +1,18 @@
 package com.gayasystem.games.dnd.common.weight;
 
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 
 import static java.math.RoundingMode.HALF_UP;
 
+@Service
 public class WeightConverter {
     private static final double GRAINS_IN_OUNCE = 437.5;
     private static final int OUNCES_IN_POUND = 16;
     private static final int POUNDS_IN_STONE = 14;
 
+    @Deprecated(forRemoval = true)
     private static double round(double value) {
         BigDecimal bd = BigDecimal.valueOf(value);
         return bd.setScale(2, HALF_UP).doubleValue();

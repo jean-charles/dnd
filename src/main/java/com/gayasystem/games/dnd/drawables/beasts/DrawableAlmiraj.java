@@ -1,6 +1,7 @@
-package com.gayasystem.games.dnd.drawables.food;
+package com.gayasystem.games.dnd.drawables.beasts;
 
 import com.gayasystem.games.dnd.drawables.AbstractDrawable;
+import com.gayasystem.games.dnd.drawables.food.DrawableCarrot;
 import com.gayasystem.games.dnd.world.InGameObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,18 +12,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-import static com.gayasystem.games.dnd.ecosystem.food.Carrot.DEPTH;
-import static com.gayasystem.games.dnd.ecosystem.food.Carrot.WIDTH;
-
 @Service
-public class DrawableCarrot extends AbstractDrawable {
+public class DrawableAlmiraj extends AbstractDrawable {
     private static final Logger log = LoggerFactory.getLogger(DrawableCarrot.class);
 
     private final BufferedImage img;
 
-    public DrawableCarrot() throws IOException {
+    public DrawableAlmiraj() throws IOException {
         super(log);
-        img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/food/Carrot.png")));
+        img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/beasts/Almiraj.png")));
     }
 
     @Override
@@ -37,7 +35,7 @@ public class DrawableCarrot extends AbstractDrawable {
 
     @Override
     protected double widthOffset() {
-        return 0.0;
+        return 0;
     }
 
     @Override
@@ -47,6 +45,6 @@ public class DrawableCarrot extends AbstractDrawable {
 
     @Override
     protected double depthOffset() {
-        return 0.12;
+        return 0;
     }
 }

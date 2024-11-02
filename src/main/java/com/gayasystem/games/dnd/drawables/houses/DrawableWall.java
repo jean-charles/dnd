@@ -40,7 +40,7 @@ public class DrawableWall extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsWidthOffset(int pixelsPerFoot) {
+    protected double widthOffset() {
         return 0;
     }
 
@@ -50,7 +50,7 @@ public class DrawableWall extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsDepthOffset(int pixelsPerFoot) {
+    protected double depthOffset() {
         return 0;
     }
 }
