@@ -80,10 +80,12 @@ public abstract class AbstractDrawable implements Drawable {
         // Image default position is to look forward to the right of the screen.
         // So image height is object width and image width is object depth
         var thing = obj.thing();
-        int width = (int) (thing.width() * pixelsPerFoot);
-        int height = (int) (thing.depth() * pixelsPerFoot);
+        int width = (int) (thing.depth() * pixelsPerFoot);
+        int height = (int) (thing.width() * pixelsPerFoot);
         int x = point.x - width / 2;
         int y = point.y - height / 2;
+
+        var orientation = -obj.orientation().phi().doubleValue();
 
         var origImg = image(obj);
         var image = origImg.getScaledInstance(pixelsDepth(pixelsPerFoot), pixelsWidth(pixelsPerFoot), Image.SCALE_SMOOTH);

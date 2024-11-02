@@ -63,7 +63,7 @@ public class Application extends JFrame implements KeyListener {
     private void gameSetUp() {
 //        world.add(newThing(Human.class), new Coordinate(20, 20), new Orientation(0));
         world.add(newThing(Almiraj.class), new Coordinate(-15, 0), new Orientation(0));
-        world.add(newThing(Wall.class, 1, 10), new Coordinate(0, 0), new Orientation(0));
+        world.add(newThing(Wall.class, 10, 1), new Coordinate(0, 0), new Orientation(0));
         world.add(newThing(Carrot.class), new Coordinate(15, 0), new Orientation(0));
     }
 
