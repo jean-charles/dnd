@@ -23,7 +23,7 @@ public class HitBoxUtils {
         var c = obj.coordinate();
         var x = c.x().doubleValue();
         var y = c.y().doubleValue();
-        var o = obj.orientation().phi().doubleValue();
+        var o = obj.velocity().destination().orientation().phi().doubleValue();
         var thing = obj.thing();
         var halfWidth = thing.width() / 2;
         var halfDepth = thing.depth() / 2;

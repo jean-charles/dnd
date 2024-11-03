@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;
@@ -35,7 +36,7 @@ public class World implements Runnable, LifeEnvironment {
     public void show(Sighted sighted, double sightDistance) {
         var obj = manager.get((Thing) sighted);
         var lifeFormCoordinate = obj.coordinate();
-        var lifeFormOrientation = obj.orientation();
+        var lifeFormVelocity = obj.velocity();
 
         // TODO: Select only object in sight distance
         for (var other : manager.getAllThings()) {
@@ -46,10 +47,10 @@ public class World implements Runnable, LifeEnvironment {
 
             var distance = targetCcoordinate.distanceFrom(lifeFormCoordinate);
             if (distance <= sightDistance) {
-                var targetOrientation = sightedObj.orientation();
+                var targetOrientation = sightedObj.velocity().destination().orientation();
 
                 var finalRelativeCoordinate = lifeFormCoordinate.to(targetCcoordinate);
-                var relativeOrientation = lifeFormOrientation.transpose(targetOrientation);
+                var relativeOrientation = lifeFormVelocity.destination().orientation().transpose(targetOrientation);
                 // TODO: see only visible things
                 sighted.see(other, finalRelativeCoordinate, relativeOrientation);
             }
@@ -61,18 +62,16 @@ public class World implements Runnable, LifeEnvironment {
     }
 
     @Override
-    public void addFrom(Thing origin, Thing newThing, Orientation orientation) {
+    public void addFrom(Thing origin, Thing newThing, Velocity newThingVelocity) {
         var obj = manager.get(origin);
         var originCoordinate = obj.coordinate();
-        var originOrientation = obj.orientation();
-        var newThingOrientation = orientation.transpose(originOrientation);
 
-        manager.add(newThing, originCoordinate, newThingOrientation);
+        manager.add(newThing, originCoordinate, newThingVelocity);
     }
 
     @Override
-    public void move(Thing thing) {
-        manager.move(thing);
+    public void move(Thing thing, Velocity velocity) {
+        manager.move(thing, velocity);
     }
 
     @Override
@@ -87,12 +86,12 @@ public class World implements Runnable, LifeEnvironment {
         lifeForm.eat((Food) food);
     }
 
-    public void add(Thing thing, Coordinate coordinate, Orientation orientation) {
+    public void add(Thing thing, Coordinate coordinate, Velocity velocity) {
         Objects.requireNonNull(thing, "Parameter 'thing' is null!");
         Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
-        Objects.requireNonNull(orientation, "Parameter 'orientation' is null!");
+        Objects.requireNonNull(velocity, "Parameter 'velocity' is null!");
 
-        manager.add(thing, coordinate, orientation);
+        manager.add(thing, coordinate, velocity);
     }
 
     public Collection<InGameObject> objects() {

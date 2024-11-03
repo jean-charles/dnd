@@ -22,7 +22,7 @@ class InGameObjectsManagerTest {
 
     private Thing theThing;
     private Coordinate coo;
-    private Orientation ori;
+    private Velocity vel;
 
     @BeforeEach
     void setUp() {
@@ -32,9 +32,10 @@ class InGameObjectsManagerTest {
 
         theThing = new ThingA(1, 2);
         coo = new Coordinate(0, 0);
-        ori = new Orientation(0);
+        CircularCoordinate ccoo = new CircularCoordinate(60, 0);
+        vel = new Velocity(60, ccoo);
 
-        manager.add(theThing, coo, ori);
+        manager.add(theThing, coo, vel);
 
         assertEquals(1, manager.sizeOfInGameObjects());
         assertEquals(1, manager.sizeOfThingsByCoordinate());
@@ -77,7 +78,7 @@ class InGameObjectsManagerTest {
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
-        assertEquals(ori, igo.orientation());
+        assertEquals(vel, igo.velocity());
     }
 
     @Test
@@ -114,7 +115,7 @@ class InGameObjectsManagerTest {
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
-        assertEquals(ori, igo.orientation());
+        assertEquals(vel, igo.velocity());
     }
 
     @Test
@@ -123,9 +124,8 @@ class InGameObjectsManagerTest {
         Velocity velocity = new Velocity(60, ccoo);
 
         var t0 = manager.getLastTimestamp(theThing);
-        theThing.velocity(velocity);
 
-        manager.move(theThing);
+        manager.move(theThing, velocity);
 
         var t1 = manager.getLastTimestamp(theThing);
         var igo = manager.get(theThing);
@@ -142,17 +142,16 @@ class InGameObjectsManagerTest {
     void moveObstructed() throws InterruptedException {
         Thing aThing = new ThingA(10, 2);
         var aCoo = new Coordinate(10, 0);
-        var anOri = new Orientation(0);
-        manager.add(aThing, aCoo, anOri);
+        var aVelocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
+        manager.add(aThing, aCoo, aVelocity);
 
         CircularCoordinate ccoo = new CircularCoordinate(60, 0);
         Velocity velocity = new Velocity(60, ccoo);
 
         var t0 = manager.getLastTimestamp(theThing);
-        theThing.velocity(velocity);
 
         Thread.sleep(1000);
-        manager.move(theThing);
+        manager.move(theThing, velocity);
 
         var t1 = manager.getLastTimestamp(theThing);
         var igo = manager.get(theThing);

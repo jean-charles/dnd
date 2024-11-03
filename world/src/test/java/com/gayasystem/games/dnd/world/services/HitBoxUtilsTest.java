@@ -1,5 +1,7 @@
 package com.gayasystem.games.dnd.world.services;
 
+import com.gayasystem.games.dnd.common.Velocity;
+import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.InGameObject;
@@ -23,7 +25,8 @@ public class HitBoxUtilsTest {
     @Test
     void hitBoxWithoutRotation() {
         var thing = new ThingA(100, 20);
-        var obj = new InGameObject(thing, new Coordinate(10, 10), new Orientation(0));
+        var velocity = new Velocity(0, new CircularCoordinate(0, 0));
+        var obj = new InGameObject(thing, new Coordinate(10, 10), velocity);
         var actual = utils.hitBox(obj);
         var expected = new HitBox(
                 new Point(BigDecimal.valueOf(20), BigDecimal.valueOf(60)),

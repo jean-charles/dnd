@@ -1,7 +1,9 @@
 package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.Food;
+import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
@@ -18,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater {
+public abstract class LifeForm extends Thing implements Moveable, Sighted, Hearing, Eater {
     public static final double CATCHING_DISTANCE = 0.5;
     public static final double SPEED_TO_FEET_PER_SECOND = 0.12;
 
@@ -33,6 +35,7 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
     private final Map<Class<? extends Thing>, Emotion> longTermMemories;
 
     private Brain brain;
+    private Velocity movement;
     private CircularCoordinate foodCoordinate;
 
     @Autowired
@@ -74,15 +77,20 @@ public abstract class LifeForm extends Thing implements Sighted, Hearing, Eater 
             brain = brainFactory.create(this, maxSpeedPerSecond, defaultEmotion, longTermMemories);
 
         foodCoordinate = null;
-        velocity = null;
+        movement = null;
 
         environment.show(this, convertor.miles2Inches(sightDistance));
         environment.listen(this, minSoundAmplitude);
         brain.run();
         if (foodCoordinate != null)
             environment.eat(this);
-        if (velocity != null)
-            environment.move(this);
+        if (movement != null)
+            environment.move(this, movement);
+    }
+
+    @Override
+    public void movement(Velocity velocity) {
+        movement = velocity;
     }
 
     @Override

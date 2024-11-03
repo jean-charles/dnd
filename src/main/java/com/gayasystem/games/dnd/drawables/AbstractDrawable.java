@@ -66,12 +66,13 @@ public abstract class AbstractDrawable implements Drawable {
         int x = point.x - width / 2 ;
         int y = point.y - height / 2;
 
-        var orientation = -obj.orientation().phi().doubleValue();
+        var orientation = obj.velocity().destination().orientation();
+        var rotation = -orientation.phi().doubleValue();
 
         var image = image(obj).getScaledInstance(width, height, Image.SCALE_SMOOTH);
         var at = new AffineTransform();
         at.translate(x, y);
-        at.rotate(orientation, (double) width / 2, (double) height / 2);
+        at.rotate(rotation, (double) width / 2, (double) height / 2);
 
         g.drawImage(image, at, observer);
     }
@@ -85,7 +86,8 @@ public abstract class AbstractDrawable implements Drawable {
         int x = point.x - width / 2;
         int y = point.y - height / 2;
 
-        var orientation = -obj.orientation().phi().doubleValue();
+        var orientation = obj.velocity().destination().orientation();
+        var rotation = -orientation.phi().doubleValue();
 
         var origImg = image(obj);
         var image = origImg.getScaledInstance(pixelsDepth(pixelsPerFoot), pixelsWidth(pixelsPerFoot), Image.SCALE_SMOOTH);
@@ -116,11 +118,12 @@ public abstract class AbstractDrawable implements Drawable {
         int x = point.x - width / 2 ;
         int y = point.y - height / 2;
 
-        var orientation = -obj.orientation().phi().doubleValue();
+        var orientation = obj.velocity().destination().orientation();
+        var rotation = -orientation.phi().doubleValue();
 
         g.setColor(red);
         g.drawRect(x, y, width, height);
-        g.rotate(orientation, (double) width / 2, (double) height / 2);
+        g.rotate(rotation, (double) width / 2, (double) height / 2);
     }
 
     @Override

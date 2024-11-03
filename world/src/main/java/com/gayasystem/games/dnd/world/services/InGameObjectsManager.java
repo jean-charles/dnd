@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
@@ -27,10 +28,10 @@ public class InGameObjectsManager {
      *
      * @param thing         {@link Thing} to add in the {@link InGameObject in game objet}.
      * @param newCoordinate {@link Coordinate} where to put the {@link InGameObject in game objet}.
-     * @param orientation   {@link Orientation} of the {@link InGameObject in game objet} in the world.
+     * @param velocity      {@link Velocity} of the {@link InGameObject in game objet} in the world.
      */
-    public void add(Thing thing, Coordinate newCoordinate, Orientation orientation) {
-        var previous = inGameObjects.put(thing, new InGameObject(thing, newCoordinate, orientation));
+    public void add(Thing thing, Coordinate newCoordinate, Velocity velocity) {
+        var previous = inGameObjects.put(thing, new InGameObject(thing, newCoordinate, velocity));
         if (previous != null)
             thingsByCoordinate.remove(previous.coordinate());
         thingsByCoordinate.put(newCoordinate, thing);
@@ -103,12 +104,11 @@ public class InGameObjectsManager {
      *
      * @param thing {@link Thing} witch to calculate the distance.
      */
-    public void move(Thing thing) {
+    public void move(Thing thing, Velocity velocity) {
         var timestamps = new Date();
         var lastTimestamps = thingsLastMove.get(thing);
         thingsLastMove.put(thing, timestamps);
 
-        var velocity = thing.velocity();
         if (velocity != null) {
             var rho = velocity.speed();
             if (lastTimestamps != null) {
@@ -123,8 +123,7 @@ public class InGameObjectsManager {
             var coordinate = obj.coordinate();
 
             var newCoordinate = coordinate.from(newDestination);
-            var orientation = thing.rotation();
-            this.add(thing, newCoordinate, orientation);
+            this.add(thing, newCoordinate, velocity);
         }
     }
 

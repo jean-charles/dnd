@@ -29,9 +29,9 @@ public class WorldTest {
     public void runMove() {
         assertNotNull(thing);
         assertNotNull(world);
-        when(thing.velocity()).thenReturn(new Velocity(1, new CircularCoordinate(1, 0)));
         double originalX = 0;
-        world.add(thing, new Coordinate(originalX, 0), new Orientation(0));
+        var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
+        world.add(thing, new Coordinate(originalX, 0), velocity);
 
         world.run();
         verify(thing, times(1)).run();
@@ -45,19 +45,19 @@ public class WorldTest {
     @Test
     void addFrom() {
         Thing parent = new ThingA();
-        world.add(parent, new Coordinate(0, 0), new Orientation(0));
+        var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
+        world.add(parent, new Coordinate(0, 0), velocity);
         Thing child = new ThingB();
-        Orientation orientation = new Orientation(0);
-        world.addFrom(parent, child, orientation);
+        world.addFrom(parent, child, velocity);
     }
 
     @Test
     void add() {
         ThingA thing = new ThingA();
         Coordinate coordinate = new Coordinate(0, 0);
-        Orientation orientation = new Orientation(0);
 
-        world.add(thing, coordinate, orientation);
+        var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
+        world.add(thing, coordinate, velocity);
 
         Coordinate actual = world.getThingCoordinate(thing);
         assertEquals(coordinate, actual);
@@ -66,13 +66,15 @@ public class WorldTest {
     @Test
     void addNulls() {
         try {
-            world.add(null, new Coordinate(0, 0), new Orientation(0));
+            var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
+            world.add(null, new Coordinate(0, 0), velocity);
             fail();
         } catch (Exception e) {
             assertEquals("Parameter 'thing' is null!", e.getLocalizedMessage());
         }
         try {
-            world.add(new ThingA(), null, new Orientation(0));
+            var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
+            world.add(new ThingA(), null, velocity);
             fail();
         } catch (Exception e) {
             assertEquals("Parameter 'coordinate' is null!", e.getLocalizedMessage());
