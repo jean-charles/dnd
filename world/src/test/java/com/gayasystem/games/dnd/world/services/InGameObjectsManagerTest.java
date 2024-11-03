@@ -66,7 +66,7 @@ class InGameObjectsManagerTest {
         assertNotNull(things);
         assertEquals(1, things.size());
 
-        var t = things.stream().toArray()[0];
+        var t = things.toArray()[0];
         assertNotNull(t);
         assertEquals(theThing, t);
     }
@@ -110,7 +110,7 @@ class InGameObjectsManagerTest {
         assertNotNull(igos);
         assertEquals(1, igos.size());
 
-        var igo = igos.stream().toList().get(0);
+        var igo = igos.stream().toList().getFirst();
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
@@ -134,6 +134,33 @@ class InGameObjectsManagerTest {
 
         double interval = (t1.getTime() - t0.getTime()) / 1000.0;
         var expectedDistance = interval * velocity.speed();
+        assertEquals(expectedDistance, distance, 0.0);
+        assertEquals(new Coordinate(expectedDistance, 0), igo.coordinate());
+    }
+
+    @Test
+    void moveObstructed() throws InterruptedException {
+        Thing aThing = new ThingA(10, 2);
+        var aCoo = new Coordinate(10, 0);
+        var anOri = new Orientation(0);
+        manager.add(aThing, aCoo, anOri);
+
+        CircularCoordinate ccoo = new CircularCoordinate(60, 0);
+        Velocity velocity = new Velocity(60, ccoo);
+
+        var t0 = manager.getLastTimestamp(theThing);
+        theThing.velocity(velocity);
+
+        Thread.sleep(1000);
+        manager.move(theThing);
+
+        var t1 = manager.getLastTimestamp(theThing);
+        var igo = manager.get(theThing);
+        var coo = igo.coordinate();
+        var distance = coo.x().doubleValue();
+
+        double interval = (t1.getTime() - t0.getTime()) / 1000.0;
+        var expectedDistance = 8;
         assertEquals(expectedDistance, distance, 0.0);
         assertEquals(new Coordinate(expectedDistance, 0), igo.coordinate());
     }
