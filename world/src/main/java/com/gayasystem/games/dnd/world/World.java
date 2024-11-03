@@ -66,7 +66,7 @@ public class World implements Runnable, LifeEnvironment {
         var obj = manager.get(origin);
         var originCoordinate = obj.coordinate();
 
-        manager.add(newThing, originCoordinate, newThingVelocity);
+        manager.add(newThing, originCoordinate, newThingVelocity.destination().orientation());
     }
 
     @Override
@@ -86,12 +86,11 @@ public class World implements Runnable, LifeEnvironment {
         lifeForm.eat((Food) food);
     }
 
-    public void add(Thing thing, Coordinate coordinate, Velocity velocity) {
+    public void add(Thing thing, Coordinate coordinate, Orientation orientation) {
         Objects.requireNonNull(thing, "Parameter 'thing' is null!");
         Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
-        Objects.requireNonNull(velocity, "Parameter 'velocity' is null!");
 
-        manager.add(thing, coordinate, velocity);
+        manager.add(thing, coordinate, orientation);
     }
 
     public Collection<InGameObject> objects() {

@@ -26,9 +26,9 @@ public class WorldIntegrationTest {
     public void integrationTests() {
         var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
         assertNotNull(almiraj);
-        world.add(almiraj, new Coordinate(0, 0), velocity);
+        world.add(almiraj, new Coordinate(0, 0), new Orientation(0));
         assertNotNull(carrot);
-        world.add(carrot, new Coordinate(10, 0), velocity);
+        world.add(carrot, new Coordinate(10, 0), new Orientation(0));
         world.run();
         var almirajCoordinate = world.getThingCoordinate(almiraj);
         assertNotNull(almirajCoordinate);

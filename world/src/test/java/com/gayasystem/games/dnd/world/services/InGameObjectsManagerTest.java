@@ -15,14 +15,14 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitConfig(classes = {WorldTestConfig.class, InGameObjectsManager.class})
+@SpringJUnitConfig(classes = {HitBoxUtils.class, HitBoxValidator.class, InGameObjectsManager.class})
 class InGameObjectsManagerTest {
     @Autowired
     private InGameObjectsManager manager;
 
     private Thing theThing;
     private Coordinate coo;
-    private Velocity vel;
+    private Orientation ori;
 
     @BeforeEach
     void setUp() {
@@ -32,10 +32,9 @@ class InGameObjectsManagerTest {
 
         theThing = new ThingA(1, 2);
         coo = new Coordinate(0, 0);
-        CircularCoordinate ccoo = new CircularCoordinate(60, 0);
-        vel = new Velocity(60, ccoo);
+        ori = new Orientation(0);
 
-        manager.add(theThing, coo, vel);
+        manager.add(theThing, coo, ori);
 
         assertEquals(1, manager.sizeOfInGameObjects());
         assertEquals(1, manager.sizeOfThingsByCoordinate());
@@ -78,7 +77,7 @@ class InGameObjectsManagerTest {
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
-        assertEquals(vel, igo.velocity());
+        assertEquals(ori, igo.velocity().destination().orientation());
     }
 
     @Test
@@ -115,12 +114,12 @@ class InGameObjectsManagerTest {
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
-        assertEquals(vel, igo.velocity());
+        assertEquals(ori, igo.velocity().destination().orientation());
     }
 
     @Test
     void move() {
-        CircularCoordinate ccoo = new CircularCoordinate(60, 0);
+        CircularCoordinate ccoo = new CircularCoordinate(120, 0);
         Velocity velocity = new Velocity(60, ccoo);
 
         var t0 = manager.getLastTimestamp(theThing);
@@ -142,8 +141,7 @@ class InGameObjectsManagerTest {
     void moveObstructed() throws InterruptedException {
         Thing aThing = new ThingA(10, 2);
         var aCoo = new Coordinate(10, 0);
-        var aVelocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
-        manager.add(aThing, aCoo, aVelocity);
+        manager.add(aThing, aCoo, new Orientation(0));
 
         CircularCoordinate ccoo = new CircularCoordinate(60, 0);
         Velocity velocity = new Velocity(60, ccoo);

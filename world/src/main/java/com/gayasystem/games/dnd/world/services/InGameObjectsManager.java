@@ -8,12 +8,16 @@ import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.InGameObject;
+import com.google.common.base.Converter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 import static com.gayasystem.games.dnd.lifeforms.LifeForm.CATCHING_DISTANCE;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 @Service
 public class InGameObjectsManager {
@@ -22,20 +26,59 @@ public class InGameObjectsManager {
     private final Map<Thing, Date> thingsLastMove = new HashMap<>();
     private final Collection<Thing> thingsToRemove = new ArrayList<>();
 
+    @Autowired
+    private HitBoxValidator validator;
+
+    private boolean doesItWantToMove(Velocity velocity) {
+        if (velocity == null) return false;
+        if (velocity.speed() == 0) return false;
+        var destination = velocity.destination();
+        if (destination.rho().equals(BigDecimal.ZERO)) return false;
+
+        return true;
+    }
+
+    private boolean doesItWantToRotate(Velocity velocity) {
+        if (velocity == null) return false;
+        var destination = velocity.destination();
+        if (destination.orientation().phi().compareTo(BigDecimal.ZERO) == 0) return false;
+
+        return true;
+    }
+
+    private double relativeDistance(double rho, double speed, double interval) {
+        var distance = speed * interval;
+
+        return min(rho - CATCHING_DISTANCE, distance);
+    }
+
+    /**
+     * Add or move an {@link InGameObject in game objet} with the {@link Thing thing} at the {@link Coordinate coordinate}
+     * and the {@link Velocity velocity}.
+     *
+     * @param thing      {@link Thing} to add in the {@link InGameObject in game objet}.
+     * @param coordinate {@link Coordinate} where to put the {@link InGameObject in game objet}.
+     * @param velocity   {@link Velocity} of the {@link InGameObject in game objet} in the world.
+     */
+    private void add(Thing thing, Coordinate coordinate, Velocity velocity) {
+        var previous = inGameObjects.put(thing, new InGameObject(thing, coordinate, velocity));
+        if (previous != null)
+            thingsByCoordinate.remove(previous.coordinate());
+        thingsByCoordinate.put(coordinate, thing);
+        thingsLastMove.computeIfAbsent(thing, k -> new Date());
+    }
+
     /**
      * Create a new {@link InGameObject in game objet} with the {@link Thing thing} at the {@link Coordinate coordinate}
      * and the {@link Orientation orientation}.
      *
-     * @param thing         {@link Thing} to add in the {@link InGameObject in game objet}.
-     * @param newCoordinate {@link Coordinate} where to put the {@link InGameObject in game objet}.
-     * @param velocity      {@link Velocity} of the {@link InGameObject in game objet} in the world.
+     * @param thing       {@link Thing} to add in the {@link InGameObject in game objet}.
+     * @param coordinate  {@link Coordinate} where to put the {@link InGameObject in game objet}.
+     * @param orientation {@link Orientation} of the {@link InGameObject in game objet} in the world.
      */
-    public void add(Thing thing, Coordinate newCoordinate, Velocity velocity) {
-        var previous = inGameObjects.put(thing, new InGameObject(thing, newCoordinate, velocity));
-        if (previous != null)
-            thingsByCoordinate.remove(previous.coordinate());
-        thingsByCoordinate.put(newCoordinate, thing);
-        thingsLastMove.computeIfAbsent(thing, k -> new Date());
+    public void add(Thing thing, Coordinate coordinate, Orientation orientation) {
+        var velocity = new Velocity(0, new CircularCoordinate(0, orientation));
+        add(thing, coordinate, velocity);
     }
 
     /**
@@ -102,29 +145,48 @@ public class InGameObjectsManager {
      * Move the {@link Thing thing} to the destination relatively to the elapsed time since the last move and others
      * {@link Thing things}.
      *
-     * @param thing {@link Thing} witch to calculate the distance.
+     * @param thing    {@link Thing} witch to calculate the distance.
+     * @param velocity Wanted {@link Velocity destination} by the {@link Thing thing}.
      */
     public void move(Thing thing, Velocity velocity) {
         var timestamps = new Date();
         var lastTimestamps = thingsLastMove.get(thing);
         thingsLastMove.put(thing, timestamps);
 
-        if (velocity != null) {
-            var rho = velocity.speed();
-            if (lastTimestamps != null) {
-                double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
-                var distance = interval * rho;
-                rho = velocity.destination().rho().doubleValue();
-                rho = (rho <= distance) ? rho - CATCHING_DISTANCE : distance;
+        var inGameObj = inGameObjects.get(thing);
+        var wantedRotation = inGameObj.velocity().destination().orientation().phi().doubleValue();
+        var newPhi = velocity.destination().orientation().phi().doubleValue();
+        if (doesItWantToRotate(velocity)) {
+            for (var other : inGameObjects.values()) {
+                if (inGameObj != other) {
+                    var rotation = validator.rotation(inGameObj, other, wantedRotation);
+                    if (wantedRotation > 0.0 && rotation < newPhi) {
+                        newPhi = rotation;
+                    } else if (wantedRotation < 0.0 && rotation > newPhi) {
+                        newPhi = rotation;
+                    }
+                }
             }
-
-            var newDestination = new CircularCoordinate(rho, velocity.destination().orientation());
-            var obj = this.get(thing);
-            var coordinate = obj.coordinate();
-
-            var newCoordinate = coordinate.from(newDestination);
-            this.add(thing, newCoordinate, velocity);
         }
+        CircularCoordinate newDestination = velocity.destination();
+        if (doesItWantToMove(velocity)) {
+            double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
+            double rho = newDestination.rho().doubleValue();
+            rho = relativeDistance(rho, velocity.speed(), interval);
+
+            for (var other : inGameObjects.values()) {
+                if (inGameObj != other) {
+                    var distance = validator.translate(inGameObj, other, rho);
+                    if (distance < rho) rho = distance;
+                }
+            }
+            newDestination = new CircularCoordinate(rho, newPhi);
+        }
+        var newVelocity = new Velocity(velocity.speed(), newDestination);
+
+        var coordinate = inGameObj.coordinate();
+        var newCoordinate = coordinate.from(newDestination);
+        add(thing, newCoordinate, newVelocity);
     }
 
     /**

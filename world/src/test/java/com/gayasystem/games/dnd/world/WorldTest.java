@@ -30,8 +30,7 @@ public class WorldTest {
         assertNotNull(thing);
         assertNotNull(world);
         double originalX = 0;
-        var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
-        world.add(thing, new Coordinate(originalX, 0), velocity);
+        world.add(thing, new Coordinate(originalX, 0), new Orientation(0));
 
         world.run();
         verify(thing, times(1)).run();
@@ -46,7 +45,7 @@ public class WorldTest {
     void addFrom() {
         Thing parent = new ThingA();
         var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
-        world.add(parent, new Coordinate(0, 0), velocity);
+        world.add(parent, new Coordinate(0, 0), new Orientation(0));
         Thing child = new ThingB();
         world.addFrom(parent, child, velocity);
     }
@@ -56,8 +55,7 @@ public class WorldTest {
         ThingA thing = new ThingA();
         Coordinate coordinate = new Coordinate(0, 0);
 
-        var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
-        world.add(thing, coordinate, velocity);
+        world.add(thing, coordinate, new Orientation(0));
 
         Coordinate actual = world.getThingCoordinate(thing);
         assertEquals(coordinate, actual);
@@ -66,15 +64,13 @@ public class WorldTest {
     @Test
     void addNulls() {
         try {
-            var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
-            world.add(null, new Coordinate(0, 0), velocity);
+            world.add(null, new Coordinate(0, 0), new Orientation(0));
             fail();
         } catch (Exception e) {
             assertEquals("Parameter 'thing' is null!", e.getLocalizedMessage());
         }
         try {
-            var velocity = new Velocity(0, new CircularCoordinate(0, new Orientation(0)));
-            world.add(new ThingA(), null, velocity);
+            world.add(new ThingA(), null, new Orientation(0));
             fail();
         } catch (Exception e) {
             assertEquals("Parameter 'coordinate' is null!", e.getLocalizedMessage());

@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class HitBoxValidator {
     @Autowired
-    HitBoxUtils utils;
+    private HitBoxUtils utils;
 
-    public boolean intersection(InGameObject obj1, InGameObject obj2) {
-        var rec1 = utils.alignedRectangle(obj1);
-        var rec2 = utils.alignedRectangle(obj2);
+    public double rotation(InGameObject obj, InGameObject other, double phi) {
+        var objHb = utils.hitBox(obj);
+        var otherHb = utils.hitBox(other);
 
-        return false;
+        return phi;
+    }
+
+    public double translate(InGameObject obj, InGameObject other, double rho) {
+        return rho;
     }
 }
