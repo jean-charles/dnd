@@ -4,7 +4,6 @@ import com.gayasystem.games.dnd.SwingTestCase;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.drawables.SizeConvertor;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.world.Coordinate;
@@ -29,7 +28,7 @@ class DrawableCarrotTest extends SwingTestCase {
     private JPanel panel;
     private DrawableCarrot drawableCarrot;
 
-    private int feetWidth = 2;
+    private double FEET_WIDTH = 1;
     private InGameObject carrotObj;
 
     @Autowired
@@ -45,9 +44,9 @@ class DrawableCarrotTest extends SwingTestCase {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Point p = new Point(getWidth() / 2, getHeight() / 2);
-                int pixelPerInch = (int) convertor.feet2Inches(getWidth() / feetWidth);
+                int pixelsPerFoot = (int) (getWidth() / FEET_WIDTH);
                 if (carrotObj != null)
-                    drawableCarrot.draw(pixelPerInch, carrotObj, p, g, null);
+                    drawableCarrot.draw(pixelsPerFoot, carrotObj, p, g, null);
             }
         };
         panel.setSize(400, 400);
