@@ -1,22 +1,28 @@
 package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.world.InGameObject;
-import com.gayasystem.games.dnd.world.services.domains.AlignedRectangle;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
 import com.gayasystem.games.dnd.world.services.domains.Point;
+import org.apache.commons.geometry.euclidean.twod.Lines;
+import org.apache.commons.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.geometry.euclidean.twod.shape.Circle;
+import org.apache.commons.numbers.core.Precision;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
-import static java.lang.Math.*;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 @Service
 public class HitBoxUtils {
-    public AlignedRectangle alignedRectangle(InGameObject obj) {
-        var hb = hitBox(obj);
-        var p1 = new Point(minX(hb.p1(), hb.p2(), hb.p3(), hb.p4()), minY(hb.p1(), hb.p2(), hb.p3(), hb.p4()));
-        var p2 = new Point(maxX(hb.p1(), hb.p2(), hb.p3(), hb.p4()), maxY(hb.p1(), hb.p2(), hb.p3(), hb.p4()));
-        return new AlignedRectangle(p1, p2);
+    private final Precision.DoubleEquivalence p;
+
+    public HitBoxUtils() {
+        p = Precision.doubleEquivalenceOfEpsilon(1e-6);
     }
 
     public HitBox hitBox(InGameObject obj) {
@@ -33,34 +39,34 @@ public class HitBoxUtils {
         var p3 = rotateRearRight(x, y, o, halfWidth, halfDepth);
         var p4 = rotateRearLeft(x, y, o, halfWidth, halfDepth);
 
-        return new HitBox(p1, p2, p3, p4);
+        return new HitBox(c.toVector2D(), p1, p2, p3, p4);
     }
 
-    public Point rotateFrontLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
+    public Vector2D rotateFrontLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
         var x1 = x + halfDepth;
         var y1 = y + halfWidth;
         return rotate(x, y, phi, x1, y1);
     }
 
-    public Point rotateFrontRight(double x, double y, double phi, double halfWidth, double halfDepth) {
+    public Vector2D rotateFrontRight(double x, double y, double phi, double halfWidth, double halfDepth) {
         var x1 = x + halfDepth;
         var y1 = y - halfWidth;
         return rotate(x, y, phi, x1, y1);
     }
 
-    public Point rotateRearRight(double x, double y, double phi, double halfWidth, double halfDepth) {
+    public Vector2D rotateRearRight(double x, double y, double phi, double halfWidth, double halfDepth) {
         var x1 = x - halfDepth;
         var y1 = y - halfWidth;
         return rotate(x, y, phi, x1, y1);
     }
 
-    public Point rotateRearLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
+    public Vector2D rotateRearLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
         var x1 = x - halfDepth;
         var y1 = y + halfWidth;
         return rotate(x, y, phi, x1, y1);
     }
 
-    public Point rotate(double xCenter, double yCenter, double phi, double xOrig, double yOrig) {
+    public Vector2D rotate(double xCenter, double yCenter, double phi, double xOrig, double yOrig) {
         var x = xOrig - xCenter;
         var y = yOrig - yCenter;
         double xDest = x * cos(phi) + y * sin(phi);
@@ -68,7 +74,7 @@ public class HitBoxUtils {
         xDest += xCenter;
         yDest += yCenter;
 
-        return new Point(BigDecimal.valueOf(xDest), BigDecimal.valueOf(yDest));
+        return Vector2D.of(xDest, yDest);
     }
 
     public BigDecimal minX(Point p1, Point p2, Point p3, Point p4) {
@@ -85,5 +91,33 @@ public class HitBoxUtils {
 
     public BigDecimal maxY(Point p1, Point p2, Point p3, Point p4) {
         return p1.y().max(p2.y()).max(p3.y()).max(p4.y());
+    }
+
+    public double radius(HitBox hitBox) {
+        var l = Lines.fromPoints(hitBox.center(), hitBox.p1(), p);
+        var s = l.segment(hitBox.center(), hitBox.p1());
+        return s.getSize();
+    }
+
+    public boolean couldItCrossIt(HitBox hb1, HitBox hb2) {
+        var c = Circle.from(hb1.center(), radius(hb1), p);
+        return Stream.of(
+                Lines.fromPoints(hb2.p1(), hb2.p2(), p),
+                Lines.fromPoints(hb2.p2(), hb2.p3(), p),
+                Lines.fromPoints(hb2.p3(), hb2.p4(), p),
+                Lines.fromPoints(hb2.p4(), hb2.p1(), p)
+        ).anyMatch(line -> c.firstIntersection(line) != null);
+    }
+
+    public List<Vector2D> intersections(HitBox hb1, HitBox hb2) {
+        var points = new ArrayList<Vector2D>();
+
+        var c = Circle.from(hb1.center(), radius(hb1), p);
+        points.addAll(c.intersections(Lines.fromPoints(hb2.p1(), hb2.p2(), p)));
+        points.addAll(c.intersections(Lines.fromPoints(hb2.p2(), hb2.p3(), p)));
+        points.addAll(c.intersections(Lines.fromPoints(hb2.p3(), hb2.p4(), p)));
+        points.addAll(c.intersections(Lines.fromPoints(hb2.p4(), hb2.p1(), p)));
+
+        return points;
     }
 }

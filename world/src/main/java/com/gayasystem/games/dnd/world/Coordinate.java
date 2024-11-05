@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
+import org.apache.commons.geometry.euclidean.twod.Vector2D;
 
 import java.math.BigDecimal;
 
@@ -25,6 +26,10 @@ public record Coordinate(BigDecimal x, BigDecimal y) {
         double y = this.y.doubleValue() + rho * sin(phi);
 
         return new Coordinate(x, y);
+    }
+
+    public Vector2D toVector2D() {
+        return Vector2D.of(x.doubleValue(), y.doubleValue());
     }
 
     public CircularCoordinate to() {
