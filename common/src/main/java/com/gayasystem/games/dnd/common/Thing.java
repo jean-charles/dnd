@@ -6,9 +6,9 @@ public abstract class Thing implements Runnable {
     protected double mass;
 
     /**
-     * @param width thing width in feet.
-     * @param depth thing depth in feet.
-     * @param mass  thing mass in pounds.
+     * @param width Distance between shoulders in feet.
+     * @param depth Distance front to back in feet.
+     * @param mass  Mass in pounds.
      */
     protected Thing(double width, double depth, double mass) {
         this.width = width;

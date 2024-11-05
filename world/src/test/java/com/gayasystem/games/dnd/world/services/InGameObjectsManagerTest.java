@@ -3,7 +3,7 @@ package com.gayasystem.games.dnd.world.services;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.world.ThingA;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.junit.jupiter.api.AfterEach;
@@ -118,7 +118,7 @@ class InGameObjectsManagerTest {
 
     @Test
     void move() {
-        PolarCoordinates ccoo = new PolarCoordinates(120, 0);
+        PolarCoordinates ccoo = PolarCoordinates.of(120, 0);
         Velocity velocity = new Velocity(60, ccoo);
 
         var t0 = manager.getLastTimestamp(theThing);
@@ -142,7 +142,7 @@ class InGameObjectsManagerTest {
         var aCoo = Vector2D.of(10, 0);
         manager.add(aThing, aCoo, new Orientation(0));
 
-        PolarCoordinates ccoo = new PolarCoordinates(60, 0);
+        PolarCoordinates ccoo = PolarCoordinates.of(60, 0);
         Velocity velocity = new Velocity(60, ccoo);
 
         var t0 = manager.getLastTimestamp(theThing);

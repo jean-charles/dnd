@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.ThingA;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
@@ -26,7 +26,7 @@ public class HitBoxUtilsTest {
     @Test
     void hitBoxWithoutRotation() {
         var thing = new ThingA(100, 20);
-        var velocity = new Velocity(0, new PolarCoordinates(0, 0));
+        var velocity = new Velocity(0, PolarCoordinates.of(0, 0));
         var center = Vector2D.of(10, 10);
         var obj = new InGameObject(thing, center, velocity);
         var actual = utils.hitBox(obj);

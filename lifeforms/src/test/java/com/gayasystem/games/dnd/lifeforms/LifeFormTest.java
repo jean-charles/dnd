@@ -3,7 +3,7 @@ package com.gayasystem.games.dnd.lifeforms;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
@@ -71,18 +71,17 @@ class LifeFormTest {
 
     @Test
     void see() {
-        Orientation orientation = new Orientation(0);
         var thing = new ThingA();
-        PolarCoordinates origin = new PolarCoordinates(10, 0);
+        PolarCoordinates origin = PolarCoordinates.of(10, 0);
 
-        lifeForm.see(thing, origin, orientation);
+        lifeForm.see(thing, origin, 0);
 
         verify(brain).handle(any(SpatialEngram.class));
     }
 
     @Test
     void ear() {
-        PolarCoordinates origin = new PolarCoordinates(10, 0);
+        PolarCoordinates origin = PolarCoordinates.of(10, 0);
         double amplitude = MIN_SOUND_AMPLITUDE * 2;
         var thing = new ThingA();
 

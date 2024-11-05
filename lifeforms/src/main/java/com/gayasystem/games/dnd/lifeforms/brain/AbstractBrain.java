@@ -3,11 +3,12 @@ package com.gayasystem.games.dnd.lifeforms.brain;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.*;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 
 @Component
 public abstract class AbstractBrain implements Brain {
-    private static final Velocity NO_VELOCITY = new Velocity(0, new PolarCoordinates(0, 0));
+    private static final Velocity NO_VELOCITY = new Velocity(0, PolarCoordinates.of(0, 0));
 
     private final LifeForm body;
     private final double maxSpeedPerSecond;
@@ -57,8 +58,8 @@ public abstract class AbstractBrain implements Brain {
         var orientation = computeOrientation(mostImportantEngram);
         var engram = mostImportantEngram.engram();
         if (engram != null) {
-            double rho = engram.origin().rho().doubleValue();
-            var destination = new PolarCoordinates(rho, orientation);
+            double rho = engram.origin().getRadius();
+            var destination = PolarCoordinates.of(rho, orientation);
             return new Velocity(speed, destination);
         }
         return NO_VELOCITY;
@@ -74,16 +75,18 @@ public abstract class AbstractBrain implements Brain {
         return speedRate * maxSpeedPerSecond;
     }
 
-    private Orientation computeOrientation(SpatialEmotionalEngram engram) {
+    private double computeOrientation(SpatialEmotionalEngram engram) {
         switch (engram.emotion()) {
             case scared -> {
-                return engram.engram().origin().orientation().opposite();
+                var origin = engram.engram().origin();
+                var point = Point1S.from(origin);
+                return point.antipodal().getAzimuth();
             }
             case hungry, attracted -> {
-                return engram.engram().origin().orientation();
+                return engram.engram().origin().getAzimuth();
             }
         }
-        return new Orientation(0);
+        return 0;
     }
 
     @Override

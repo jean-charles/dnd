@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+import static java.lang.Math.*;
 
 @Service
 public class HitBoxUtils {
@@ -29,7 +28,7 @@ public class HitBoxUtils {
         var c = obj.coordinate();
         var x = c.getX();
         var y = c.getY();
-        var o = obj.velocity().destination().orientation().phi().doubleValue();
+        var o = obj.velocity().destination().getAzimuth();
         var thing = obj.thing();
         var halfWidth = thing.width() / 2;
         var halfDepth = thing.depth() / 2;
@@ -77,20 +76,20 @@ public class HitBoxUtils {
         return Vector2D.of(xDest, yDest);
     }
 
-    public BigDecimal minX(Point p1, Point p2, Point p3, Point p4) {
-        return p1.getX().min(p2.x()).min(p3.x()).min(p4.x());
+    public double minX(Vector2D p1, Vector2D p2, Vector2D p3, Vector2D p4) {
+        return min(min(min(p1.getX(), p2.getX()), p3.getX()), p4.getX());
     }
 
-    public BigDecimal maxX(Point p1, Point p2, Point p3, Point p4) {
-        return p1.getX().max(p2.x()).max(p3.x()).max(p4.x());
+    public double maxX(Vector2D p1, Vector2D p2, Vector2D p3, Vector2D p4) {
+        return max(max(max(p1.getX(), p2.getX()), p3.getX()), p4.getX());
     }
 
-    public BigDecimal minY(Point p1, Point p2, Point p3, Point p4) {
-        return p1.y().min(p2.y()).min(p3.y()).min(p4.y());
+    public double minY(Vector2D p1, Vector2D p2, Vector2D p3, Vector2D p4) {
+        return min(min(min(p1.getY(), p2.getY()), p3.getY()), p4.getY());
     }
 
-    public BigDecimal maxY(Point p1, Point p2, Point p3, Point p4) {
-        return p1.y().max(p2.y()).max(p3.y()).max(p4.y());
+    public double maxY(Vector2D p1, Vector2D p2, Vector2D p3, Vector2D p4) {
+        return max(max(max(p1.getY(), p2.getY()), p3.getY()), p4.getY());
     }
 
     public double radius(HitBox hitBox) {

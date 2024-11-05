@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MeasurementConvertor {
-    private double FEET_IN_MILE = 5280;
-    private double INCH_IN_FOOT = 12;
+    private final double FEET_IN_MILE = 5280;
+    private final double INCH_IN_FOOT = 12;
 
     public double feet2Miles(double feet) {
         return feet / FEET_IN_MILE;

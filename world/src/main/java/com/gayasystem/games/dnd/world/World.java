@@ -50,9 +50,9 @@ public class World implements Runnable, LifeEnvironment {
                 var targetOrientation = sightedObj.velocity().destination().getAzimuth();
 
                 var relativeCoordinate = lifeFormCoordinate.directionTo(sightedObjCoordinate);
-                var relativeOrientation = lifeFormVelocity.destination().getAzimuth().transpose(targetOrientation);
+//                var relativeOrientation = lifeFormVelocity.destination().getAzimuth().transpose(targetOrientation);
                 // TODO: see only visible things
-                sighted.see(other, relativeCoordinate, relativeOrientation);
+                sighted.see(other, null, 0);
             }
         }
     }
@@ -86,7 +86,7 @@ public class World implements Runnable, LifeEnvironment {
         lifeForm.eat((Food) food);
     }
 
-    public void add(Thing thing, Vector2D coordinate, Orientation orientation) {
+    public void add(Thing thing, Vector2D coordinate, double orientation) {
         Objects.requireNonNull(thing, "Parameter 'thing' is null!");
         Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
 
@@ -120,7 +120,7 @@ public class World implements Runnable, LifeEnvironment {
 //
 //        double rho = hypot(x, y);
 //        double phi = atan2(y, x);
-//        return new PolarCoordinates(rho, phi);
+//        return PolarCoordinates.of(rho, phi);
 //    }
 //    public double distanceFrom(Coordinate formCoordinate) {
 //        var newX = pow(x.doubleValue() - formCoordinate.x.doubleValue(), 2);

@@ -34,7 +34,7 @@ public class EngramComputing {
 //        double closestDistance = Double.MAX_VALUE;
         Emotion mostImportantEmotion = neutral;
         for (var spatialEmotionalEngram : spatialEmotionalEngrams) {
-            var distance = spatialEmotionalEngram.engram().origin().rho().doubleValue();
+            var distance = spatialEmotionalEngram.engram().origin().getRadius();
             if (mostImportantEmotion(spatialEmotionalEngram.emotion(), mostImportantEmotion)) {
 //                if (distance < closestDistance) {
                     mostImportantEngram = spatialEmotionalEngram;
@@ -55,8 +55,8 @@ public class EngramComputing {
             case attracted, scared -> move;
             case hungry -> {
                 var spatialEngram = mostImportantEngram.engram();
-                var distance = spatialEngram.origin().rho();
-                if (distance.compareTo(BigDecimal.valueOf(CATCHING_DISTANCE)) <= 0)
+                var distance = spatialEngram.origin().getRadius();
+                if (distance <= CATCHING_DISTANCE)
                     yield eat;
                 yield move;
             }

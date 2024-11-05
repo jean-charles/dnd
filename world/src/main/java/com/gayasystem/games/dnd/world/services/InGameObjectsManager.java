@@ -31,7 +31,7 @@ public class InGameObjectsManager {
         if (velocity == null) return false;
         if (velocity.speed() == 0) return false;
         var destination = velocity.destination();
-        if (destination.rho().equals(BigDecimal.ZERO)) return false;
+        if (destination.getRadius() == 0) return false;
 
         return true;
     }
@@ -39,7 +39,7 @@ public class InGameObjectsManager {
     private boolean doesItWantToRotate(Velocity velocity) {
         if (velocity == null) return false;
         var destination = velocity.destination();
-        if (destination.orientation().phi().compareTo(BigDecimal.ZERO) == 0) return false;
+        if (destination.getAzimuth() == 0) return false;
 
         return true;
     }
@@ -152,8 +152,8 @@ public class InGameObjectsManager {
         thingsLastMove.put(thing, timestamps);
 
         var inGameObj = inGameObjects.get(thing);
-        var wantedRotation = inGameObj.velocity().destination().orientation().phi().doubleValue();
-        var newPhi = velocity.destination().orientation().phi().doubleValue();
+        var wantedRotation = inGameObj.velocity().destination().getAzimuth();
+        var newPhi = velocity.destination().getAzimuth();
         if (doesItWantToRotate(velocity)) {
             for (var other : inGameObjects.values()) {
                 if (inGameObj != other) {
@@ -169,7 +169,7 @@ public class InGameObjectsManager {
         PolarCoordinates newDestination = velocity.destination();
         if (doesItWantToMove(velocity)) {
             double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
-            double rho = newDestination.rho().doubleValue();
+            double rho = newDestination.getRadius();
             rho = relativeDistance(rho, velocity.speed(), interval);
 
             for (var other : inGameObjects.values()) {
@@ -178,12 +178,12 @@ public class InGameObjectsManager {
                     if (distance < rho) rho = distance;
                 }
             }
-            newDestination = new PolarCoordinates(rho, newPhi);
+            newDestination = PolarCoordinates.of(rho, newPhi);
         }
         var newVelocity = new Velocity(velocity.speed(), newDestination);
 
         var coordinate = inGameObj.coordinate();
-        var newCoordinate = coordinate.from(newDestination);
+        var newCoordinate = coordinate;//.from(newDestination);
         add(thing, newCoordinate, newVelocity);
     }
 
@@ -196,11 +196,11 @@ public class InGameObjectsManager {
      * @return The {@link Thing caught thing} or null.
      */
     public Thing catchThing(LifeForm lifeForm, PolarCoordinates targetRelativeCoordinate) {
-        if (targetRelativeCoordinate.rho().compareTo(BigDecimal.valueOf(CATCHING_DISTANCE)) > 0)
+        if (targetRelativeCoordinate.getRadius() > CATCHING_DISTANCE)
             return null;
         var catcher = this.get(lifeForm);
         var catcherCoordinate = catcher.coordinate();
-        var targetCoordinate = catcherCoordinate.from(targetRelativeCoordinate);
+        var targetCoordinate = catcherCoordinate;//.from(targetRelativeCoordinate);
         var target = (Food) this.getThing(targetCoordinate);
         return target;
     }

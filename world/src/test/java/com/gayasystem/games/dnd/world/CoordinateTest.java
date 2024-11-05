@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.world;
 
-import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.junit.jupiter.api.Test;
 
@@ -29,10 +29,10 @@ class CoordinateTest {
     @Test
     void assertFrom() {
         var c = Vector2D.of(0, 0);
-        assertFrom(1, 0, c, new PolarCoordinates(1, 0));
-        assertFrom(0, 1, c, new PolarCoordinates(1, PI / 2));
-        assertFrom(-1, 0, c, new PolarCoordinates(1, PI));
-        assertFrom(0, -1, c, new PolarCoordinates(1, 3 * PI / 2));
+        assertFrom(1, 0, c, PolarCoordinates.of(1, 0));
+        assertFrom(0, 1, c, PolarCoordinates.of(1, PI / 2));
+        assertFrom(-1, 0, c, PolarCoordinates.of(1, PI));
+        assertFrom(0, -1, c, PolarCoordinates.of(1, 3 * PI / 2));
     }
 
     @Test

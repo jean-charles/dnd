@@ -3,7 +3,7 @@ package com.gayasystem.games.dnd.world;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class WorldTest {
     @Test
     void addFrom() {
         Thing parent = new ThingA();
-        var velocity = new Velocity(0, new PolarCoordinates(0, new Orientation(0)));
+        var velocity = new Velocity(0, PolarCoordinates.of(0, new Orientation(0)));
         world.add(parent, Vector2D.of(0, 0), new Orientation(0));
         Thing child = new ThingB();
         world.addFrom(parent, child, velocity);

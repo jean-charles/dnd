@@ -15,7 +15,6 @@ import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
-import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -94,7 +93,7 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     }
 
     @Override
-    public void see(Thing thing, PolarCoordinates origin, Point1S orientation) {
+    public void see(Thing thing, PolarCoordinates origin, double orientation) {
         Image image = new Image(thing.getClass());
         brain.handle(new SpatialEngram(image, origin));
     }

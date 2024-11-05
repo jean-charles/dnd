@@ -11,18 +11,20 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-import static com.gayasystem.games.dnd.ecosystem.food.Carrot.DEPTH;
-import static com.gayasystem.games.dnd.ecosystem.food.Carrot.WIDTH;
-
 @Service
 public class DrawableCarrot extends AbstractDrawable {
     private static final Logger log = LoggerFactory.getLogger(DrawableCarrot.class);
 
     private final BufferedImage img;
+    private final double width;
+    private final double height;
 
     public DrawableCarrot() throws IOException {
         super(log);
         img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/food/Carrot.png")));
+        double ratio = 0.10;
+        width = 12 * ratio;
+        height = 8 * ratio;
     }
 
     @Override

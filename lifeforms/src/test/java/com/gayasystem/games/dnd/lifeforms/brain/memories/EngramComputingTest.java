@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.lifeforms.ThingA;
 import com.gayasystem.games.dnd.lifeforms.ThingB;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
@@ -23,7 +23,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new PolarCoordinates(1.0, 0.0)));
+                        PolarCoordinates.of(1.0, 0.0)));
         engramComputing.compute(Emotion.neutral, memories, engrams);
     }
 
@@ -35,7 +35,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new PolarCoordinates(1.0, 0.0)));
+                        PolarCoordinates.of(1.0, 0.0)));
         engramComputing.compute(Emotion.neutral, memories, engrams);
     }
 
@@ -49,10 +49,10 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new PolarCoordinates(1.0, 0.0)),
+                        PolarCoordinates.of(1.0, 0.0)),
                 new SpatialEngram(
                         new Image(ThingB.class),
-                        new PolarCoordinates(1.0, 0.0)));
+                        PolarCoordinates.of(1.0, 0.0)));
         engramComputing.compute(Emotion.neutral, memories, engrams);
     }
 
@@ -66,7 +66,7 @@ class EngramComputingTest {
         Collection<SpatialEngram> engrams = List.of(
                 new SpatialEngram(
                         new Image(ThingA.class),
-                        new PolarCoordinates(1.0, 0.0)));
+                        PolarCoordinates.of(1.0, 0.0)));
         engramComputing.compute(Emotion.neutral, memories, engrams);
     }
 }

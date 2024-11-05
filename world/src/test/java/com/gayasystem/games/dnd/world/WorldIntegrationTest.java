@@ -2,7 +2,7 @@ package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
@@ -24,7 +24,7 @@ public class WorldIntegrationTest {
 
     //    @Test
     public void integrationTests() {
-        var velocity = new Velocity(0, new PolarCoordinates(0, new Orientation(0)));
+        var velocity = new Velocity(0, PolarCoordinates.of(0, new Orientation(0)));
         assertNotNull(almiraj);
         world.add(almiraj, Vector2D.of(0, 0), new Orientation(0));
         assertNotNull(carrot);
