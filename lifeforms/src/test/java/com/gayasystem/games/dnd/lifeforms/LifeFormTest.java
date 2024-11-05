@@ -51,7 +51,7 @@ class LifeFormTest {
 
     @BeforeEach
     void setUp() {
-        when(brainFactory.create(lifeForm, SPEED, Emotion.neutral, MEMORIES)).thenReturn(brain);
+        when(brainFactory.create(eq(lifeForm), anyDouble(), any(), any())).thenReturn(brain);
         lifeForm.run();
     }
 

@@ -21,7 +21,7 @@ class InGameObjectsManagerTest {
 
     private Thing theThing;
     private Vector2D coo;
-    private Orientation ori;
+    private double ori;
 
     @BeforeEach
     void setUp() {
@@ -31,7 +31,7 @@ class InGameObjectsManagerTest {
 
         theThing = new ThingA(1, 2);
         coo = Vector2D.of(0, 0);
-        ori = new Orientation(0);
+        ori = 0;
 
         manager.add(theThing, coo, ori);
 
@@ -76,7 +76,7 @@ class InGameObjectsManagerTest {
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
-        assertEquals(ori, igo.velocity().destination().orientation());
+        assertEquals(ori, igo.velocity().destination().getAzimuth());
     }
 
     @Test
@@ -113,7 +113,7 @@ class InGameObjectsManagerTest {
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
-        assertEquals(ori, igo.velocity().destination().orientation());
+        assertEquals(ori, igo.velocity().destination().getAzimuth());
     }
 
     @Test
@@ -128,7 +128,7 @@ class InGameObjectsManagerTest {
         var t1 = manager.getLastTimestamp(theThing);
         var igo = manager.get(theThing);
         var coo = igo.coordinate();
-        var distance = coo.getX().doubleValue();
+        var distance = coo.getX();
 
         double interval = (t1.getTime() - t0.getTime()) / 1000.0;
         var expectedDistance = interval * velocity.speed();
@@ -140,7 +140,7 @@ class InGameObjectsManagerTest {
     void moveObstructed() throws InterruptedException {
         Thing aThing = new ThingA(10, 2);
         var aCoo = Vector2D.of(10, 0);
-        manager.add(aThing, aCoo, new Orientation(0));
+        manager.add(aThing, aCoo, 0);
 
         PolarCoordinates ccoo = PolarCoordinates.of(60, 0);
         Velocity velocity = new Velocity(60, ccoo);
@@ -153,7 +153,7 @@ class InGameObjectsManagerTest {
         var t1 = manager.getLastTimestamp(theThing);
         var igo = manager.get(theThing);
         var coo = igo.coordinate();
-        var distance = coo.getX().doubleValue();
+        var distance = coo.getX();
 
         double interval = (t1.getTime() - t0.getTime()) / 1000.0;
         var expectedDistance = 8;

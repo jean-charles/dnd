@@ -29,6 +29,7 @@ public class World implements Runnable, LifeEnvironment {
     public void run() {
         for (var thing : manager.getAllThings()) {
             thing.run();
+            manager.move(thing);
         }
         manager.clean();
     }

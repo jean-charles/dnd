@@ -29,25 +29,17 @@ public class InGameObjectsManager {
 
     private boolean doesItWantToMove(Velocity velocity) {
         if (velocity == null) return false;
-        if (velocity.speed() == 0) return false;
-        var destination = velocity.destination();
-        if (destination.getRadius() == 0) return false;
-
-        return true;
+        return velocity.speed() != 0;
     }
 
     private boolean doesItWantToRotate(Velocity velocity) {
         if (velocity == null) return false;
-        var destination = velocity.destination();
-        if (destination.getAzimuth() == 0) return false;
-
-        return true;
+        return velocity.azimuth() != 0;
     }
 
-    private double relativeDistance(double rho, double speed, double interval) {
+    private double relativeDistance(double radius, double speed, double interval) {
         var distance = speed * interval;
-
-        return min(rho - CATCHING_DISTANCE, distance);
+        return min(radius - CATCHING_DISTANCE, distance);
     }
 
     /**
@@ -75,7 +67,7 @@ public class InGameObjectsManager {
      * @param orientation Orientation of the {@link InGameObject in game objet} in the world.
      */
     public void add(Thing thing, Vector2D coordinate, double orientation) {
-        var velocity = new Velocity(0, PolarCoordinates.of(0, orientation));
+        var velocity = new Velocity(0, 0, orientation);
         add(thing, coordinate, velocity);
     }
 
@@ -139,6 +131,30 @@ public class InGameObjectsManager {
         return inGameObjects.keySet();
     }
 
+
+    /**
+     * Move the {@link Thing thing} base on its current velocity.
+     *
+     * @param thing {@link Thing} witch to calculate the distance.
+     */
+    public void move(Thing thing) {
+        var igo = inGameObjects.get(thing);
+        var velocity = igo.velocity();
+
+        var t0 = thingsLastMove.get(thing);
+        move(thing, velocity);
+        var t1 = thingsLastMove.get(thing);
+        double interval = (t1.getTime() - t0.getTime()) / 1000.0;
+
+        double deceleration = velocity.acceleration();
+        deceleration -= deceleration * 0.1;
+        double speed = velocity.speed();
+        speed += deceleration * interval;
+        var newVelocity = new Velocity(speed, deceleration, velocity.azimuth());
+        igo = new InGameObject(igo.thing(), igo.coordinate(), newVelocity);
+        inGameObjects.put(thing, igo);
+    }
+
     /**
      * Move the {@link Thing thing} to the destination relatively to the elapsed time since the last move and others
      * {@link Thing things}.
@@ -152,35 +168,35 @@ public class InGameObjectsManager {
         thingsLastMove.put(thing, timestamps);
 
         var inGameObj = inGameObjects.get(thing);
-        var wantedRotation = inGameObj.velocity().destination().getAzimuth();
-        var newPhi = velocity.destination().getAzimuth();
+        var azimuth = inGameObj.velocity().azimuth();
+        var relativeAzimuth = velocity.azimuth();
         if (doesItWantToRotate(velocity)) {
             for (var other : inGameObjects.values()) {
                 if (inGameObj != other) {
-                    var rotation = validator.rotation(inGameObj, other, wantedRotation);
-                    if (wantedRotation > 0.0 && rotation < newPhi) {
-                        newPhi = rotation;
-                    } else if (wantedRotation < 0.0 && rotation > newPhi) {
-                        newPhi = rotation;
+                    var rotation = validator.rotation(inGameObj, other, relativeAzimuth);
+                    if (relativeAzimuth > 0.0 && rotation < azimuth) {
+                        azimuth = rotation;
+                    } else if (relativeAzimuth < 0.0 && rotation > azimuth) {
+                        azimuth = rotation;
                     }
                 }
             }
         }
-        PolarCoordinates newDestination = velocity.destination();
         if (doesItWantToMove(velocity)) {
             double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
-            double rho = newDestination.getRadius();
-            rho = relativeDistance(rho, velocity.speed(), interval);
+            PolarCoordinates newDestination = velocity.destination();
+            double radius = newDestination.getRadius();
+            radius = relativeDistance(radius, velocity.speed(), interval);
 
-            for (var other : inGameObjects.values()) {
-                if (inGameObj != other) {
-                    var distance = validator.translate(inGameObj, other, rho);
-                    if (distance < rho) rho = distance;
-                }
-            }
-            newDestination = PolarCoordinates.of(rho, newPhi);
+//            for (var other : inGameObjects.values()) {
+//                if (inGameObj == other) continue;
+//
+//                var distance = validator.translate(inGameObj, other, radius);
+//                if (distance < radius) radius = distance;
+//            }
+            newDestination = PolarCoordinates.of(radius, newPhi);
         }
-        var newVelocity = new Velocity(velocity.speed(), newDestination);
+        var newVelocity = velocity;
 
         var coordinate = inGameObj.coordinate();
         var newCoordinate = coordinate;//.from(newDestination);

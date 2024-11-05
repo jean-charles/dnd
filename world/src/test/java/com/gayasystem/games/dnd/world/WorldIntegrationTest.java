@@ -24,11 +24,11 @@ public class WorldIntegrationTest {
 
     //    @Test
     public void integrationTests() {
-        var velocity = new Velocity(0, PolarCoordinates.of(0, new Orientation(0)));
+        var velocity = new Velocity(0, PolarCoordinates.of(0, 0));
         assertNotNull(almiraj);
-        world.add(almiraj, Vector2D.of(0, 0), new Orientation(0));
+        world.add(almiraj, Vector2D.of(0, 0), 0);
         assertNotNull(carrot);
-        world.add(carrot, Vector2D.of(10, 0), new Orientation(0));
+        world.add(carrot, Vector2D.of(10, 0), 0);
         world.run();
         var almirajCoordinate = world.getThingCoordinate(almiraj);
         assertNotNull(almirajCoordinate);

@@ -1,15 +1,12 @@
 package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Velocity;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.ThingA;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
-import com.gayasystem.games.dnd.world.services.domains.Point;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.sqrt;
@@ -31,7 +28,7 @@ public class HitBoxUtilsTest {
         var obj = new InGameObject(thing, center, velocity);
         var actual = utils.hitBox(obj);
         var expected = new HitBox(
-                center.toVector2D(),
+                center,
                 Vector2D.of(20, 60),
                 Vector2D.of(20, -40),
                 Vector2D.of(0, -40),
@@ -73,42 +70,42 @@ public class HitBoxUtilsTest {
 
     @Test
     void minX() {
-        var p1 = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(-1));
-        var p2 = new Point(BigDecimal.valueOf(-1), BigDecimal.valueOf(0));
-        var p3 = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(1));
-        var p4 = new Point(BigDecimal.valueOf(1), BigDecimal.valueOf(0));
-        BigDecimal actual = utils.minX(p1, p2, p3, p4);
-        assertEquals(BigDecimal.valueOf(-1), actual);
+        var p1 = Vector2D.of(0, -1);
+        var p2 = Vector2D.of(-1, 0);
+        var p3 = Vector2D.of(0, 1);
+        var p4 = Vector2D.of(1, 0);
+        var actual = utils.minX(p1, p2, p3, p4);
+        assertEquals(-1, actual, 0.00000000000001);
     }
 
     @Test
     void maxX() {
-        var p1 = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(-1));
-        var p2 = new Point(BigDecimal.valueOf(-1), BigDecimal.valueOf(0));
-        var p3 = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(1));
-        var p4 = new Point(BigDecimal.valueOf(1), BigDecimal.valueOf(0));
-        BigDecimal actual = utils.maxX(p1, p2, p3, p4);
-        assertEquals(BigDecimal.valueOf(1), actual);
+        var p1 = Vector2D.of(0, -1);
+        var p2 = Vector2D.of(-1, 0);
+        var p3 = Vector2D.of(0, 1);
+        var p4 = Vector2D.of(1, 0);
+        var actual = utils.maxX(p1, p2, p3, p4);
+        assertEquals(1, actual, 0.00000000000001);
     }
 
     @Test
     void minY() {
-        var p1 = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(-1));
-        var p2 = new Point(BigDecimal.valueOf(-1), BigDecimal.valueOf(0));
-        var p3 = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(1));
-        var p4 = new Point(BigDecimal.valueOf(1), BigDecimal.valueOf(0));
-        BigDecimal actual = utils.minY(p1, p2, p3, p4);
-        assertEquals(BigDecimal.valueOf(-1), actual);
+        var p1 = Vector2D.of(0, -1);
+        var p2 = Vector2D.of(-1, 0);
+        var p3 = Vector2D.of(0, 1);
+        var p4 = Vector2D.of(1, 0);
+        var actual = utils.minY(p1, p2, p3, p4);
+        assertEquals(-1, actual, 0.00000000000001);
     }
 
     @Test
     void maxY() {
-        var p1 = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(-1));
-        var p2 = new Point(BigDecimal.valueOf(-1), BigDecimal.valueOf(0));
-        var p3 = new Point(BigDecimal.valueOf(0), BigDecimal.valueOf(1));
-        var p4 = new Point(BigDecimal.valueOf(1), BigDecimal.valueOf(0));
-        BigDecimal actual = utils.maxY(p1, p2, p3, p4);
-        assertEquals(BigDecimal.valueOf(1), actual);
+        var p1 = Vector2D.of(0, -1);
+        var p2 = Vector2D.of(-1, 0);
+        var p3 = Vector2D.of(0, 1);
+        var p4 = Vector2D.of(1, 0);
+        var actual = utils.maxY(p1, p2, p3, p4);
+        assertEquals(1, actual, 0.00000000000001);
     }
 
     @Test

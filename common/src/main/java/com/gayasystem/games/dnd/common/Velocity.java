@@ -1,11 +1,9 @@
 package com.gayasystem.games.dnd.common;
 
-
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
-
 /**
- * @param speed       in feet per second.
- * @param destination where to go.
+ * @param speed        in meter per second.
+ * @param acceleration acceleration in meter per second.
+ * @param azimuth      angle of the direction in radian.
  */
-public record Velocity(double speed, PolarCoordinates destination) {
+public record Velocity(double speed, double acceleration, double azimuth) {
 }
