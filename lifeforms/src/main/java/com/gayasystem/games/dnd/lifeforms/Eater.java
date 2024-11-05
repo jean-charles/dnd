@@ -1,12 +1,12 @@
 package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.Food;
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 
 public interface Eater {
-    void foodCoordinate(CircularCoordinate coordinate);
+    void foodCoordinate(PolarCoordinates coordinate);
 
-    CircularCoordinate foodCoordinate();
+    PolarCoordinates foodCoordinate();
 
     void eat(Food food);
 }

@@ -2,8 +2,8 @@ package com.gayasystem.games.dnd.lifeforms.brain;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
+import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.*;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Component
 public abstract class AbstractBrain implements Brain {
-    private static final Velocity NO_VELOCITY = new Velocity(0, new CircularCoordinate(0, 0));
+    private static final Velocity NO_VELOCITY = new Velocity(0, new PolarCoordinates(0, 0));
 
     private final LifeForm body;
     private final double maxSpeedPerSecond;
@@ -58,7 +58,7 @@ public abstract class AbstractBrain implements Brain {
         var engram = mostImportantEngram.engram();
         if (engram != null) {
             double rho = engram.origin().rho().doubleValue();
-            var destination = new CircularCoordinate(rho, orientation);
+            var destination = new PolarCoordinates(rho, orientation);
             return new Velocity(speed, destination);
         }
         return NO_VELOCITY;

@@ -4,9 +4,7 @@ import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.common.sight.Sighted;
@@ -16,6 +14,8 @@ import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -36,7 +36,7 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
 
     private Brain brain;
     private Velocity movement;
-    private CircularCoordinate foodCoordinate;
+    private PolarCoordinates foodCoordinate;
 
     @Autowired
     private LifeEnvironment environment;
@@ -94,13 +94,13 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     }
 
     @Override
-    public void see(Thing thing, CircularCoordinate origin, Orientation orientation) {
+    public void see(Thing thing, PolarCoordinates origin, Point1S orientation) {
         Image image = new Image(thing.getClass());
         brain.handle(new SpatialEngram(image, origin));
     }
 
     @Override
-    public void ear(Thing thing, SoundSpectrum spectrum, double amplitude, CircularCoordinate origin) {
+    public void ear(Thing thing, SoundSpectrum spectrum, double amplitude, PolarCoordinates origin) {
         var sound = new Sound(thing.getClass(), spectrum, amplitude);
         if (sound.spectrum().equals(soundSpectrum) && sound.amplitude() >= minSoundAmplitude) {
             brain.handle(new SpatialEngram(sound, origin));
@@ -108,12 +108,12 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     }
 
     @Override
-    public void foodCoordinate(CircularCoordinate coordinate) {
+    public void foodCoordinate(PolarCoordinates coordinate) {
         this.foodCoordinate = coordinate;
     }
 
     @Override
-    public CircularCoordinate foodCoordinate() {
+    public PolarCoordinates foodCoordinate() {
         return foodCoordinate;
     }
 

@@ -1,8 +1,7 @@
 package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
-import com.gayasystem.games.dnd.world.Coordinate;
+import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
 import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.ThingA;
 import org.apache.commons.geometry.euclidean.twod.Line;
@@ -26,9 +25,9 @@ class HitBoxValidatorTest {
     @Test
     void rotationOkWithFarThing() {
         var thingA = new ThingA(2, 1);
-        var obj = new InGameObject(thingA, new Coordinate(0, 0), new Velocity(0, new CircularCoordinate(0, 0)));
+        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, new PolarCoordinates(0, 0)));
         var thingB = new ThingA(1, 1);
-        var other = new InGameObject(thingB, new Coordinate(10, 10), new Velocity(0, new CircularCoordinate(0, 0)));
+        var other = new InGameObject(thingB, Vector2D.of(10, 10), new Velocity(0, new PolarCoordinates(0, 0)));
 
         var phi = validator.rotation(obj, other, PI);
 
@@ -38,9 +37,9 @@ class HitBoxValidatorTest {
     @Test
     void rotationOkWithCloseThing() {
         var thingA = new ThingA(20, 1);
-        var obj = new InGameObject(thingA, new Coordinate(0, 0), new Velocity(0, new CircularCoordinate(0, 0)));
+        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, new PolarCoordinates(0, 0)));
         var thingB = new ThingA(1, 1);
-        var other = new InGameObject(thingB, new Coordinate(2, 10), new Velocity(0, new CircularCoordinate(0, 0)));
+        var other = new InGameObject(thingB, Vector2D.of(2, 10), new Velocity(0, new PolarCoordinates(0, 0)));
 
         var phi = validator.rotation(obj, other, PI / 2);
 
@@ -50,9 +49,9 @@ class HitBoxValidatorTest {
     @Test
     void rotationKo() {
         var thingA = new ThingA(20, 2);
-        var obj = new InGameObject(thingA, new Coordinate(0, 0), new Velocity(0, new CircularCoordinate(0, 0)));
+        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, new PolarCoordinates(0, 0)));
         var thingB = new ThingA(1, 1);
-        var other = new InGameObject(thingB, new Coordinate(10, 1), new Velocity(0, new CircularCoordinate(0, 0)));
+        var other = new InGameObject(thingB, Vector2D.of(10, 1), new Velocity(0, new PolarCoordinates(0, 0)));
 
         var phi = validator.rotation(obj, other, 2 * PI);
 

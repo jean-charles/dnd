@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.lifeforms.brain;
 
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
+import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
 import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.ThingA;
@@ -86,7 +86,7 @@ public class DefaultBrainTest {
     @Test
     public void shortTermMemoriesMemoriesAttracted() {
         when(engramComputing.compute(any(), anyCollection(), anyCollection())).thenReturn(new NextAction(Action.doNothing));
-        CircularCoordinate coordinates = new CircularCoordinate(10, 0);
+        PolarCoordinates coordinates = new PolarCoordinates(10, 0);
         brain.handle(new SpatialEngram(new Image(ThingA.class), coordinates));
         brain.run();
     }

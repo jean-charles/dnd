@@ -9,6 +9,7 @@ import com.gayasystem.games.dnd.common.sight.Sighted;
 import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.world.services.InGameObjectsManager;
+import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,17 +43,16 @@ public class World implements Runnable, LifeEnvironment {
         for (var other : manager.getAllThings()) {
             if (sighted == other) continue;
 
-            var sightedObj = manager.get((Thing) other);
-            var targetCcoordinate = sightedObj.coordinate();
-
-            var distance = targetCcoordinate.distanceFrom(lifeFormCoordinate);
+            var sightedObj = manager.get(other);
+            var sightedObjCoordinate = sightedObj.coordinate();
+            var distance = lifeFormCoordinate.distance(sightedObjCoordinate);
             if (distance <= sightDistance) {
-                var targetOrientation = sightedObj.velocity().destination().orientation();
+                var targetOrientation = sightedObj.velocity().destination().getAzimuth();
 
-                var finalRelativeCoordinate = lifeFormCoordinate.to(targetCcoordinate);
-                var relativeOrientation = lifeFormVelocity.destination().orientation().transpose(targetOrientation);
+                var relativeCoordinate = lifeFormCoordinate.directionTo(sightedObjCoordinate);
+                var relativeOrientation = lifeFormVelocity.destination().getAzimuth().transpose(targetOrientation);
                 // TODO: see only visible things
-                sighted.see(other, finalRelativeCoordinate, relativeOrientation);
+                sighted.see(other, relativeCoordinate, relativeOrientation);
             }
         }
     }
@@ -66,7 +66,7 @@ public class World implements Runnable, LifeEnvironment {
         var obj = manager.get(origin);
         var originCoordinate = obj.coordinate();
 
-        manager.add(newThing, originCoordinate, newThingVelocity.destination().orientation());
+        manager.add(newThing, originCoordinate, newThingVelocity.destination().getAzimuth());
     }
 
     @Override
@@ -86,7 +86,7 @@ public class World implements Runnable, LifeEnvironment {
         lifeForm.eat((Food) food);
     }
 
-    public void add(Thing thing, Coordinate coordinate, Orientation orientation) {
+    public void add(Thing thing, Vector2D coordinate, Orientation orientation) {
         Objects.requireNonNull(thing, "Parameter 'thing' is null!");
         Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
 
@@ -100,7 +100,32 @@ public class World implements Runnable, LifeEnvironment {
     /**
      * TEST ONLY
      */
-    Coordinate getThingCoordinate(Thing thing) {
+    Vector2D getThingCoordinate(Thing thing) {
         return manager.get(thing).coordinate();
     }
+
+
+//    public Coordinate from(PolarCoordinates sc) {
+//        double rho = sc.rho().doubleValue();
+//        double phi = sc.orientation().phi().doubleValue();
+//
+//        double x = this.x.doubleValue() + rho * cos(phi);
+//        double y = this.y.doubleValue() + rho * sin(phi);
+//
+//        return new Coordinate(x, y);
+//    }
+//    public PolarCoordinates to(Coordinate coordinate) {
+//        double x = coordinate.x.subtract(this.x).doubleValue();
+//        double y = coordinate.y.subtract(this.y).doubleValue();
+//
+//        double rho = hypot(x, y);
+//        double phi = atan2(y, x);
+//        return new PolarCoordinates(rho, phi);
+//    }
+//    public double distanceFrom(Coordinate formCoordinate) {
+//        var newX = pow(x.doubleValue() - formCoordinate.x.doubleValue(), 2);
+//        var newY = pow(y.doubleValue() - formCoordinate.y.doubleValue(), 2);
+//
+//        return sqrt(newX + newY);
+//    }
 }

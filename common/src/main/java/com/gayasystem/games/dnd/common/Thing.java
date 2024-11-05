@@ -1,8 +1,5 @@
 package com.gayasystem.games.dnd.common;
 
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
-
 public abstract class Thing implements Runnable {
     protected double width;
     protected double depth;

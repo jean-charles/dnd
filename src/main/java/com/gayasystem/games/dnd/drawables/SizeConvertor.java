@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.drawables;
 
-import com.gayasystem.games.dnd.world.Coordinate;
+import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -11,12 +11,12 @@ public class SizeConvertor {
      * @param pixelPerFoot pixels per foot.
      * @param width        Canvas width in pixels.
      * @param height       Canvas height in pixels.
-     * @param coordinate   Coordinate to convert.
+     * @param coordinate   {@link Vector2D Coordinate} to convert.
      * @return {@link Point} in pixels.
      */
-    public Point coordinate2Point(int pixelPerFoot, int width, int height, Coordinate coordinate) {
-        int x = (int) (width / 2.0 + coordinate.x().doubleValue() * pixelPerFoot);
-        int y = (int) (height / 2.0 - coordinate.y().doubleValue() * pixelPerFoot);
+    public Point coordinate2Point(int pixelPerFoot, int width, int height, Vector2D coordinate) {
+        int x = (int) (width / 2.0 + coordinate.getX() * pixelPerFoot);
+        int y = (int) (height / 2.0 - coordinate.getY() * pixelPerFoot);
         return new Point(x, y);
     }
 

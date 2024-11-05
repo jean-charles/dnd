@@ -3,12 +3,11 @@ package com.gayasystem.games.dnd.world.services;
 import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
-import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.InGameObject;
-import com.google.common.base.Converter;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
+import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +15,12 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static com.gayasystem.games.dnd.lifeforms.LifeForm.CATCHING_DISTANCE;
-import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 @Service
 public class InGameObjectsManager {
     private final Map<Thing, InGameObject> inGameObjects = new HashMap<>();
-    private final Map<Coordinate, Thing> thingsByCoordinate = new HashMap<>();
+    private final Map<Vector2D, Thing> thingsByCoordinate = new HashMap<>();
     private final Map<Thing, Date> thingsLastMove = new HashMap<>();
     private final Collection<Thing> thingsToRemove = new ArrayList<>();
 
@@ -53,14 +51,14 @@ public class InGameObjectsManager {
     }
 
     /**
-     * Add or move an {@link InGameObject in game objet} with the {@link Thing thing} at the {@link Coordinate coordinate}
+     * Add or move an {@link InGameObject in game objet} with the {@link Thing thing} at the {@link Vector2D coordinate}
      * and the {@link Velocity velocity}.
      *
      * @param thing      {@link Thing} to add in the {@link InGameObject in game objet}.
-     * @param coordinate {@link Coordinate} where to put the {@link InGameObject in game objet}.
+     * @param coordinate {@link Vector2D} where to put the {@link InGameObject in game objet}.
      * @param velocity   {@link Velocity} of the {@link InGameObject in game objet} in the world.
      */
-    private void add(Thing thing, Coordinate coordinate, Velocity velocity) {
+    private void add(Thing thing, Vector2D coordinate, Velocity velocity) {
         var previous = inGameObjects.put(thing, new InGameObject(thing, coordinate, velocity));
         if (previous != null)
             thingsByCoordinate.remove(previous.coordinate());
@@ -69,25 +67,25 @@ public class InGameObjectsManager {
     }
 
     /**
-     * Create a new {@link InGameObject in game objet} with the {@link Thing thing} at the {@link Coordinate coordinate}
+     * Create a new {@link InGameObject in game objet} with the {@link Thing thing} at the {@link Vector2D coordinate}
      * and the {@link Orientation orientation}.
      *
      * @param thing       {@link Thing} to add in the {@link InGameObject in game objet}.
-     * @param coordinate  {@link Coordinate} where to put the {@link InGameObject in game objet}.
-     * @param orientation {@link Orientation} of the {@link InGameObject in game objet} in the world.
+     * @param coordinate  {@link Vector2D} where to put the {@link InGameObject in game objet}.
+     * @param orientation Orientation of the {@link InGameObject in game objet} in the world.
      */
-    public void add(Thing thing, Coordinate coordinate, Orientation orientation) {
-        var velocity = new Velocity(0, new CircularCoordinate(0, orientation));
+    public void add(Thing thing, Vector2D coordinate, double orientation) {
+        var velocity = new Velocity(0, PolarCoordinates.of(0, orientation));
         add(thing, coordinate, velocity);
     }
 
     /**
      * Get {@link Thing thing} from its coordinates.
      *
-     * @param from {@link Coordinate} from where to get the {@link Thing thing}.
-     * @return {@link Thing thing} found at the {@link Coordinate coordinate} or {@code null} if not found.
+     * @param from {@link Vector2D} from where to get the {@link Thing thing}.
+     * @return {@link Thing thing} found at the {@link Vector2D coordinate} or {@code null} if not found.
      */
-    public Thing getThing(Coordinate from) {
+    public Thing getThing(Vector2D from) {
         return thingsByCoordinate.get(from);
     }
 
@@ -168,7 +166,7 @@ public class InGameObjectsManager {
                 }
             }
         }
-        CircularCoordinate newDestination = velocity.destination();
+        PolarCoordinates newDestination = velocity.destination();
         if (doesItWantToMove(velocity)) {
             double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
             double rho = newDestination.rho().doubleValue();
@@ -180,7 +178,7 @@ public class InGameObjectsManager {
                     if (distance < rho) rho = distance;
                 }
             }
-            newDestination = new CircularCoordinate(rho, newPhi);
+            newDestination = new PolarCoordinates(rho, newPhi);
         }
         var newVelocity = new Velocity(velocity.speed(), newDestination);
 
@@ -190,14 +188,14 @@ public class InGameObjectsManager {
     }
 
     /**
-     * {@link LifeForm} try to catch a {@link Thing thing} at {@link CircularCoordinate relative coordinate}.
+     * {@link LifeForm} try to catch a {@link Thing thing} at {@link PolarCoordinates relative coordinate}.
      *
      * @param lifeForm                 {@link LifeForm} that try to catch a {@link Thing thing}.
-     * @param targetRelativeCoordinate {@link CircularCoordinate Relative coordinate} where to catch the
+     * @param targetRelativeCoordinate {@link PolarCoordinates Relative coordinate} where to catch the
      *                                 {@link Thing thing}.
      * @return The {@link Thing caught thing} or null.
      */
-    public Thing catchThing(LifeForm lifeForm, CircularCoordinate targetRelativeCoordinate) {
+    public Thing catchThing(LifeForm lifeForm, PolarCoordinates targetRelativeCoordinate) {
         if (targetRelativeCoordinate.rho().compareTo(BigDecimal.valueOf(CATCHING_DISTANCE)) > 0)
             return null;
         var catcher = this.get(lifeForm);

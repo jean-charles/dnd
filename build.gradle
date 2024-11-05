@@ -21,6 +21,8 @@ dependencies {
 
     implementation libs.guava
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.apache.commons:commons-geometry-euclidean:1.0'
+    implementation 'org.apache.commons:commons-geometry-spherical:1.0'
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

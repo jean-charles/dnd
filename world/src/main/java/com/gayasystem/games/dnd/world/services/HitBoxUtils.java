@@ -27,8 +27,8 @@ public class HitBoxUtils {
 
     public HitBox hitBox(InGameObject obj) {
         var c = obj.coordinate();
-        var x = c.x().doubleValue();
-        var y = c.y().doubleValue();
+        var x = c.getX();
+        var y = c.getY();
         var o = obj.velocity().destination().orientation().phi().doubleValue();
         var thing = obj.thing();
         var halfWidth = thing.width() / 2;
@@ -39,7 +39,7 @@ public class HitBoxUtils {
         var p3 = rotateRearRight(x, y, o, halfWidth, halfDepth);
         var p4 = rotateRearLeft(x, y, o, halfWidth, halfDepth);
 
-        return new HitBox(c.toVector2D(), p1, p2, p3, p4);
+        return new HitBox(c, p1, p2, p3, p4);
     }
 
     public Vector2D rotateFrontLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
@@ -78,11 +78,11 @@ public class HitBoxUtils {
     }
 
     public BigDecimal minX(Point p1, Point p2, Point p3, Point p4) {
-        return p1.x().min(p2.x()).min(p3.x()).min(p4.x());
+        return p1.getX().min(p2.x()).min(p3.x()).min(p4.x());
     }
 
     public BigDecimal maxX(Point p1, Point p2, Point p3, Point p4) {
-        return p1.x().max(p2.x()).max(p3.x()).max(p4.x());
+        return p1.getX().max(p2.x()).max(p3.x()).max(p4.x());
     }
 
     public BigDecimal minY(Point p1, Point p2, Point p3, Point p4) {

@@ -2,12 +2,12 @@ package com.gayasystem.games.dnd.drawables.food;
 
 import com.gayasystem.games.dnd.SwingTestCase;
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.CircularCoordinate;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
+import com.gayasystem.games.dnd.common.coordinates.PolarCoordinates;
 import com.gayasystem.games.dnd.drawables.SizeConvertor;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
-import com.gayasystem.games.dnd.world.Coordinate;
 import com.gayasystem.games.dnd.world.InGameObject;
+import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +65,8 @@ class DrawableCarrotTest extends SwingTestCase {
         double increment = PI / 128;
         var carrot = new Carrot();
         for (double phi = 0; phi <= max; phi += increment) {
-            var velocity = new Velocity(0, new CircularCoordinate(0, phi));
-            carrotObj = new InGameObject(carrot, new Coordinate(0, 0), velocity);
+            var velocity = new Velocity(0, new PolarCoordinates(0, phi));
+            carrotObj = new InGameObject(carrot, Vector2D.of(0, 0), velocity);
             frame.repaint();
             sleep(25);
         }
