@@ -9,6 +9,7 @@ import org.apache.commons.geometry.euclidean.twod.Lines;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.euclidean.twod.shape.Circle;
 import org.apache.commons.geometry.spherical.oned.Point1S;
+import org.apache.commons.geometry.spherical.oned.Transform1S;
 import org.apache.commons.numbers.core.Precision;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,40 +62,32 @@ class HitBoxValidatorTest {
 
     @Test
     void geometry1() {
-        Precision.DoubleEquivalence precision = Precision.doubleEquivalenceOfEpsilon(1e-6);
-        Circle c = Circle.from(Vector2D.ZERO, 2, precision);
-        Line l = Lines.fromPoints(Vector2D.of(0, 4), Vector2D.of(4, 0), precision);
+        var p1 = Point1S.ZERO;
+        var rotation1 = Point1S.of(PI / 2);
+        var actual1 = Point1S.of(p1.signedDistance(rotation1));
+        assertEquals(PI / 2, actual1.getAzimuth());
 
-        var i = c.firstIntersection(l);
+        var t2 = Transform1S.createRotation(PI / 4);
+        var p2 = Point1S.of(PI / 4);
+        var actual2 = t2.apply(p2);
+        assertEquals(PI / 2, actual2.getAzimuth());
 
+        var t3 = Transform1S.createRotation(-PI / 4 - 2 * PI);
+        var p3 = Point1S.of(PI / 4);
+        var actual3 = t3.apply(p3).getNormalizedAzimuth();
+        assertEquals(0, actual3);
+
+        var t4 = Transform1S.createRotation(-PI / 4);
+        var p4 = Point1S.of(PI / 4);
+        var actual4 = t4.rotate(2 * PI).apply(p4).getNormalizedAzimuth();
+        assertEquals(0, actual4);
     }
 
     @Test
     void geometry2() {
-        Precision.DoubleEquivalence precision = Precision.doubleEquivalenceOfEpsilon(1e-6);
-        Circle c = Circle.from(Vector2D.ZERO, 2, precision);
-        Line l = Lines.fromPoints(Vector2D.of(-2, 2), Vector2D.of(2, -2), precision);
-
-        var i = c.firstIntersection(l);
-
-        assertNotNull(i);
-        assertEquals(-1.414213, i.getX(), 0.0001);
-        assertEquals(1.414213, i.getY(), 0.0001);
-    }
-
-    @Test
-    void geometry3() {
-        Precision.DoubleEquivalence precision = Precision.doubleEquivalenceOfEpsilon(1e-6);
-        Circle c = Circle.from(Vector2D.ZERO, 2, precision);
-        Line l = Lines.fromPoints(Vector2D.of(-2, 2), Vector2D.of(2, -2), precision);
-
-        var i = c.intersections(l);
-
-        assertNotNull(i);
-        assertEquals(2, i.size());
-        assertEquals(-1.414213, i.get(0).getX(), 0.0001);
-        assertEquals(1.414213, i.get(0).getY(), 0.0001);
-        assertEquals(1.414213, i.get(1).getX(), 0.0001);
-        assertEquals(-1.414213, i.get(1).getY(), 0.0001);
+        var c = Vector2D.of(10, 10);
+        var t = PolarCoordinates.of(5, PI / 2);
+        var newCoordinate = c.add(t.toCartesian());
+        assertEquals(Vector2D.of(10, 15), newCoordinate);
     }
 }

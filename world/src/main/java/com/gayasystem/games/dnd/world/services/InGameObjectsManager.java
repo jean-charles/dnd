@@ -9,13 +9,13 @@ import com.gayasystem.games.dnd.world.InGameObject;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;
+import org.apache.commons.geometry.spherical.oned.Transform1S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 import static com.gayasystem.games.dnd.lifeforms.LifeForm.CATCHING_DISTANCE;
-import static java.lang.Math.min;
 
 @Service
 public class InGameObjectsManager {
@@ -25,6 +25,9 @@ public class InGameObjectsManager {
     private final Collection<Thing> thingsToRemove = new ArrayList<>();
 
     @Autowired
+    private GeometryService geometry;
+
+    @Autowired
     private HitBoxValidator validator;
 
     private boolean doesItWantToMove(Velocity velocity) {
@@ -32,25 +35,47 @@ public class InGameObjectsManager {
         return velocity.speed() != 0;
     }
 
-    private boolean doesItWantToRotate(Velocity velocity) {
+    private boolean doesItRotate(Velocity velocity) {
         if (velocity == null) return false;
         return velocity.azimuth().getAzimuth() != 0;
     }
 
-    private double relativeDistance(double radius, double speed, double interval) {
-        var distance = speed * interval;
-        return min(radius - CATCHING_DISTANCE, distance);
+    /**
+     * Execute the rotation and update the object.
+     *
+     * @param igo   In game object to rotate.
+     * @param angle Rotation angle to apply.
+     */
+    private void rotate(InGameObject igo, double angle) {
+        var velocity = igo.velocity();
+        var azimuth = velocity.azimuth();
+        Point1S newAzimuth = geometry.rotate(azimuth, angle);
+        var newVelocity = new Velocity(velocity.speed(), velocity.acceleration(), newAzimuth);
+        var newIgo = new InGameObject(igo.thing(), igo.coordinate(), newVelocity);
+        inGameObjects.put(igo.thing(), newIgo);
     }
 
     /**
-     * Add or move an {@link InGameObject in game objet} with the {@link Thing thing} at the {@link Vector2D coordinate}
+     * Move the in game object update the object.
+     *
+     * @param igo                In game object to move.
+     * @param relativeCoordinate Relative coordinate where to move the object.
+     */
+    private void move(InGameObject igo, PolarCoordinates relativeCoordinate) {
+        var coordinate = igo.coordinate();
+        var newCoordinate = coordinate.add(relativeCoordinate.toCartesian());
+        addOrUpdate(igo.thing(), newCoordinate, igo.velocity());
+    }
+
+    /**
+     * Add or update an {@link InGameObject in game objet} with the {@link Thing thing} at the {@link Vector2D coordinate}
      * and the {@link Velocity velocity}.
      *
      * @param thing      {@link Thing} to add in the {@link InGameObject in game objet}.
      * @param coordinate {@link Vector2D} where to put the {@link InGameObject in game objet}.
      * @param velocity   {@link Velocity} of the {@link InGameObject in game objet} in the world.
      */
-    private void add(Thing thing, Vector2D coordinate, Velocity velocity) {
+    private void addOrUpdate(Thing thing, Vector2D coordinate, Velocity velocity) {
         var previous = inGameObjects.put(thing, new InGameObject(thing, coordinate, velocity));
         if (previous != null)
             thingsByCoordinate.remove(previous.coordinate());
@@ -68,7 +93,7 @@ public class InGameObjectsManager {
      */
     public void add(Thing thing, Vector2D coordinate, Point1S orientation) {
         var velocity = new Velocity(0, 0, orientation);
-        add(thing, coordinate, velocity);
+        addOrUpdate(thing, coordinate, velocity);
     }
 
     /**
@@ -170,10 +195,17 @@ public class InGameObjectsManager {
         var inGameObj = inGameObjects.get(thing);
         var coordinate = inGameObj.coordinate();
         var velocity = inGameObj.velocity();
+        var speed = velocity.speed();
+        var acceleration = velocity.acceleration();
         var azimuth = velocity.azimuth();
 
-        if (doesItWantToRotate(wantedVelocity)) {
+        var newCoordinate = coordinate;
+        var newVelocity = velocity;
+
+        var hasItRotatedCompletely = true;
+        if (doesItRotate(wantedVelocity)) {
             var relativeAzimuth = wantedVelocity.azimuth();
+            var newAzimuth = azimuth;
             for (var other : inGameObjects.values()) {
                 if (inGameObj != other) continue;
 
@@ -185,11 +217,11 @@ public class InGameObjectsManager {
                     azimuth = rotation;
                 }
             }
-            // TODO - To be validated
-            azimuth = Point1S.of(velocity.azimuth().signedDistance(azimuth));
+            newVelocity = new Velocity(speed, acceleration, newAzimuth);
         }
-        var hasItTurnedCompletely = false;//wantedVelocity.azimuth();
-        if (hasItTurnedCompletely && doesItWantToMove(wantedVelocity)) {
+        else hasItRotatedCompletely = true;
+
+        if (hasItRotatedCompletely && doesItWantToMove(wantedVelocity)) {
             double interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
 //            PolarCoordinates newDestination = wantedVelocity.destination();
 //            double radius = newDestination.getRadius();
@@ -203,8 +235,7 @@ public class InGameObjectsManager {
 //            }
 //            newDestination = PolarCoordinates.of(radius, newPhi);
         }
-        var newVelocity = new Velocity(velocity.speed(), velocity.acceleration(), azimuth);
-        add(thing, coordinate, newVelocity);
+        addOrUpdate(thing, newCoordinate, newVelocity);
     }
 
     /**
