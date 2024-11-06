@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.world.InGameObject;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.apache.commons.numbers.core.Precision;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,21 +20,21 @@ public class HitBoxValidator {
     /**
      * Find the angle that the object can rotate until reach the other object or the desired angle.
      *
-     * @param obj   Object to rotate.
-     * @param other Object tha can block the object to rotate.
-     * @param phi   Desired angle of rotation (radian).
+     * @param obj     Object to rotate.
+     * @param other   Object tha can block the object to rotate.
+     * @param azimuth Desired angle of rotation.
      * @return final angle of the rotation.
      */
-    public double rotation(InGameObject obj, InGameObject other, double phi) {
+    public Point1S rotation(InGameObject obj, InGameObject other, Point1S azimuth) {
         var objHb = utils.hitBox(obj);
         var otherHb = utils.hitBox(other);
 
         if (!utils.couldItCrossIt(objHb, otherHb)) {
-            return phi;
+            return azimuth;
         }
         var points = utils.intersections(objHb, otherHb);
 
-        return phi;
+        return azimuth;
     }
 
     public double translate(InGameObject obj, InGameObject other, double rho) {

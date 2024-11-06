@@ -2,14 +2,12 @@ package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
-import com.gayasystem.games.dnd.world.services.domains.Point;
 import org.apache.commons.geometry.euclidean.twod.Lines;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.euclidean.twod.shape.Circle;
 import org.apache.commons.numbers.core.Precision;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -28,7 +26,7 @@ public class HitBoxUtils {
         var c = obj.coordinate();
         var x = c.getX();
         var y = c.getY();
-        var o = obj.velocity().destination().getAzimuth();
+        var o = obj.velocity().azimuth();
         var thing = obj.thing();
         var halfWidth = thing.width() / 2;
         var halfDepth = thing.depth() / 2;

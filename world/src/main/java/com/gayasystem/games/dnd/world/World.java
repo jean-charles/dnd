@@ -3,7 +3,6 @@ package com.gayasystem.games.dnd.world;
 import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;
 import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
@@ -48,7 +47,7 @@ public class World implements Runnable, LifeEnvironment {
             var sightedObjCoordinate = sightedObj.coordinate();
             var distance = lifeFormCoordinate.distance(sightedObjCoordinate);
             if (distance <= sightDistance) {
-                var targetOrientation = sightedObj.velocity().destination().getAzimuth();
+                var targetOrientation = sightedObj.velocity().azimuth();
 
                 var relativeCoordinate = lifeFormCoordinate.directionTo(sightedObjCoordinate);
 //                var relativeOrientation = lifeFormVelocity.destination().getAzimuth().transpose(targetOrientation);
@@ -67,7 +66,7 @@ public class World implements Runnable, LifeEnvironment {
         var obj = manager.get(origin);
         var originCoordinate = obj.coordinate();
 
-        manager.add(newThing, originCoordinate, newThingVelocity.destination().getAzimuth());
+        manager.add(newThing, originCoordinate, newThingVelocity.azimuth());
     }
 
     @Override
@@ -104,29 +103,4 @@ public class World implements Runnable, LifeEnvironment {
     Vector2D getThingCoordinate(Thing thing) {
         return manager.get(thing).coordinate();
     }
-
-
-//    public Coordinate from(PolarCoordinates sc) {
-//        double rho = sc.rho().doubleValue();
-//        double phi = sc.orientation().phi().doubleValue();
-//
-//        double x = this.x.doubleValue() + rho * cos(phi);
-//        double y = this.y.doubleValue() + rho * sin(phi);
-//
-//        return new Coordinate(x, y);
-//    }
-//    public PolarCoordinates to(Coordinate coordinate) {
-//        double x = coordinate.x.subtract(this.x).doubleValue();
-//        double y = coordinate.y.subtract(this.y).doubleValue();
-//
-//        double rho = hypot(x, y);
-//        double phi = atan2(y, x);
-//        return PolarCoordinates.of(rho, phi);
-//    }
-//    public double distanceFrom(Coordinate formCoordinate) {
-//        var newX = pow(x.doubleValue() - formCoordinate.x.doubleValue(), 2);
-//        var newY = pow(y.doubleValue() - formCoordinate.y.doubleValue(), 2);
-//
-//        return sqrt(newX + newY);
-//    }
 }

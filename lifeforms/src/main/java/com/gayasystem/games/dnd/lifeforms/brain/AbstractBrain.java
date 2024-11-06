@@ -2,12 +2,10 @@ package com.gayasystem.games.dnd.lifeforms.brain;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.*;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,10 +14,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import static com.gayasystem.games.dnd.common.Velocity.NO_VELOCITY;
+
 @Component
 public abstract class AbstractBrain implements Brain {
-    private static final Velocity NO_VELOCITY = new Velocity(0, PolarCoordinates.of(0, 0));
-
     private final LifeForm body;
     private final double maxSpeedPerSecond;
     private final Emotion defaultEmotion;
@@ -59,8 +57,7 @@ public abstract class AbstractBrain implements Brain {
         var engram = mostImportantEngram.engram();
         if (engram != null) {
             double rho = engram.origin().getRadius();
-            var destination = PolarCoordinates.of(rho, orientation);
-            return new Velocity(speed, destination);
+            return new Velocity(speed, rho, orientation);
         }
         return NO_VELOCITY;
     }
