@@ -6,6 +6,7 @@ import com.gayasystem.games.dnd.world.ThingA;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.PI;
@@ -23,7 +24,7 @@ public class HitBoxUtilsTest {
     @Test
     void hitBoxWithoutRotation() {
         var thing = new ThingA(100, 20);
-        var velocity = new Velocity(0, PolarCoordinates.of(0, 0));
+        var velocity = new Velocity(0, 0, Point1S.of(0));
         var center = Vector2D.of(10, 10);
         var obj = new InGameObject(thing, center, velocity);
         var actual = utils.hitBox(obj);
@@ -50,7 +51,7 @@ public class HitBoxUtilsTest {
         var y = 0.0;
         var xOrig = 10.0;
         var yOrig = 2.0;
-        var actual = utils.rotate(x, y, PI, xOrig, yOrig);
+        var actual = utils.rotate(x, y, Point1S.PI, xOrig, yOrig);
         var expected = Vector2D.of(-10, -2);
         assertEquals(expected.getX(), actual.getX(), 0.00000000000001);
         assertEquals(expected.getY(), actual.getY(), 0.00000000000001);
@@ -62,7 +63,7 @@ public class HitBoxUtilsTest {
         var y = 10.0;
         var xOrig = x + 10.0;
         var yOrig = y + 2.0;
-        var actual = utils.rotate(x, y, PI, xOrig, yOrig);
+        var actual = utils.rotate(x, y, Point1S.PI, xOrig, yOrig);
         var expected = Vector2D.of(0, 8);
         assertEquals(expected.getX(), actual.getX(), 0.00000000000001);
         assertEquals(expected.getY(), actual.getY(), 0.00000000000001);

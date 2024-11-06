@@ -8,6 +8,7 @@ import org.apache.commons.geometry.euclidean.twod.Line;
 import org.apache.commons.geometry.euclidean.twod.Lines;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.euclidean.twod.shape.Circle;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.apache.commons.numbers.core.Precision;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,11 @@ class HitBoxValidatorTest {
     @Test
     void rotationOkWithFarThing() {
         var thingA = new ThingA(2, 1);
-        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, PolarCoordinates.of(0, 0)));
+        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, 0, Point1S.of(0)));
         var thingB = new ThingA(1, 1);
-        var other = new InGameObject(thingB, Vector2D.of(10, 10), new Velocity(0, PolarCoordinates.of(0, 0)));
+        var other = new InGameObject(thingB, Vector2D.of(10, 10), new Velocity(0, 0, Point1S.of(0)));
 
-        var phi = validator.rotation(obj, other, PI);
+        var phi = validator.rotation(obj, other, Point1S.PI);
 
         assertEquals(PI, phi);
     }
@@ -37,25 +38,25 @@ class HitBoxValidatorTest {
     @Test
     void rotationOkWithCloseThing() {
         var thingA = new ThingA(20, 1);
-        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, PolarCoordinates.of(0, 0)));
+        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, 0, Point1S.of(0)));
         var thingB = new ThingA(1, 1);
-        var other = new InGameObject(thingB, Vector2D.of(2, 10), new Velocity(0, PolarCoordinates.of(0, 0)));
+        var other = new InGameObject(thingB, Vector2D.of(2, 10), new Velocity(0, 0, Point1S.of(0)));
 
-        var phi = validator.rotation(obj, other, PI / 2);
+        var phi = validator.rotation(obj, other, Point1S.of(PI / 2));
 
-        assertEquals(PI / 2, phi);
+        assertEquals(PI / 2, phi.getAzimuth());
     }
 
     @Test
     void rotationKo() {
         var thingA = new ThingA(20, 2);
-        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, PolarCoordinates.of(0, 0)));
+        var obj = new InGameObject(thingA, Vector2D.of(0, 0), new Velocity(0, 0, Point1S.of(0)));
         var thingB = new ThingA(1, 1);
-        var other = new InGameObject(thingB, Vector2D.of(10, 1), new Velocity(0, PolarCoordinates.of(0, 0)));
+        var other = new InGameObject(thingB, Vector2D.of(10, 1), new Velocity(0, 0, Point1S.of(0)));
 
-        var phi = validator.rotation(obj, other, 2 * PI);
+        var phi = validator.rotation(obj, other, Point1S.of(2 * PI));
 
-        assertEquals(PI / 2, phi);
+        assertEquals(PI / 2, phi.getAzimuth());
     }
 
     @Test

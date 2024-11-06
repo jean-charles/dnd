@@ -57,7 +57,7 @@ public abstract class AbstractBrain implements Brain {
         var engram = mostImportantEngram.engram();
         if (engram != null) {
             double rho = engram.origin().getRadius();
-            return new Velocity(speed, rho, orientation);
+            return new Velocity(speed, rho, Point1S.of(orientation));
         }
         return NO_VELOCITY;
     }

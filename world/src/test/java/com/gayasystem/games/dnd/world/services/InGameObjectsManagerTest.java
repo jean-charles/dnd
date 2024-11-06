@@ -2,10 +2,9 @@ package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.world.ThingA;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ class InGameObjectsManagerTest {
 
     private Thing theThing;
     private Vector2D coo;
-    private double ori;
+    private Point1S ori;
 
     @BeforeEach
     void setUp() {
@@ -31,7 +30,7 @@ class InGameObjectsManagerTest {
 
         theThing = new ThingA(1, 2);
         coo = Vector2D.of(0, 0);
-        ori = 0;
+        ori = Point1S.ZERO;
 
         manager.add(theThing, coo, ori);
 
@@ -76,7 +75,7 @@ class InGameObjectsManagerTest {
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
-        assertEquals(ori, igo.velocity().destination().getAzimuth());
+        assertEquals(ori, igo.velocity().azimuth());
     }
 
     @Test
@@ -113,13 +112,12 @@ class InGameObjectsManagerTest {
         assertNotNull(igo);
         assertEquals(theThing, igo.thing());
         assertEquals(coo, igo.coordinate());
-        assertEquals(ori, igo.velocity().destination().getAzimuth());
+        assertEquals(ori, igo.velocity().azimuth());
     }
 
     @Test
     void move() {
-        PolarCoordinates ccoo = PolarCoordinates.of(120, 0);
-        Velocity velocity = new Velocity(60, ccoo);
+        Velocity velocity = new Velocity(60, 0, Point1S.ZERO);
 
         var t0 = manager.getLastTimestamp(theThing);
 
@@ -140,10 +138,9 @@ class InGameObjectsManagerTest {
     void moveObstructed() throws InterruptedException {
         Thing aThing = new ThingA(10, 2);
         var aCoo = Vector2D.of(10, 0);
-        manager.add(aThing, aCoo, 0);
+        manager.add(aThing, aCoo, Point1S.ZERO);
 
-        PolarCoordinates ccoo = PolarCoordinates.of(60, 0);
-        Velocity velocity = new Velocity(60, ccoo);
+        Velocity velocity = new Velocity(60, 0, Point1S.ZERO);
 
         var t0 = manager.getLastTimestamp(theThing);
 

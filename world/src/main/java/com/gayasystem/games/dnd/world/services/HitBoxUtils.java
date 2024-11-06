@@ -5,6 +5,7 @@ import com.gayasystem.games.dnd.world.services.domains.HitBox;
 import org.apache.commons.geometry.euclidean.twod.Lines;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.euclidean.twod.shape.Circle;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.apache.commons.numbers.core.Precision;
 import org.springframework.stereotype.Service;
 
@@ -39,35 +40,35 @@ public class HitBoxUtils {
         return new HitBox(c, p1, p2, p3, p4);
     }
 
-    public Vector2D rotateFrontLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
+    public Vector2D rotateFrontLeft(double x, double y, Point1S orientation, double halfWidth, double halfDepth) {
         var x1 = x + halfDepth;
         var y1 = y + halfWidth;
-        return rotate(x, y, phi, x1, y1);
+        return rotate(x, y, orientation, x1, y1);
     }
 
-    public Vector2D rotateFrontRight(double x, double y, double phi, double halfWidth, double halfDepth) {
+    public Vector2D rotateFrontRight(double x, double y, Point1S orientation, double halfWidth, double halfDepth) {
         var x1 = x + halfDepth;
         var y1 = y - halfWidth;
-        return rotate(x, y, phi, x1, y1);
+        return rotate(x, y, orientation, x1, y1);
     }
 
-    public Vector2D rotateRearRight(double x, double y, double phi, double halfWidth, double halfDepth) {
+    public Vector2D rotateRearRight(double x, double y, Point1S orientation, double halfWidth, double halfDepth) {
         var x1 = x - halfDepth;
         var y1 = y - halfWidth;
-        return rotate(x, y, phi, x1, y1);
+        return rotate(x, y, orientation, x1, y1);
     }
 
-    public Vector2D rotateRearLeft(double x, double y, double phi, double halfWidth, double halfDepth) {
+    public Vector2D rotateRearLeft(double x, double y, Point1S orientation, double halfWidth, double halfDepth) {
         var x1 = x - halfDepth;
         var y1 = y + halfWidth;
-        return rotate(x, y, phi, x1, y1);
+        return rotate(x, y, orientation, x1, y1);
     }
 
-    public Vector2D rotate(double xCenter, double yCenter, double phi, double xOrig, double yOrig) {
+    public Vector2D rotate(double xCenter, double yCenter, Point1S orientation, double xOrig, double yOrig) {
         var x = xOrig - xCenter;
         var y = yOrig - yCenter;
-        double xDest = x * cos(phi) + y * sin(phi);
-        double yDest = -x * sin(phi) + y * cos(phi);
+        double xDest = x * cos(orientation.getAzimuth()) + y * sin(orientation.getAzimuth());
+        double yDest = -x * sin(orientation.getAzimuth()) + y * cos(orientation.getAzimuth());
         xDest += xCenter;
         yDest += yCenter;
 

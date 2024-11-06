@@ -34,7 +34,7 @@ public class InGameObjectsManager {
 
     private boolean doesItWantToRotate(Velocity velocity) {
         if (velocity == null) return false;
-        return velocity.azimuth() != 0;
+        return velocity.azimuth().getAzimuth() != 0;
     }
 
     private double relativeDistance(double radius, double speed, double interval) {
@@ -66,7 +66,7 @@ public class InGameObjectsManager {
      * @param coordinate  {@link Vector2D} where to put the {@link InGameObject in game objet}.
      * @param orientation Orientation of the {@link InGameObject in game objet} in the world.
      */
-    public void add(Thing thing, Vector2D coordinate, double orientation) {
+    public void add(Thing thing, Vector2D coordinate, Point1S orientation) {
         var velocity = new Velocity(0, 0, orientation);
         add(thing, coordinate, velocity);
     }

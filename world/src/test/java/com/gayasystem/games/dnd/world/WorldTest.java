@@ -2,8 +2,8 @@ package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class WorldTest {
         assertNotNull(thing);
         assertNotNull(world);
         double originalX = 0;
-        world.add(thing, Vector2D.of(originalX, 0), 0);
+        world.add(thing, Vector2D.of(originalX, 0), Point1S.ZERO);
 
         world.run();
         verify(thing, times(1)).run();
@@ -50,8 +50,8 @@ public class WorldTest {
     @Test
     void addFrom() {
         Thing parent = new ThingA();
-        var velocity = new Velocity(0, PolarCoordinates.of(0, 0));
-        world.add(parent, Vector2D.of(0, 0), 0);
+        var velocity = new Velocity(0, 0, Point1S.ZERO);
+        world.add(parent, Vector2D.of(0, 0), Point1S.ZERO);
         Thing child = new ThingB();
         world.addFrom(parent, child, velocity);
     }
@@ -62,7 +62,7 @@ public class WorldTest {
         ThingA thing = new ThingA();
         Vector2D coordinate = Vector2D.of(0, 0);
 
-        world.add(thing, coordinate, 0);
+        world.add(thing, coordinate, Point1S.ZERO);
 
         Vector2D actual = world.getThingCoordinate(thing);
         assertEquals(coordinate, actual);
