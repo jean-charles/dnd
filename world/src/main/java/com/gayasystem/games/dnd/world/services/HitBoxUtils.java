@@ -10,8 +10,6 @@ import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.apache.commons.numbers.core.Precision;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static java.lang.Math.*;
@@ -22,6 +20,27 @@ public class HitBoxUtils {
 
     public HitBoxUtils() {
         p = Precision.doubleEquivalenceOfEpsilon(1e-6);
+    }
+
+    private Circle circle(Vector2D center, Vector2D point) {
+        var radius = center.distance(point);
+        return Circle.from(center, radius, p);
+    }
+
+    private double shortestDistance(final HitBox from, final HitBox to, final double distance, final double azimuth) {
+        var shortestDistance = distance;
+        for (var hbPoint : from.points()) {
+            var l = Lines.fromPointAndAngle(hbPoint, azimuth, p);
+            for (var segment : to.segments(p)) {
+                var intersection = segment.intersection(l);
+                if (intersection != null) {
+                    var currentDistance = hbPoint.distance(intersection);
+                    if (currentDistance < shortestDistance)
+                        shortestDistance = currentDistance;
+                }
+            }
+        }
+        return shortestDistance;
     }
 
     public HitBox hitBox(InGameObject obj) {
@@ -92,48 +111,23 @@ public class HitBoxUtils {
         return max(max(max(p1.getY(), p2.getY()), p3.getY()), p4.getY());
     }
 
-    public double radius(HitBox hitBox) {
-        var l = Lines.fromPoints(hitBox.center(), hitBox.p1(), p);
-        var s = l.segment(hitBox.center(), hitBox.p1());
-        return s.getSize();
-    }
 
     public boolean couldItCrossIt(HitBox hb1, HitBox hb2) {
-        var c = Circle.from(hb1.center(), radius(hb1), p);
-        return Stream.of(
-                Lines.fromPoints(hb2.p1(), hb2.p2(), p),
-                Lines.fromPoints(hb2.p2(), hb2.p3(), p),
-                Lines.fromPoints(hb2.p3(), hb2.p4(), p),
-                Lines.fromPoints(hb2.p4(), hb2.p1(), p)
-        ).anyMatch(line -> c.firstIntersection(line) != null);
+        var cOrig = circle(hb1.center(), hb1.p1());
+        var c1 = circle(hb2.center(), hb1.p1());
+        var c2 = circle(hb2.center(), hb2.p2());
+        var c3 = circle(hb2.center(), hb2.p3());
+        var c4 = circle(hb2.center(), hb2.p4());
+        return Stream.of(c1, c2, c3, c4).anyMatch(c -> c.getRadius() < cOrig.getRadius());
     }
 
-    public List<Vector2D> intersections(HitBox hb1, HitBox hb2) {
-        var points = new ArrayList<Vector2D>();
+    public double azimuthWhereItCross(HitBox hb1, HitBox hb2, double azimuth) {
+        var a1 = hb2.center().angle(hb1.p1());
+        var a2 = hb2.center().angle(hb2.p2());
+        var a3 = hb2.center().angle(hb2.p3());
+        var a4 = hb2.center().angle(hb2.p4());
 
-        var c = Circle.from(hb1.center(), radius(hb1), p);
-        points.addAll(c.intersections(Lines.fromPoints(hb2.p1(), hb2.p2(), p)));
-        points.addAll(c.intersections(Lines.fromPoints(hb2.p2(), hb2.p3(), p)));
-        points.addAll(c.intersections(Lines.fromPoints(hb2.p3(), hb2.p4(), p)));
-        points.addAll(c.intersections(Lines.fromPoints(hb2.p4(), hb2.p1(), p)));
-
-        return points;
-    }
-
-    private double shortestDistance(final HitBox from, final HitBox to, final double distance, final double azimuth) {
-        var shortestDistance = distance;
-        for (var hbPoint : from.points()) {
-            var l = Lines.fromPointAndAngle(hbPoint, azimuth, p);
-            for (var segment : to.segments(p)) {
-                var intersection = segment.intersection(l);
-                if (intersection != null) {
-                    var currentDistance = hbPoint.distance(intersection);
-                    if (currentDistance < shortestDistance)
-                        shortestDistance = currentDistance;
-                }
-            }
-        }
-        return shortestDistance;
+        return Stream.of(azimuth, a1, a2, a3, a4).min(Double::compare).get();
     }
 
     /**
@@ -149,9 +143,8 @@ public class HitBoxUtils {
         var otherHb = hitBox(other);
 
         if (!couldItCrossIt(objHb, otherHb)) {
-            return azimuth;
+            return Point1S.of(azimuthWhereItCross(objHb, otherHb, azimuth.getAzimuth()));
         }
-        var points = intersections(objHb, otherHb);
 
         return azimuth;
     }
