@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.commons:commons-numbers-quaternion:1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.apache.commons" artifactId="commons-numbers-quaternion" version="1.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-numbers-quaternion/1.0/34335952c70c914db83f136d97061142d53bb569/commons-numbers-quaternion-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

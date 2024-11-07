@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.commons:commons-geometry-spherical:1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.apache.commons" artifactId="commons-geometry-spherical" version="1.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-geometry-spherical/1.0/f027b6c207ea5e7e2bd6f3d2bc9585a5ab04bdec/commons-geometry-spherical-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-geometry-spherical/1.0/a744fc29968715b71135ff9514a50d4c0707bc80/commons-geometry-spherical-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

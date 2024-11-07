@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.commons:commons-numbers-angle:1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.apache.commons" artifactId="commons-numbers-angle" version="1.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-numbers-angle/1.0/be81b2dda1484c649a8db3e8e8f45fe71eeb5d7b/commons-numbers-angle-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

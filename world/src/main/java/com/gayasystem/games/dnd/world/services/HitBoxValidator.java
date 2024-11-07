@@ -1,7 +1,8 @@
 package com.gayasystem.games.dnd.world.services;
 
-import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.world.InGameObject;
+import com.gayasystem.games.dnd.world.services.domains.HitBox;
+import org.apache.commons.geometry.euclidean.twod.Lines;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.apache.commons.numbers.core.Precision;
@@ -19,6 +20,22 @@ public class HitBoxValidator {
         this.p = Precision.doubleEquivalenceOfEpsilon(1e-6);
     }
 
+    private double shortestDistance(final HitBox from, final HitBox to, final double distance, final double azimuth) {
+        var shortestDistance = distance;
+        for (var hbPoint : from.points()) {
+            var l = Lines.fromPointAndAngle(hbPoint, azimuth, p);
+            for (var segment : to.segments(p)) {
+                var intersection = segment.intersection(l);
+                if (intersection != null) {
+                    var currentDistance = hbPoint.distance(intersection);
+                    if (currentDistance < shortestDistance)
+                        shortestDistance = currentDistance;
+                }
+            }
+        }
+        return shortestDistance;
+    }
+
     /**
      * Find the angle that the object can rotate until reach the other object or the desired angle.
      *
@@ -27,7 +44,7 @@ public class HitBoxValidator {
      * @param azimuth Desired angle of rotation.
      * @return final angle of the rotation.
      */
-    public Point1S rotation(InGameObject obj, InGameObject other, Point1S azimuth) {
+    public Point1S rotation(final InGameObject obj, final InGameObject other, final Point1S azimuth) {
         var objHb = utils.hitBox(obj);
         var otherHb = utils.hitBox(other);
 
@@ -42,17 +59,20 @@ public class HitBoxValidator {
     /**
      * Move the object until it's blocked by the other object.
      *
-     * @param obj      Object to move.
-     * @param other    Object that could block the movement.
-     * @param velocity Velocity to use for the movement.
+     * @param obj         Object to move.
+     * @param other       Object that could block the movement.
+     * @param coordinates Polar coordinates to use for the movement as destination.
      * @return the coordinate where the hit box are in contact or null if the other do not block.
      */
-    public PolarCoordinates translate(InGameObject obj, InGameObject other, Velocity velocity, double interval) {
-        var distance = velocity.speed() * interval;
+    public PolarCoordinates translation(final InGameObject obj, final InGameObject other, final PolarCoordinates coordinates) {
+        var distance = coordinates.getRadius();
+        var azimuth = coordinates.getAzimuth();
         var hb = utils.hitBox(obj);
         var hbOther = utils.hitBox(other);
 
+        distance = shortestDistance(hb, hbOther, distance, azimuth);
+        distance = shortestDistance(hbOther, hb, distance, azimuth);
 
-        return PolarCoordinates.of(distance, velocity.azimuth().getNormalizedAzimuth());
+        return PolarCoordinates.of(distance, azimuth);
     }
 }

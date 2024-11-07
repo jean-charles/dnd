@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.commons:commons-geometry-euclidean:1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.apache.commons" artifactId="commons-geometry-euclidean" version="1.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-geometry-euclidean/1.0/52ea4b8e1d0348ec0b781230f5042526ab669b66/commons-geometry-euclidean-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-geometry-euclidean/1.0/54d20a2ce69b19979b20439e5a41dd0e2488be1a/commons-geometry-euclidean-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

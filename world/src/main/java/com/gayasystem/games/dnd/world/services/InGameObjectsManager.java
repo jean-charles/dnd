@@ -190,10 +190,9 @@ public class InGameObjectsManager {
         if (hasItRotatedCompletely && doesItWantToMove(wantedVelocity)) {
             var speed = inGameObj.velocity().speed();
             var p = physical.relativeCoordinates(interval, speed, wantedVelocity.azimuth());
-            var currentCoordinate = inGameObj.coordinate();
             double distance = p.getRadius();
             for (var other : inGameObjects.values()) {
-                var coordinate = validator.translate(inGameObj, other, wantedVelocity, interval);
+                var coordinate = validator.translation(inGameObj, other, p);
                 var currentDistance = coordinate.getRadius();
                 if (currentDistance < distance) {
                     distance = currentDistance;
