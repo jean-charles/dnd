@@ -4,7 +4,6 @@ import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -31,15 +30,15 @@ public class EngramComputing {
 
     private SpatialEmotionalEngram findMostImportantEngram(Collection<SpatialEmotionalEngram> spatialEmotionalEngrams) {
         var mostImportantEngram = new SpatialEmotionalEngram(null, neutral);
-//        double closestDistance = Double.MAX_VALUE;
+        double closestDistance = Double.MAX_VALUE;
         Emotion mostImportantEmotion = neutral;
         for (var spatialEmotionalEngram : spatialEmotionalEngrams) {
             var distance = spatialEmotionalEngram.engram().origin().getRadius();
             if (mostImportantEmotion(spatialEmotionalEngram.emotion(), mostImportantEmotion)) {
 //                if (distance < closestDistance) {
-                    mostImportantEngram = spatialEmotionalEngram;
+                mostImportantEngram = spatialEmotionalEngram;
 //                    closestDistance = distance;
-                    mostImportantEmotion = spatialEmotionalEngram.emotion();
+                mostImportantEmotion = spatialEmotionalEngram.emotion();
 //                }
             }
         }

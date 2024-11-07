@@ -36,24 +36,14 @@ public class World implements Runnable, LifeEnvironment {
 
     @Override
     public void show(Sighted sighted, double sightDistance) {
-        var obj = manager.get((Thing) sighted);
-        var lifeFormCoordinate = obj.coordinate();
-        var lifeFormVelocity = obj.velocity();
+        if (!(sighted instanceof Thing)) return;
 
-        // TODO: Select only object in sight distance
         for (var other : manager.getAllThings()) {
             if (sighted == other) continue;
 
-            var sightedObj = manager.get(other);
-            var sightedObjCoordinate = sightedObj.coordinate();
-            var distance = lifeFormCoordinate.distance(sightedObjCoordinate);
-            if (distance <= sightDistance) {
-                var targetOrientation = sightedObj.velocity().azimuth();
-
-                var relativeCoordinate = lifeFormCoordinate.directionTo(sightedObjCoordinate);
-//                var relativeOrientation = lifeFormVelocity.destination().getAzimuth().transpose(targetOrientation);
-                // TODO: see only visible things
-                sighted.see(other, null, 0);
+            var relativeCoordinate = manager.relativeCoordinates((Thing) sighted, other);
+            if (relativeCoordinate.getRadius() <= sightDistance) {
+                sighted.see(other, relativeCoordinate, 0);
             }
         }
     }

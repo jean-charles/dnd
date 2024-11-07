@@ -223,6 +223,22 @@ public class InGameObjectsManager {
         return target;
     }
 
+    /**
+     * Calculate the relative polar coordinates between the two things.
+     *
+     * @param from Thing from where to calculate the polar coordinates.
+     * @param to   Thing where to calculate the polar coordinates.
+     * @return the relative polar coordinates in meters and radians.
+     */
+    public PolarCoordinates relativeCoordinates(Thing from, Thing to) {
+        var fromObject = inGameObjects.get(from);
+        var origin = PolarCoordinates.fromCartesian(fromObject.coordinate());
+        var destination = PolarCoordinates.fromCartesian(inGameObjects.get(to).coordinate());
+
+        var originAngle = fromObject.orientation();
+        return PolarCoordinates.of(radius, azimuth);
+    }
+
     /* TESTS ONLY */
     int sizeOfInGameObjects() {
         return inGameObjects.size();

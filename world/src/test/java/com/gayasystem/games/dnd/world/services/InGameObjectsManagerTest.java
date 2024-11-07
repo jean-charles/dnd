@@ -3,6 +3,7 @@ package com.gayasystem.games.dnd.world.services;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.world.ThingA;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.junit.jupiter.api.AfterEach;
@@ -11,9 +12,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitConfig(classes = {HitBoxUtils.class, InGameObjectsManager.class})
+@SpringJUnitConfig(classes = {InGameObjectsManager.class, HitBoxUtils.class, PhysicalService.class})
 class InGameObjectsManagerTest {
     @Autowired
     private InGameObjectsManager manager;
@@ -156,5 +159,18 @@ class InGameObjectsManagerTest {
         var expectedDistance = 8;
         assertEquals(expectedDistance, distance, 0.0);
         assertEquals(Vector2D.of(expectedDistance, 0), igo.coordinate());
+    }
+
+    @Test
+    void relativeCoordinates() {
+        Thing from = new ThingA(1, 2);
+        Thing to = new ThingA(1, 2);
+
+        manager.add(from, Vector2D.of(10, 10), Point1S.of(PI));
+        manager.add(to, Vector2D.of(20, 20), Point1S.ZERO);
+
+        var p = manager.relativeCoordinates(from, to);
+        var expected = PolarCoordinates.of(sqrt(200), -3 * PI / 4);
+        assertEquals(expected, p);
     }
 }
