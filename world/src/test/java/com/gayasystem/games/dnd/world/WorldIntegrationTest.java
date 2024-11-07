@@ -1,8 +1,6 @@
 package com.gayasystem.games.dnd.world;
 
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
@@ -25,11 +23,11 @@ public class WorldIntegrationTest {
 
     //    @Test
     public void integrationTests() {
-        var velocity = new Velocity(0, 0, Point1S.of(0));
+        var velocity = new Velocity(0, 0, Point1S.ZERO);
         assertNotNull(almiraj);
-        world.add(almiraj, Vector2D.of(0, 0), Point1S.of(0));
+        world.add(almiraj, Vector2D.of(0, 0), 0);
         assertNotNull(carrot);
-        world.add(carrot, Vector2D.of(10, 0), Point1S.of(0));
+        world.add(carrot, Vector2D.of(10, 0), 0);
         world.run();
         var almirajCoordinate = world.getThingCoordinate(almiraj);
         assertNotNull(almirajCoordinate);

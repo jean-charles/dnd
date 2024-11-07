@@ -3,7 +3,6 @@ package com.gayasystem.games.dnd.drawables.food;
 import com.gayasystem.games.dnd.SwingTestCase;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import com.gayasystem.games.dnd.drawables.SizeConvertor;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.world.InGameObject;
@@ -66,8 +65,8 @@ class DrawableCarrotTest extends SwingTestCase {
         double increment = PI / 128;
         var carrot = new Carrot();
         for (double phi = 0; phi <= max; phi += increment) {
-            var velocity = new Velocity(0, 0, Point1S.of(phi));
-            carrotObj = new InGameObject(carrot, Vector2D.of(0, 0), velocity);
+            var velocity = new Velocity(0, 0, Point1S.ZERO);
+            carrotObj = new InGameObject(carrot, Vector2D.of(0, 0), Point1S.of(phi), velocity);
             frame.repaint();
             sleep(25);
         }

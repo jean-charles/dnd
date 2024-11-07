@@ -1,13 +1,11 @@
 package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.ecosystem.houses.Wall;
 import com.gayasystem.games.dnd.world.World;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
-import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.WebApplicationType;
@@ -62,10 +60,10 @@ public class Application extends JFrame implements KeyListener {
     }
 
     private void gameSetUp() {
-//        world.add(newThing(Human.class), Vector2D.of(20, 20), Point1S.of(0));
-        world.add(newThing(Almiraj.class), Vector2D.of(-15, 0), Point1S.of(0));
-        world.add(newThing(Wall.class, 10, 1), Vector2D.of(0, 0), Point1S.of(0));
-        world.add(newThing(Carrot.class), Vector2D.of(15, 0), Point1S.of(0));
+//        world.add(newThing(Human.class), Vector2D.of(20, 20), 0);
+        world.add(newThing(Almiraj.class), Vector2D.of(-15, 0), 0);
+        world.add(newThing(Wall.class, 10, 1), Vector2D.of(0, 0), 0);
+        world.add(newThing(Carrot.class), Vector2D.of(15, 0), 0);
     }
 
     private Thing newThing(Class<? extends Thing> clazz, Object... args) {

@@ -35,7 +35,7 @@ public class WorldTest {
         assertNotNull(thing);
         assertNotNull(world);
         double originalX = 0;
-        world.add(thing, Vector2D.of(originalX, 0), Point1S.ZERO);
+        world.add(thing, Vector2D.of(originalX, 0), 0);
 
         world.run();
         verify(thing, times(1)).run();
@@ -51,7 +51,7 @@ public class WorldTest {
     void addFrom() {
         Thing parent = new ThingA();
         var velocity = new Velocity(0, 0, Point1S.ZERO);
-        world.add(parent, Vector2D.of(0, 0), Point1S.ZERO);
+        world.add(parent, Vector2D.of(0, 0), 0);
         Thing child = new ThingB();
         world.addFrom(parent, child, velocity);
     }
@@ -62,7 +62,7 @@ public class WorldTest {
         ThingA thing = new ThingA();
         Vector2D coordinate = Vector2D.of(0, 0);
 
-        world.add(thing, coordinate, Point1S.ZERO);
+        world.add(thing, coordinate, 0);
 
         Vector2D actual = world.getThingCoordinate(thing);
         assertEquals(coordinate, actual);

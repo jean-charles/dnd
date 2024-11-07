@@ -4,12 +4,10 @@ import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.ThingA;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.junit.jupiter.api.Test;
 
-import static java.lang.Math.PI;
 import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,9 +22,9 @@ public class HitBoxUtilsTest {
     @Test
     void hitBoxWithoutRotation() {
         var thing = new ThingA(100, 20);
-        var velocity = new Velocity(0, 0, Point1S.of(0));
+        var velocity = new Velocity(0, 0, Point1S.ZERO);
         var center = Vector2D.of(10, 10);
-        var obj = new InGameObject(thing, center, velocity);
+        var obj = new InGameObject(thing, center, Point1S.ZERO, velocity);
         var actual = utils.hitBox(obj);
         var expected = new HitBox(
                 center,

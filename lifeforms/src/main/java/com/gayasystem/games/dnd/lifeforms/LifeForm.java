@@ -84,7 +84,7 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
         if (foodCoordinate != null)
             environment.eat(this);
         if (movement != null)
-            environment.move(this, movement);
+            environment.move(this, movement.azimuth(), movement);
     }
 
     @Override

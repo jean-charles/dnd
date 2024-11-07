@@ -71,8 +71,8 @@ public class World implements Runnable, LifeEnvironment {
     }
 
     @Override
-    public void move(Thing thing, Velocity velocity) {
-        manager.move(thing, velocity);
+    public void move(Thing thing, Point1S orientation, Velocity velocity) {
+        manager.move(thing, orientation, velocity);
     }
 
     @Override
@@ -87,11 +87,11 @@ public class World implements Runnable, LifeEnvironment {
         lifeForm.eat((Food) food);
     }
 
-    public void add(Thing thing, Vector2D coordinate, Point1S orientation) {
+    public void add(Thing thing, Vector2D coordinate, double orientation) {
         Objects.requireNonNull(thing, "Parameter 'thing' is null!");
         Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
 
-        manager.add(thing, coordinate, orientation);
+        manager.add(thing, coordinate, Point1S.of(orientation));
     }
 
     public Collection<InGameObject> objects() {

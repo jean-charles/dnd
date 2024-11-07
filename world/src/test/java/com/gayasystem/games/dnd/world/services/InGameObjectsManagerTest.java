@@ -121,7 +121,7 @@ class InGameObjectsManagerTest {
 
         var t0 = manager.getLastTimestamp(theThing);
 
-        manager.move(theThing, velocity);
+        manager.move(theThing, Point1S.ZERO, velocity);
 
         var t1 = manager.getLastTimestamp(theThing);
         var igo = manager.get(theThing);
@@ -145,7 +145,7 @@ class InGameObjectsManagerTest {
         var t0 = manager.getLastTimestamp(theThing);
 
         Thread.sleep(1000);
-        manager.move(theThing, velocity);
+        manager.move(theThing, Point1S.ZERO, velocity);
 
         var t1 = manager.getLastTimestamp(theThing);
         var igo = manager.get(theThing);
