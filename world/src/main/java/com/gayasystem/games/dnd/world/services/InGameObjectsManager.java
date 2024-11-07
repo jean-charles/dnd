@@ -27,7 +27,7 @@ public class InGameObjectsManager {
     private PhysicalService physical;
 
     @Autowired
-    private HitBoxValidator validator;
+    private HitBoxUtils utils;
 
     /**
      * Test if the orientation is eligible to rotation. A orientation with a non-zero azimuth is eligible.
@@ -179,7 +179,7 @@ public class InGameObjectsManager {
             for (var other : inGameObjects.values()) {
                 if (inGameObj != other) continue;
 
-                var finalOrientation = validator.rotation(inGameObj, other, wantedOrientation);
+                var finalOrientation = utils.rotation(inGameObj, other, wantedOrientation);
                 if (!wantedOrientation.equals(finalOrientation) && compare(finalOrientation, newOrientation) < 0) {
                     hasItRotatedCompletely = false;
                     newOrientation = finalOrientation;
@@ -192,7 +192,7 @@ public class InGameObjectsManager {
             var p = physical.relativeCoordinates(interval, speed, wantedVelocity.azimuth());
             double distance = p.getRadius();
             for (var other : inGameObjects.values()) {
-                var coordinate = validator.translation(inGameObj, other, p);
+                var coordinate = utils.translation(inGameObj, other, p);
                 var currentDistance = coordinate.getRadius();
                 if (currentDistance < distance) {
                     distance = currentDistance;

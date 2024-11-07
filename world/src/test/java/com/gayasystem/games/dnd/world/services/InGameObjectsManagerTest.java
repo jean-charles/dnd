@@ -13,7 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitConfig(classes = {HitBoxUtils.class, HitBoxValidator.class, InGameObjectsManager.class})
+@SpringJUnitConfig(classes = {HitBoxUtils.class, InGameObjectsManager.class})
 class InGameObjectsManagerTest {
     @Autowired
     private InGameObjectsManager manager;
