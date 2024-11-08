@@ -61,9 +61,9 @@ public class Application extends JFrame implements KeyListener {
 
     private void gameSetUp() {
 //        world.add(newThing(Human.class), Vector2D.of(20, 20), 0);
-        world.add(newThing(Almiraj.class), Vector2D.of(-15, 0), 0);
-        world.add(newThing(Wall.class, 10, 1), Vector2D.of(0, 0), 0);
-        world.add(newThing(Carrot.class), Vector2D.of(15, 0), 0);
+        world.add(newThing(Almiraj.class), Vector2D.of(-1.2, 0), 0);
+        world.add(newThing(Wall.class, 1, 0.05), Vector2D.of(0, 0), 0);
+        world.add(newThing(Carrot.class), Vector2D.of(1, 0), 0);
     }
 
     private Thing newThing(Class<? extends Thing> clazz, Object... args) {
@@ -73,7 +73,7 @@ public class Application extends JFrame implements KeyListener {
     private void setUpUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        var canvas = ctx.getBean(Canvas.class, 50);
+        var canvas = ctx.getBean(Canvas.class, 3);
         add(canvas);
         addKeyListener(canvas);
     }

@@ -7,9 +7,11 @@ public abstract class Food extends Thing {
     protected double nourishment;
 
     /**
-     * @param mass
-     * @param timeToDecompose in days
-     * @param nourishment
+     * @param width           Front width of the food in meter.
+     * @param depth           Depth of the food in meter.
+     * @param mass            Mass in kilograms.
+     * @param timeToDecompose Time to the decomposition in days.
+     * @param nourishment     Food nourishment.
      */
     protected Food(double width, double depth, double mass, int timeToDecompose, double nourishment) {
         super(width, depth, mass);

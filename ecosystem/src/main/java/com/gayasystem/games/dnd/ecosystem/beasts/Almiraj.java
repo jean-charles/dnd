@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.ecosystem.beasts;
 
+import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.ecosystem.Beast;
-import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.gametools.dices.Die1D6;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
@@ -16,8 +16,8 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class Almiraj extends Beast {
-    public static final double WIDTH = 0.75;
-    public static final double DEPTH = 1.6;
+    public static final double WIDTH = MeasurementConvertor.c.feetInMeters(0.75);
+    public static final double DEPTH = MeasurementConvertor.c.feetInMeters(1.6);
 
     public Almiraj() {
         super(
@@ -53,16 +53,16 @@ public class Almiraj extends Beast {
                 Die1D6.die,
                 WIDTH,
                 DEPTH,
-                9,
+                MeasurementConvertor.c.poundInKg(9),
                 Gender.male,
-                60,
-                60.0,
-                30.0,
+                MeasurementConvertor.c.feetInMeters(60),
+                MeasurementConvertor.c.feetInMeters(60.0),
+                MeasurementConvertor.c.feetInMeters(30.0),
                 null,
                 0.0,
                 Emotion.neutral,
                 Map.of(
-                        Carrot.class, Emotion.hungry
+//                        Carrot.class, Emotion.hungry
                 )
         );
     }

@@ -163,14 +163,15 @@ class InGameObjectsManagerTest {
 
     @Test
     void relativeCoordinates() {
-        Thing from = new ThingA(1, 2);
-        Thing to = new ThingA(1, 2);
+        Thing from = new ThingA(1, 1);
+        Thing to = new ThingA(1, 1);
 
-        manager.add(from, Vector2D.of(10, 10), Point1S.of(PI));
-        manager.add(to, Vector2D.of(20, 20), Point1S.ZERO);
+        manager.add(from, Vector2D.of(1, 1), Point1S.of(PI));
+        manager.add(to, Vector2D.of(2, 1 + sqrt(3)), Point1S.ZERO);
 
         var p = manager.relativeCoordinates(from, to);
-        var expected = PolarCoordinates.of(sqrt(200), -3 * PI / 4);
-        assertEquals(expected, p);
+        var expected = PolarCoordinates.of(2, 2 * PI / 3);
+        assertEquals(expected.getRadius(), p.getRadius(), 0.0000000001);
+        assertEquals(expected.getAzimuth(), p.getAzimuth(), 0.0000000001);
     }
 }

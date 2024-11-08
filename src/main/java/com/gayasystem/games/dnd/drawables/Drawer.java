@@ -21,19 +21,19 @@ public class Drawer {
     private SizeConvertor sizeConvertor;
 
     /**
-     * @param feetWidth Canvas width in feet.
-     * @param size      Canvas {@link Dimension dimension}.
-     * @param obj       {@link InGameObject} to draw in the Canvas.
-     * @param g         {@link Graphics} to use to draw the {@link InGameObject}.
+     * @param metersWidth Canvas width in meters.
+     * @param size        Canvas {@link Dimension dimension}.
+     * @param obj         {@link InGameObject} to draw in the Canvas.
+     * @param g           {@link Graphics} to use to draw the {@link InGameObject}.
      */
-    public void draw(int feetWidth, Dimension size, InGameObject obj, Graphics g, ImageObserver observer) {
+    public void draw(int metersWidth, Dimension size, InGameObject obj, Graphics g, ImageObserver observer) {
         try {
             String thingName = "drawable" + obj.thing().getClass().getSimpleName();
             Drawable drawable = (Drawable) ctx.getBean(thingName);
 
-            int pixelsPerFoot = size.width / feetWidth;
-            var p = sizeConvertor.coordinate2Point(pixelsPerFoot, size.width, size.height, obj.coordinate());
-            drawable.draw(pixelsPerFoot, obj, p, (Graphics2D) g, observer);
+            int pixelsPerMeter = size.width / metersWidth;
+            var p = sizeConvertor.coordinate2Point(pixelsPerMeter, size.width, size.height, obj.coordinate());
+            drawable.draw(pixelsPerMeter, obj, p, (Graphics2D) g, observer);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static com.gayasystem.games.dnd.lifeforms.LifeForm.CATCHING_DISTANCE;
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.Action.*;
 import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion.neutral;
 
@@ -55,7 +54,7 @@ public class EngramComputing {
             case hungry -> {
                 var spatialEngram = mostImportantEngram.engram();
                 var distance = spatialEngram.origin().getRadius();
-                if (distance <= CATCHING_DISTANCE)
+                if (distance <= 0)
                     yield eat;
                 yield move;
             }

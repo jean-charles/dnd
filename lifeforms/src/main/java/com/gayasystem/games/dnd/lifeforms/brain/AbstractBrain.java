@@ -29,7 +29,7 @@ public abstract class AbstractBrain implements Brain {
 
     /**
      * @param body              body that contain the brain
-     * @param maxSpeedPerSecond max speed in feet per second
+     * @param maxSpeedPerSecond max speed in meter per second
      * @param defaultEmotion    default emotion for unknown things
      * @param longTermMemories  predetermined memories
      */

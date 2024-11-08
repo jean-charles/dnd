@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Carrot extends Food {
-    public static final double WIDTH = 0.3;
-    public static final double DEPTH = 0.8;
+    public static final double WIDTH = 0.04;
+    public static final double DEPTH = 0.20;
 
     public Carrot() {
-        super(WIDTH, DEPTH, 0.13, 4, 20);
+        super(WIDTH, DEPTH, 0.130, 4, 20);
     }
 }

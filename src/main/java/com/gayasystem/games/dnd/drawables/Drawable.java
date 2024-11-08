@@ -6,5 +6,5 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 
 public interface Drawable {
-    void draw(int pixelsPerFoot, InGameObject obj, Point point, Graphics g, ImageObserver observer);
+    void draw(int pixelsPerMeter, InGameObject obj, Point point, Graphics g, ImageObserver observer);
 }

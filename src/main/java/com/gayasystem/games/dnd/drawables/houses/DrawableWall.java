@@ -35,8 +35,8 @@ public class DrawableWall extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsWidth(int pixelsPerFoot) {
-        return (int) (pixelsPerFoot * size);
+    protected int pixelsWidth(int pixelsPerMeter) {
+        return (int) (pixelsPerMeter * size);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class DrawableWall extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsDepth(int pixelsPerFoot) {
-        return (int) (pixelsPerFoot * size);
+    protected int pixelsDepth(int pixelsPerMeter) {
+        return (int) (pixelsPerMeter * size);
     }
 
     @Override

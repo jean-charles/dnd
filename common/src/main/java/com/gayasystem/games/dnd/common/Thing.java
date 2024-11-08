@@ -6,9 +6,9 @@ public abstract class Thing implements Runnable {
     protected double mass;
 
     /**
-     * @param width Distance between shoulders in feet.
-     * @param depth Distance front to back in feet.
-     * @param mass  Mass in pounds.
+     * @param width Distance between shoulders in meter.
+     * @param depth Distance front to back in meter.
+     * @param mass  Mass in kilograms.
      */
     protected Thing(double width, double depth, double mass) {
         this.width = width;
@@ -17,27 +17,27 @@ public abstract class Thing implements Runnable {
     }
 
     /**
-     * The width of the thing in feet.
+     * The width of the thing in meter.
      *
-     * @return the thing width in feet.
+     * @return the thing width in meter.
      */
     public double width() {
         return width;
     }
 
     /**
-     * The depth of the thing in feet.
+     * The depth of the thing in meter.
      *
-     * @return the depth in feet.
+     * @return the depth in meter.
      */
     public double depth() {
         return depth;
     }
 
     /**
-     * The mass of the thing in pounds (lb).
+     * The mass of the thing in kilograms.
      *
-     * @return the mass in pounds.
+     * @return the mass in kilograms.
      */
     public double mass() {
         return mass;

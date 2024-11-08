@@ -22,7 +22,7 @@ import static java.awt.Color.black;
 public class Canvas extends JPanel implements ActionListener, KeyListener {
     private static final Logger log = LoggerFactory.getLogger(Canvas.class);
 
-    private final int feetWidth;
+    private final int metersWidth;
     // controls the delay between each tick in ms
     private final int DELAY = 1000;
 
@@ -39,11 +39,11 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
     @Autowired
     private Player player;
 
-    public Canvas(int feetWidth) {
+    public Canvas(int metersWidth) {
         super(true);
         setPreferredSize(new Dimension(800, 600));
         setBackground(black);
-        this.feetWidth = feetWidth;
+        this.metersWidth = metersWidth;
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -57,7 +57,7 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
 
     private void drawThing(InGameObject thing, Graphics g) {
         var size = getSize();
-        drawer.draw(feetWidth, size, thing, g, this);
+        drawer.draw(metersWidth, size, thing, g, this);
     }
 
     private void drawScore(Graphics g) {

@@ -29,7 +29,7 @@ public class DrawableAlmiraj extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsWidth(int pixelsPerFoot) {
+    protected int pixelsWidth(int pixelsPerMeter) {
         return 0;
     }
 
@@ -39,7 +39,7 @@ public class DrawableAlmiraj extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsDepth(int pixelsPerFoot) {
+    protected int pixelsDepth(int pixelsPerMeter) {
         return 0;
     }
 

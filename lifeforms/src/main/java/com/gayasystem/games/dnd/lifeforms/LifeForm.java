@@ -20,12 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
 
 public abstract class LifeForm extends Thing implements Moveable, Sighted, Hearing, Eater {
-    public static final double CATCHING_DISTANCE = 0.5;
-    public static final double SPEED_TO_FEET_PER_SECOND = 0.12;
-
     private final Gender gender;
-    // Speed in feet per second
-    private final double maxSpeedPerSecond;
+    private final double speed;
     private final double sightDistance;
     private final double nightSightDistance;
     private final SoundSpectrum soundSpectrum;
@@ -47,13 +43,13 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     private MeasurementConvertor convertor;
 
     /**
-     * @param width              width in feet.
-     * @param depth              depth in feet.
-     * @param mass               mass in pounds.
+     * @param width              width in meter.
+     * @param depth              depth in meter.
+     * @param mass               mass in kilogram.
      * @param gender             female or male.
-     * @param speed              in feet.
-     * @param sightDistance      in miles.
-     * @param nightSightDistance in feet.
+     * @param speed              in meter per second (m/s).
+     * @param sightDistance      in kilometer.
+     * @param nightSightDistance in meter.
      * @param soundSpectrum      TBD
      * @param minSoundAmplitude  TBD
      * @param longTermMemories   list of long term memories.
@@ -61,7 +57,7 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
         super(width, depth, mass);
         this.gender = gender;
-        this.maxSpeedPerSecond = speed * SPEED_TO_FEET_PER_SECOND;
+        this.speed = speed;
         this.sightDistance = sightDistance;
         this.nightSightDistance = nightSightDistance;
         this.soundSpectrum = soundSpectrum;
@@ -73,7 +69,7 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     @Override
     public void run() {
         if (brain == null)
-            brain = brainFactory.create(this, maxSpeedPerSecond, defaultEmotion, longTermMemories);
+            brain = brainFactory.create(this, speed, defaultEmotion, longTermMemories);
 
         foodCoordinate = null;
         movement = null;

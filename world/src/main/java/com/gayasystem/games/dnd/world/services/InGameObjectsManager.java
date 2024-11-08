@@ -232,11 +232,13 @@ public class InGameObjectsManager {
      */
     public PolarCoordinates relativeCoordinates(Thing from, Thing to) {
         var fromObject = inGameObjects.get(from);
-        var origin = PolarCoordinates.fromCartesian(fromObject.coordinate());
-        var destination = PolarCoordinates.fromCartesian(inGameObjects.get(to).coordinate());
-
-        var originAngle = fromObject.orientation();
-        return PolarCoordinates.of(radius, azimuth);
+        var origin = fromObject.coordinate();
+        var destination = inGameObjects.get(to).coordinate();
+        var delta = destination.subtract(origin);
+        var rpc = PolarCoordinates.fromCartesian(delta);
+        var orientation = fromObject.orientation().getAzimuth();
+        var azimuth = orientation - rpc.getAzimuth();
+        return PolarCoordinates.of(rpc.getRadius(), azimuth);
     }
 
     /* TESTS ONLY */

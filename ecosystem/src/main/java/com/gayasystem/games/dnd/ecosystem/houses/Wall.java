@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Wall extends Thing {
-    protected Wall(int width, int depth) {
+    protected Wall(double width, double depth) {
         super(width, depth, Integer.MAX_VALUE);
     }
 
