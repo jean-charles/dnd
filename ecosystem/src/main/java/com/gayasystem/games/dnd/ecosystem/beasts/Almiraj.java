@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd.ecosystem.beasts;
 
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.ecosystem.Beast;
+import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.gametools.dices.Die1D6;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
@@ -55,14 +56,14 @@ public class Almiraj extends Beast {
                 DEPTH,
                 MeasurementConvertor.c.poundInKg(9),
                 Gender.male,
-                MeasurementConvertor.c.feetInMeters(60),
-                MeasurementConvertor.c.feetInMeters(60.0),
-                MeasurementConvertor.c.feetInMeters(30.0),
+                16,
+                200,
+                20,
                 null,
                 0.0,
                 Emotion.neutral,
                 Map.of(
-//                        Carrot.class, Emotion.hungry
+                        Carrot.class, Emotion.hungry
                 )
         );
     }

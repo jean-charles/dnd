@@ -48,7 +48,7 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
      * @param mass               mass in kilogram.
      * @param gender             female or male.
      * @param speed              in meter per second (m/s).
-     * @param sightDistance      in kilometer.
+     * @param sightDistance      in meter.
      * @param nightSightDistance in meter.
      * @param soundSpectrum      TBD
      * @param minSoundAmplitude  TBD
