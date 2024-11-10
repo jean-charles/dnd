@@ -199,7 +199,7 @@ public class InGameObjectsManager {
                 }
             }
             p = PolarCoordinates.of(distance, wantedVelocity.azimuth().getNormalizedAzimuth());
-            newCoordinate = p.toCartesian();
+            newCoordinate = inGameObj.coordinate().add(p.toCartesian());
         }
         var velocity = physical.recalculateVelocity(interval, inGameObj.velocity());
         addOrUpdate(inGameObj.thing(), newCoordinate, newOrientation, velocity);
