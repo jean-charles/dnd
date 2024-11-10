@@ -3,7 +3,7 @@ package com.gayasystem.games.dnd.drawables.races;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.drawables.AbstractDrawable;
 import com.gayasystem.games.dnd.ecosystem.races.Human;
-import com.gayasystem.games.dnd.world.InGameObject;
+import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

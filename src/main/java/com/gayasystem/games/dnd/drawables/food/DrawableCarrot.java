@@ -1,7 +1,7 @@
 package com.gayasystem.games.dnd.drawables.food;
 
 import com.gayasystem.games.dnd.drawables.AbstractDrawable;
-import com.gayasystem.games.dnd.world.InGameObject;
+import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

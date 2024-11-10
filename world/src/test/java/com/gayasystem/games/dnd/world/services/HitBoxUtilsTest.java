@@ -1,9 +1,9 @@
 package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.ThingA;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
+import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;

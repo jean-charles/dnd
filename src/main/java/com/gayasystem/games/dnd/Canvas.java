@@ -1,8 +1,8 @@
 package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.drawables.Drawer;
-import com.gayasystem.games.dnd.world.InGameObject;
 import com.gayasystem.games.dnd.world.World;
+import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

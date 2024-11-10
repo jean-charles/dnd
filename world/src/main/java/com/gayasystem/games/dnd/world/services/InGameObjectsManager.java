@@ -5,7 +5,7 @@ import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
-import com.gayasystem.games.dnd.world.InGameObject;
+import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;
@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
-import static com.gayasystem.games.dnd.lifeforms.LifeForm.CATCHING_DISTANCE;
 
 @Service
 public class InGameObjectsManager {
@@ -214,7 +212,7 @@ public class InGameObjectsManager {
      * @return The {@link Thing caught thing} or null.
      */
     public Thing catchThing(LifeForm lifeForm, PolarCoordinates targetRelativeCoordinate) {
-        if (targetRelativeCoordinate.getRadius() > CATCHING_DISTANCE)
+        if (targetRelativeCoordinate.getRadius() > 0)
             return null;
         var catcher = this.get(lifeForm);
         var catcherCoordinate = catcher.coordinate();

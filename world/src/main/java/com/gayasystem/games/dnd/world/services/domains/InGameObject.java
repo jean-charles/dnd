@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.world;
+package com.gayasystem.games.dnd.world.services.domains;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;

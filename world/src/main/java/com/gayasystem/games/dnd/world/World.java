@@ -8,6 +8,7 @@ import com.gayasystem.games.dnd.common.sight.Sighted;
 import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.world.services.InGameObjectsManager;
+import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.slf4j.Logger;

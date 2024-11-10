@@ -1,6 +1,6 @@
 package com.gayasystem.games.dnd.drawables;
 
-import com.gayasystem.games.dnd.world.InGameObject;
+import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;

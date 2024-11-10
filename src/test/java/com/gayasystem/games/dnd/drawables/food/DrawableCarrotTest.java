@@ -5,7 +5,7 @@ import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.drawables.SizeConvertor;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
-import com.gayasystem.games.dnd.world.InGameObject;
+import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.junit.jupiter.api.BeforeEach;
