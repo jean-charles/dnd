@@ -56,9 +56,9 @@ public class Almiraj extends Beast {
                 DEPTH,
                 MeasurementConvertor.c.poundInKg(9),
                 Gender.male,
-                16,
-                200,
-                20,
+                15.24, // 50 feet/s
+                3218.69, // 2 miles
+                9.144, //30 feet
                 null,
                 0.0,
                 Emotion.neutral,

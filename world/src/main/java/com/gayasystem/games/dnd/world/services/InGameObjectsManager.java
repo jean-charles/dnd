@@ -186,10 +186,12 @@ public class InGameObjectsManager {
         }
         var interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
         if (hasItRotatedCompletely && doesItWantToMove(wantedVelocity)) {
-            var speed = inGameObj.velocity().speed();
+            var speed = wantedVelocity.speed();
             var p = physical.relativeCoordinates(interval, speed, wantedVelocity.azimuth());
             double distance = p.getRadius();
             for (var other : inGameObjects.values()) {
+                if (other == inGameObj) continue;
+
                 var coordinate = utils.translation(inGameObj, other, p);
                 var currentDistance = coordinate.getRadius();
                 if (currentDistance < distance) {

@@ -33,7 +33,7 @@ public class Drawer {
 
             int pixelsPerMeter = size.width / metersWidth;
             var p = sizeConvertor.coordinate2Point(pixelsPerMeter, size.width, size.height, obj.coordinate());
-            drawable.draw(pixelsPerMeter, obj, p, (Graphics2D) g, observer);
+            drawable.draw(pixelsPerMeter, obj, p, g, observer);
         } catch (Exception e) {
             e.printStackTrace();
         }
