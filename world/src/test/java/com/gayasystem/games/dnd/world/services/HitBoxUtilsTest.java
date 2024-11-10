@@ -1,6 +1,8 @@
 package com.gayasystem.games.dnd.world.services;
 
 import com.gayasystem.games.dnd.common.Velocity;
+import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
+import com.gayasystem.games.dnd.ecosystem.houses.Wall;
 import com.gayasystem.games.dnd.world.ThingA;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
 import com.gayasystem.games.dnd.world.services.domains.InGameObject;
@@ -22,6 +24,21 @@ public class HitBoxUtilsTest {
 
     @Autowired
     HitBoxUtils utils = new HitBoxUtils();
+
+    /**
+     * Create expected polar coordinates only for horizontal translation.
+     *
+     * @param o1
+     * @param o2
+     * @return
+     */
+    private PolarCoordinates expected(InGameObject o1, InGameObject o2) {
+        var depth1 = o1.thing().depth();
+        var depth2 = o2.thing().depth();
+        var x1 = o1.coordinate().getX();
+        var x2 = o2.coordinate().getX();
+        return PolarCoordinates.of(x2 - x1 - depth1 / 2 - depth2 / 2, 0);
+    }
 
     @Test
     void hitBox() {
@@ -234,8 +251,30 @@ public class HitBoxUtilsTest {
         var thingB = new ThingA(1, 1);
         var objA = new InGameObject(thingA, Vector2D.of(0, 10), Point1S.ZERO, Velocity.NO_VELOCITY);
         var objB = new InGameObject(thingB, Vector2D.of(10, 10), Point1S.ZERO, Velocity.NO_VELOCITY);
-        PolarCoordinates actual = utils.translation(objA, objB, PolarCoordinates.of(20, 0));
-        PolarCoordinates expected = PolarCoordinates.of(9, 0);
+        PolarCoordinates actual = utils.translation(objA, objB, PolarCoordinates.of(200, 0));
+        PolarCoordinates expected = expected(objA, objB);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void translationBlockedNegative() {
+        var thingA = new ThingA(1.2, 1.2);
+        var thingB = new ThingA(1.4, 1.4);
+        var objA = new InGameObject(thingA, Vector2D.of(-4.5, 0), Point1S.ZERO, Velocity.NO_VELOCITY);
+        var objB = new InGameObject(thingB, Vector2D.of(5.5, 0), Point1S.ZERO, Velocity.NO_VELOCITY);
+        PolarCoordinates actual = utils.translation(objA, objB, PolarCoordinates.of(200, 0));
+        PolarCoordinates expected = expected(objA, objB);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void translationGame() {
+        var thingA = new Almiraj();
+        var thingB = new Wall(1.0, 0.05);
+        var objA = new InGameObject(thingA, Vector2D.of(-1.2, 0), Point1S.ZERO, Velocity.NO_VELOCITY);
+        var objB = new InGameObject(thingB, Vector2D.of(2, 0), Point1S.ZERO, Velocity.NO_VELOCITY);
+        PolarCoordinates actual = utils.translation(objA, objB, PolarCoordinates.of(200, 0));
+        PolarCoordinates expected = expected(objA, objB);
         assertEquals(expected, actual);
     }
 
