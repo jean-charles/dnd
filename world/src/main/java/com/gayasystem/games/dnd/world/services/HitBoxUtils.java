@@ -168,4 +168,13 @@ public class HitBoxUtils {
 
         return PolarCoordinates.of(distance, azimuth);
     }
+
+    public Point1S rotationRatio(double rotation, double interval) {
+        if (interval >= 1000) return Point1S.of(rotation);
+
+        var rPercent = rotation / (2 * PI);
+        var iPercent = interval / 1000;
+
+        return Point1S.of(iPercent >= rPercent ? rotation : rotation * iPercent);
+    }
 }

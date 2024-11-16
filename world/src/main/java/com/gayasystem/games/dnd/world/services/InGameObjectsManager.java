@@ -167,24 +167,25 @@ public class InGameObjectsManager {
         var timestamps = new Date();
         var lastTimestamps = thingsLastMove.get(thing);
         thingsLastMove.put(thing, timestamps);
+        var interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
 
         var inGameObj = inGameObjects.get(thing);
         var newCoordinate = inGameObj.coordinate();
         var newOrientation = inGameObj.orientation();
+        var rotation = utils.rotationRatio(wantedOrientation.signedDistance(newOrientation), interval);
 
-        var hasItRotatedCompletely = true;
-        if (doesItRotate(wantedOrientation)) {
+        var hasItRotatedCompletely = rotation.equals(wantedOrientation);
+        if (doesItRotate(rotation)) {
             for (var other : inGameObjects.values()) {
                 if (inGameObj != other) continue;
 
-                var finalOrientation = utils.rotation(inGameObj, other, wantedOrientation);
-                if (!wantedOrientation.equals(finalOrientation) && compare(finalOrientation, newOrientation) < 0) {
+                var finalOrientation = utils.rotation(inGameObj, other, rotation);
+                if (!rotation.equals(finalOrientation) && compare(finalOrientation, newOrientation) < 0) {
                     hasItRotatedCompletely = false;
                     newOrientation = finalOrientation;
                 }
             }
         }
-        var interval = (timestamps.getTime() - lastTimestamps.getTime()) / 1000.0;
         if (hasItRotatedCompletely && doesItWantToMove(wantedVelocity)) {
             var speed = wantedVelocity.speed();
             var p = physical.relativeCoordinates(interval, speed, wantedVelocity.azimuth());
