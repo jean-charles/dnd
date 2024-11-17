@@ -1,77 +1,64 @@
 package com.gayasystem.games.dnd;
 
+import com.gayasystem.games.dnd.common.Velocity;
+import com.gayasystem.games.dnd.drawables.races.DrawableHuman;
+import com.gayasystem.games.dnd.world.World;
+import org.apache.commons.geometry.spherical.oned.Point1S;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.IOException;
-import java.util.Objects;
+
+import static java.awt.event.KeyEvent.*;
+import static java.lang.Math.PI;
 
 @Component
-public class Player {
-    // image that represents the player's position on the board
+public class Player extends DrawableHuman {
+    private static final Logger log = LoggerFactory.getLogger(Player.class);
+    private static final double ACCELERATION = 2.0;
+
     private BufferedImage image;
-    // current position of the player on the board grid
-    private Point position;
-    // keep track of the player's score
+    private int imgHalfWidth = 0;
+    private int imgHalfHeight = 0;
+
     private int score;
 
-    public Player() {
-        // load the assets
-        loadImage();
+    @Autowired
+    private World world;
 
-        // initialize the state
-        position = new Point(0, 0);
+    public Player() throws IOException {
+        super(log);
         score = 0;
     }
 
-    private void loadImage() {
-        try {
-            // you can use just the filename if the image file is in your
-            // project folder, otherwise you need to provide the file path.
-            image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanFemale.png")));
-        } catch (IOException e) {
-            System.out.println("Error opening image file: " + e.getMessage());
-        }
-    }
-
-    public void draw(Graphics g, ImageObserver observer) {
-        g.drawImage(
-                image,
-                position.x,
-                position.y,
-                observer
-        );
-    }
-
     public void keyPressed(KeyEvent e) {
+        var igo = world.player();
+        var orientation = igo.orientation();
+        var velocity = igo.velocity();
+        var speed = velocity.speed();
+        var acceleration = velocity.acceleration();
+
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_LEFT:
+            case VK_UP, VK_W:
+                velocity = new Velocity(speed, acceleration + ACCELERATION, orientation);
+                break;
+            case VK_DOWN, VK_S:
+                velocity = new Velocity(speed, acceleration - ACCELERATION, orientation);
+                break;
+            case VK_RIGHT, VK_D:
+                orientation = Point1S.of(orientation.getAzimuth() - PI / 8);
+                velocity = new Velocity(speed, acceleration, orientation);
+                break;
+            case VK_LEFT, VK_A:
+                orientation = Point1S.of(orientation.getAzimuth() + PI / 8);
+                velocity = new Velocity(speed, acceleration, orientation);
+                break;
         }
-    }
-
-    public void tick() {
-        // this gets called once every tick, before the repainting process happens.
-        // so we can do anything needed in here to update the state of the player.
-
-        // prevent the player from moving off the edge of the board sideways
-        if (position.x < 0) {
-            position.x = 0;
-//        } else if (pos.x >= Board.COLUMNS) {
-//            pos.x = Board.COLUMNS - 1;
-        }
-        // prevent the player from moving off the edge of the board vertically
-        if (position.y < 0) {
-            position.y = 0;
-//        } else if (pos.y >= Board.ROWS) {
-//            pos.y = Board.ROWS - 1;
-        }
+        world.movePlayer(orientation, velocity);
     }
 
     public String getScore() {
@@ -80,9 +67,5 @@ public class Player {
 
     public void addScore(int amount) {
         score += amount;
-    }
-
-    public Point getPosition() {
-        return position;
     }
 }

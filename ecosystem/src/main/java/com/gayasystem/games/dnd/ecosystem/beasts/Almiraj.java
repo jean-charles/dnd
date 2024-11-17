@@ -17,8 +17,8 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class Almiraj extends Beast {
-    public static final double WIDTH = 0.25;
-    public static final double DEPTH = 0.50;
+    private static final double WIDTH = 0.25;
+    private static final double DEPTH = 0.50;
 
     public Almiraj() {
         super(

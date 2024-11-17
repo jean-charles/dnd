@@ -18,23 +18,9 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class Human extends Character {
-    public Human() {
-        this(
-                new AbilityScores(
-                        new Ability(Die1D20.die.roll()),
-                        new Ability(Die1D20.die.roll()),
-                        new Ability(Die1D20.die.roll()),
-                        new Ability(Die1D20.die.roll()),
-                        new Ability(Die1D20.die.roll()),
-                        new Ability(Die1D20.die.roll())
-                ),
-                new Alignment(
-                        Ethical.neutral,
-                        Moral.neutral
-                ),
-                Gender.male
-        );
-    }
+    private static final double WIDTH = 0.8;
+    private static final double DEPTH = 0.4;
+
     public Human(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
                 abilityScores,
@@ -48,8 +34,8 @@ public class Human extends Character {
                 ),
                 alignment,
                 null,
-                1.8,
-                1.1,
+                WIDTH,
+                DEPTH,
                 125, // 125 to 250 lb
                 gender,
                 30,
@@ -62,5 +48,27 @@ public class Human extends Character {
                         Almiraj.class, Emotion.hungry
                 )
         );
+    }
+
+    public Human(Gender gender) {
+        this(
+                new AbilityScores(
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll()),
+                        new Ability(Die1D20.die.roll())
+                ),
+                new Alignment(
+                        Ethical.neutral,
+                        Moral.neutral
+                ),
+                gender
+        );
+    }
+
+    public Human() {
+        this(Gender.male);
     }
 }

@@ -22,9 +22,9 @@ import static java.awt.Color.black;
 public class Canvas extends JPanel implements ActionListener, KeyListener {
     private static final Logger log = LoggerFactory.getLogger(Canvas.class);
 
-    private final int metersWidth;
+    private final double metersWidth;
     // controls the delay between each tick in ms
-    private final int DELAY = 1000;
+    private final int DELAY = 250;
 
     // keep a reference to the timer object that triggers actionPerformed() in
     // case we need access to it in another method
@@ -39,7 +39,7 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
     @Autowired
     private Player player;
 
-    public Canvas(int metersWidth) {
+    public Canvas(double metersWidth) {
         super(true);
         setPreferredSize(new Dimension(800, 600));
         setBackground(black);
@@ -49,32 +49,38 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
         timer.start();
     }
 
+    private void drawBackground(Graphics g) {
+    }
+
     private void drawWorld(Graphics g) {
         for (var thing : world.objects()) {
-            drawThing(thing, g);
+            if (thing != world.player())
+                drawThing(thing, g);
         }
     }
 
     private void drawThing(InGameObject thing, Graphics g) {
-        var size = getSize();
-        drawer.draw(metersWidth, size, thing, g, this);
+        var center = world.player().coordinate();
+        var orientation = world.player().orientation();
+        drawer.draw(metersWidth, getSize(), thing, center, orientation, g, this);
+    }
+
+    private void drawPlayer(Graphics g) {
+        var player = world.player();
+        var center = player.coordinate();
+        var orientation = player.orientation();
+        drawer.draw(metersWidth, getSize(), player, center, orientation, g, this);
     }
 
     private void drawScore(Graphics g) {
-    }
-
-    private void drawBackground(Graphics g) {
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         world.run();
 
-        // Prevent the player from disappearing off the board
-        player.tick();
-
         // Give the player points for collecting coins
-        // points
+//        player.addScore(points);
 
         repaint();
     }
@@ -82,10 +88,10 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawWorld(g);
-//        player.draw(g, this);
-        drawScore(g);
         drawBackground(g);
+        drawWorld(g);
+        drawPlayer(g);
+        drawScore(g);
 
         // this smooths out animations on some systems
         Toolkit.getDefaultToolkit().sync();
@@ -93,15 +99,16 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // react to key down events
         player.keyPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+
     }
 }

@@ -1,13 +1,15 @@
 package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
-import com.gayasystem.games.dnd.ecosystem.food.Carrot;
-import com.gayasystem.games.dnd.ecosystem.houses.Wall;
+import com.gayasystem.games.dnd.ecosystem.Character;
+import com.gayasystem.games.dnd.ecosystem.races.Human;
+import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.world.World;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -27,6 +29,9 @@ public class Application extends JFrame implements KeyListener {
     private final ApplicationContext ctx;
     private final World world;
 
+    @Autowired
+    private Player player;
+
     private boolean isFullScreen = false;
 
     public Application(ApplicationContext ctx, World world) throws Exception {
@@ -35,7 +40,7 @@ public class Application extends JFrame implements KeyListener {
         setJMenuBar(menuBar());
 
         gameSetUp();
-        setUpUI();
+        setUpUI(3.0);
         addKeyListener(this);
         setUpScreen();
     }
@@ -60,20 +65,24 @@ public class Application extends JFrame implements KeyListener {
     }
 
     private void gameSetUp() {
-//        world.add(newThing(Human.class), Vector2D.of(20, 20), 0);
-        world.add(newThing(Almiraj.class), Vector2D.of(-1.2, 0), 0);
-        world.add(newThing(Wall.class, 1, 0.05), Vector2D.of(0, 0), 0);
-        world.add(newThing(Carrot.class), Vector2D.of(1, 0), 0);
+        world.setPlayer(newPlayer(Human.class, Gender.female), Vector2D.of(0, 0), Point1S.ZERO);
+//        world.add(newThing(Almiraj.class), Vector2D.of(-1.2, 0), 0);
+//        world.add(newThing(Wall.class, 1, 0.05), Vector2D.of(0, 0), 0);
+//        world.add(newThing(Carrot.class), Vector2D.of(1, 0), 0);
+    }
+
+    private Character newPlayer(Class<? extends Character> clazz, Object... args) {
+        return ctx.getBean(clazz, args);
     }
 
     private Thing newThing(Class<? extends Thing> clazz, Object... args) {
         return ctx.getBean(clazz, args);
     }
 
-    private void setUpUI() {
+    private void setUpUI(double width) {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        var canvas = ctx.getBean(Canvas.class, 3);
+        var canvas = ctx.getBean(Canvas.class, width);
         add(canvas);
         addKeyListener(canvas);
     }
@@ -115,6 +124,7 @@ public class Application extends JFrame implements KeyListener {
                 fullScreen();
                 break;
         }
+        player.keyPressed(e);
     }
 
     @Override

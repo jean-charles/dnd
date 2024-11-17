@@ -1,7 +1,9 @@
 package com.gayasystem.games.dnd.drawables;
 
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
+import com.gayasystem.games.dnd.world.World;
 import com.gayasystem.games.dnd.world.services.domains.InGameObject;
+import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,10 +17,11 @@ import static java.awt.Color.red;
 import static java.lang.String.format;
 
 public abstract class AbstractDrawable implements Drawable {
+
     private final Logger log;
-
     private final boolean fill;
-
+    @Autowired
+    private World world;
     @Autowired
     private MeasurementConvertor convertor;
 
@@ -56,38 +59,32 @@ public abstract class AbstractDrawable implements Drawable {
         return croppedImg;
     }
 
-    private void drawImage(int pixelsPerMeter, InGameObject obj, Point point, Graphics2D g, ImageObserver observer) {
+    /**
+     * Draw the current thing relatively to the player position and orientation.
+     *
+     * @param pixelsPerMeter
+     * @param obj
+     * @param point
+     * @param up
+     * @param g
+     * @param observer
+     */
+    private void drawImage(int pixelsPerMeter, InGameObject obj, Point point, Point1S up, Graphics2D g, ImageObserver observer) {
         log.debug(format("Draw Image: %s", g.toString()));
-        // Image default position is to look forward to the right of the screen.
-        // So image height is object width and image width is object depth
         var thing = obj.thing();
-        int width = (int) (thing.depth() * pixelsPerMeter);
-        int height = (int) (thing.width() * pixelsPerMeter);
-        int x = point.x - width / 2;
-        int y = point.y - height / 2;
+        var d = new Data(pixelsPerMeter, point, thing.width(), thing.depth(), up.getAzimuth(), obj.orientation().getAzimuth());
 
-        var orientation = obj.velocity().azimuth().getAzimuth();
-        var rotation = -orientation;
-
-        var image = image(obj).getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        var image = image(obj).getScaledInstance(d.width, d.height, Image.SCALE_SMOOTH);
         var at = new AffineTransform();
-        at.translate(x, y);
-        at.rotate(rotation, (double) width / 2, (double) height / 2);
+        at.translate(d.x, d.y);
+        at.rotate(d.rotation, (double) d.width / 2.0, (double) d.height / 2.0);
 
         g.drawImage(image, at, observer);
     }
 
-    private void drawRepeatedImage(int pixelsPerMeter, InGameObject obj, Point point, Graphics2D g, ImageObserver observer) {
-        // Image default position is to look forward to the right of the screen.
-        // So image height is object width and image width is object depth
+    private void drawRepeatedImage(int pixelsPerMeter, InGameObject obj, Point point, Point1S up, Graphics2D g, ImageObserver observer) {
         var thing = obj.thing();
-        int width = (int) (thing.depth() * pixelsPerMeter);
-        int height = (int) (thing.width() * pixelsPerMeter);
-        int x = point.x - width / 2;
-        int y = point.y - height / 2;
-
-        var orientation = obj.velocity().azimuth().getAzimuth();
-        var rotation = -orientation;
+        var d = new Data(pixelsPerMeter, point, thing.width(), thing.depth(), up.getAzimuth(), obj.orientation().getAzimuth());
 
         var origImg = image(obj);
         var image = origImg.getScaledInstance(pixelsDepth(pixelsPerMeter), pixelsWidth(pixelsPerMeter), Image.SCALE_SMOOTH);
@@ -96,42 +93,42 @@ public abstract class AbstractDrawable implements Drawable {
 
         int nbX = 0;
         int nbY = 0;
-        for (int offsetX = 0; offsetX < width; offsetX += imgWidth) {
-            for (int offsetY = 0; offsetY < height; offsetY += imgHeight) {
-                int drawImgWidth = min(width - imgWidth * nbX, imgWidth);
-                int drawImgDepth = min(height - imgHeight * nbY, imgHeight);
+        for (int offsetX = 0; offsetX < d.width; offsetX += imgWidth) {
+            for (int offsetY = 0; offsetY < d.height; offsetY += imgHeight) {
+                int drawImgWidth = min(d.width - imgWidth * nbX, imgWidth);
+                int drawImgDepth = min(d.height - imgHeight * nbY, imgHeight);
                 var cropped = cropImage(image, drawImgWidth, drawImgDepth);
-                g.drawImage(cropped, offsetX + x, offsetY + y, drawImgWidth, drawImgDepth, null);
+                g.drawImage(cropped, offsetX + d.x, offsetY + d.y, drawImgWidth, drawImgDepth, null);
                 nbY++;
             }
             nbX++;
         }
     }
 
-    private void drawCollisionBorder(int pixelsPerMeter, InGameObject obj, Point point, Graphics2D g) {
+    private void drawCollisionBorder(int pixelsPerMeter, InGameObject obj, Point point, Point1S up, Graphics2D g) {
         log.debug(format("Draw Border Collision: %s", g.toString()));
-        // Image default position is to look forward to the right of the screen.
-        // So image height is object width and image width is object depth
         var thing = obj.thing();
-        int width = (int) (thing.depth() * pixelsPerMeter);
-        int height = (int) (thing.width() * pixelsPerMeter);
-        int x = point.x - width / 2;
-        int y = point.y - height / 2;
-
-        var orientation = obj.velocity().azimuth().getAzimuth();
-        var rotation = -orientation;
+        var d = new Data(pixelsPerMeter, point, thing.width(), thing.depth(), up.getAzimuth(), obj.orientation().getAzimuth());
 
         g.setColor(red);
-        g.drawRect(x, y, width, height);
-        g.rotate(rotation, (double) width / 2, (double) height / 2);
+        g.drawRect(d.x, d.y, d.width, d.height);
+        g.rotate(d.rotation, (double) d.width / 2.0, (double) d.height / 2.0);
     }
 
     @Override
-    public void draw(int pixelsPerMeter, InGameObject obj, Point point, Graphics g, ImageObserver observer) {
-        if (fill)
-            drawRepeatedImage(pixelsPerMeter, obj, point, (Graphics2D) g, observer);
-        else
-            drawImage(pixelsPerMeter, obj, point, (Graphics2D) g, observer);
-        drawCollisionBorder(pixelsPerMeter, obj, point, (Graphics2D) g);
+    public void draw(int pixelsPerMeter, InGameObject obj, Point point, Point1S up, Graphics g, ImageObserver observer) {
+        if (fill) drawRepeatedImage(pixelsPerMeter, obj, point, up, (Graphics2D) g, observer);
+        else drawImage(pixelsPerMeter, obj, point, up, (Graphics2D) g, observer);
+        drawCollisionBorder(pixelsPerMeter, obj, point, up, (Graphics2D) g);
+    }
+
+    private record Data(int x, int y, int width, int height, double rotation) {
+        public Data(int pixelsPerMeter, Point p, double width, double height, double up, double orientation) {
+            this(p, (int) (width * pixelsPerMeter), (int) (height * pixelsPerMeter), orientation - up);
+        }
+
+        public Data(Point p, int width, int height, double rotation) {
+            this(p.x - (int) (width / 2), p.y - (int) (height / 2), width, height, rotation);
+        }
     }
 }

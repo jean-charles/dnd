@@ -5,6 +5,7 @@ import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.hear.Hearing;
 import com.gayasystem.games.dnd.common.sight.Sighted;
+import com.gayasystem.games.dnd.ecosystem.Character;
 import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.world.services.InGameObjectsManager;
@@ -26,9 +27,12 @@ public class World implements Runnable, LifeEnvironment {
     @Autowired
     private InGameObjectsManager manager;
 
+    private Character player;
+
     @Override
     public void run() {
         for (var thing : manager.getAllThings()) {
+            if (thing == player) continue;
             thing.run();
             manager.move(thing);
         }
@@ -78,11 +82,26 @@ public class World implements Runnable, LifeEnvironment {
         lifeForm.eat((Food) food);
     }
 
-    public void add(Thing thing, Vector2D coordinate, double orientation) {
+    public void setPlayer(Character player, Vector2D coordinate, Point1S orientation) {
+        if (this.player != null)
+            throw new RuntimeException("Player already present!");
+        this.player = player;
+        manager.add(player, coordinate, orientation);
+    }
+
+    public InGameObject player() {
+        return manager.get(player);
+    }
+
+    public void movePlayer(Point1S orientation, Velocity velocity) {
+        manager.move(player, orientation, velocity);
+    }
+
+    public void add(Thing thing, Vector2D coordinate, Point1S orientation) {
         Objects.requireNonNull(thing, "Parameter 'thing' is null!");
         Objects.requireNonNull(coordinate, "Parameter 'coordinate' is null!");
 
-        manager.add(thing, coordinate, Point1S.of(orientation));
+        manager.add(thing, coordinate, orientation);
     }
 
     public Collection<InGameObject> objects() {

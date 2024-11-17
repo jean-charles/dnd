@@ -28,7 +28,11 @@ public class DrawableHuman extends AbstractDrawable {
     private MeasurementConvertor convertor;
 
     public DrawableHuman() throws IOException {
-        super(log);
+        this(log);
+    }
+
+    public DrawableHuman(Logger logger) throws IOException {
+        super(logger);
         imgFemale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanFemale.png")));
         imgMale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanMale.png")));
         size = 2.8;
