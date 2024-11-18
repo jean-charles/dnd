@@ -35,7 +35,7 @@ public class DrawableHuman extends AbstractDrawable {
         super(logger);
         imgFemale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanFemale.png")));
         imgMale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanMale.png")));
-        size = 2.8;
+        size = 0.8 * 388 / 150;
     }
 
     @Override
@@ -45,22 +45,22 @@ public class DrawableHuman extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsWidth(int pixelsPerMeter) {
-        return 0;
+    protected double width() {
+        return size;
     }
 
     @Override
-    protected double widthOffset() {
-        return 0;
+    protected int widthOffset() {
+        return 150;
     }
 
     @Override
-    protected int pixelsDepth(int pixelsPerMeter) {
-        return 0;
+    protected double depth() {
+        return size;
     }
 
     @Override
-    protected double depthOffset() {
-        return 0;
+    protected int depthOffset() {
+        return 180;
     }
 }

@@ -29,22 +29,22 @@ public class DrawableAlmiraj extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsWidth(int pixelsPerMeter) {
+    protected double width() {
         return 0;
     }
 
     @Override
-    protected double widthOffset() {
+    protected int widthOffset() {
         return 0;
     }
 
     @Override
-    protected int pixelsDepth(int pixelsPerMeter) {
+    protected double depth() {
         return 0;
     }
 
     @Override
-    protected double depthOffset() {
+    protected int depthOffset() {
         return 0;
     }
 }

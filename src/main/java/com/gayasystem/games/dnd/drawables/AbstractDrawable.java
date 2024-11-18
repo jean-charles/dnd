@@ -36,13 +36,19 @@ public abstract class AbstractDrawable implements Drawable {
 
     protected abstract BufferedImage image(InGameObject obj);
 
-    protected abstract int pixelsWidth(int pixelsPerMeter);
+    /**
+     * @return Image width in meter.
+     */
+    protected abstract double width();
 
-    protected abstract double widthOffset();
+    protected abstract int widthOffset();
 
-    protected abstract int pixelsDepth(int pixelsPerMeter);
+    /**
+     * @return Image depth in meter.
+     */
+    protected abstract double depth();
 
-    protected abstract double depthOffset();
+    protected abstract int depthOffset();
 
     private BufferedImage cropImage(Image image, int drawImgWidth, int drawImgDepth) throws IllegalArgumentException {
         // Image default position is to look forward to the right of the screen.
@@ -74,9 +80,11 @@ public abstract class AbstractDrawable implements Drawable {
         var thing = obj.thing();
         var d = new Data(pixelsPerMeter, point, thing.width(), thing.depth(), up.getAzimuth(), obj.orientation().getAzimuth());
 
-        var image = image(obj).getScaledInstance(d.width, d.height, Image.SCALE_SMOOTH);
+        int imgWidth = (int) (width() * pixelsPerMeter);
+        int imgHeight = (int) (depth() * pixelsPerMeter);
+        var image = image(obj).getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
         var at = new AffineTransform();
-        at.translate(d.x, d.y);
+        at.translate(d.x - calculatedWidthOffset(obj, image), d.y - calculateDepthOffset(obj, image));
         at.rotate(d.rotation, (double) d.width / 2.0, (double) d.height / 2.0);
 
         g.drawImage(image, at, observer);
@@ -87,7 +95,7 @@ public abstract class AbstractDrawable implements Drawable {
         var d = new Data(pixelsPerMeter, point, thing.width(), thing.depth(), up.getAzimuth(), obj.orientation().getAzimuth());
 
         var origImg = image(obj);
-        var image = origImg.getScaledInstance(pixelsDepth(pixelsPerMeter), pixelsWidth(pixelsPerMeter), Image.SCALE_SMOOTH);
+        var image = origImg.getScaledInstance((int) (width() * pixelsPerMeter), (int) (depth() * pixelsPerMeter), Image.SCALE_SMOOTH);
         int imgWidth = image.getWidth(null);
         int imgHeight = image.getHeight(null);
 
@@ -113,6 +121,18 @@ public abstract class AbstractDrawable implements Drawable {
         g.setColor(red);
         g.drawRect(d.x, d.y, d.width, d.height);
         g.rotate(d.rotation, (double) d.width / 2.0, (double) d.height / 2.0);
+    }
+
+    private int calculatedWidthOffset(InGameObject obj, Image image) {
+        var img = image(obj);
+        double ratio = (double) image.getWidth(null) / img.getWidth();
+        return (int) (ratio * widthOffset());
+    }
+
+    private int calculateDepthOffset(InGameObject obj, Image image) {
+        var img = image(obj);
+        double ratio = (double) image.getHeight(null) / img.getHeight();
+        return (int) (ratio * depthOffset());
     }
 
     @Override

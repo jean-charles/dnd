@@ -17,14 +17,13 @@ public class DrawableCarrot extends AbstractDrawable {
 
     private final BufferedImage img;
     private final double width;
-    private final double height;
+    private final double depth;
 
     public DrawableCarrot() throws IOException {
         super(log);
         img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/food/Carrot.png")));
-        double ratio = 0.10;
-        width = 12 * ratio;
-        height = 8 * ratio;
+        width = 0.12;
+        depth = 0.8;
     }
 
     @Override
@@ -33,22 +32,22 @@ public class DrawableCarrot extends AbstractDrawable {
     }
 
     @Override
-    protected int pixelsWidth(int pixelsPerMeter) {
+    protected double width() {
+        return width;
+    }
+
+    @Override
+    protected int widthOffset() {
         return 0;
     }
 
     @Override
-    protected double widthOffset() {
-        return 0.0;
+    protected double depth() {
+        return depth;
     }
 
     @Override
-    protected int pixelsDepth(int pixelsPerMeter) {
+    protected int depthOffset() {
         return 0;
-    }
-
-    @Override
-    protected double depthOffset() {
-        return 0.12;
     }
 }

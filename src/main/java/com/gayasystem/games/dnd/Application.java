@@ -40,7 +40,7 @@ public class Application extends JFrame implements KeyListener {
         setJMenuBar(menuBar());
 
         gameSetUp();
-        setUpUI(3.0);
+        setUpUI(4.0);
         addKeyListener(this);
         setUpScreen();
     }
