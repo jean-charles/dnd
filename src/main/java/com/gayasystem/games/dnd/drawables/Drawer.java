@@ -42,7 +42,7 @@ public class Drawer {
      * @param g           {@link Graphics} to use to draw the {@link InGameObject}.
      * @param observer    Object observer.
      */
-    public void draw(double metersWidth, Dimension size, InGameObject obj, Vector2D center, Point1S orientation, Graphics g, ImageObserver observer) {
+    public void draw(double metersWidth, Dimension size, InGameObject obj, Vector2D center, Point1S orientation, Graphics2D g, ImageObserver observer) {
         try {
             String thingName = "drawable" + obj.thing().getClass().getSimpleName();
             Drawable drawable = (Drawable) ctx.getBean(thingName);

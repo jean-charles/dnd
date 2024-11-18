@@ -35,7 +35,7 @@ public class DrawableHuman extends AbstractDrawable {
         super(logger);
         imgFemale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanFemale.png")));
         imgMale = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/races/HumanMale.png")));
-        size = 0.8 * 388 / 150;
+        size = Human.WIDTH * imgFemale.getHeight() / 150; // width of the shoulder in pixels in the image
     }
 
     @Override

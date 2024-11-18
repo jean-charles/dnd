@@ -2,6 +2,7 @@ package com.gayasystem.games.dnd;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.ecosystem.Character;
+import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.ecosystem.races.Human;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.world.World;
@@ -21,6 +22,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import static java.awt.event.KeyEvent.*;
+import static java.lang.Math.PI;
 
 @SpringBootApplication
 public class Application extends JFrame implements KeyListener {
@@ -68,7 +70,7 @@ public class Application extends JFrame implements KeyListener {
         world.setPlayer(newPlayer(Human.class, Gender.female), Vector2D.of(0, 0), Point1S.ZERO);
 //        world.add(newThing(Almiraj.class), Vector2D.of(-1.2, 0), 0);
 //        world.add(newThing(Wall.class, 1, 0.05), Vector2D.of(0, 0), 0);
-//        world.add(newThing(Carrot.class), Vector2D.of(1, 0), 0);
+        world.add(newThing(Carrot.class), Vector2D.of(1, 0.6), Point1S.of(PI / 2));
     }
 
     private Character newPlayer(Class<? extends Character> clazz, Object... args) {

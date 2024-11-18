@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.drawables.food;
 
 import com.gayasystem.games.dnd.drawables.AbstractDrawable;
+import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,8 @@ public class DrawableCarrot extends AbstractDrawable {
     public DrawableCarrot() throws IOException {
         super(log);
         img = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/food/Carrot.png")));
-        width = 0.12;
-        depth = 0.8;
+        width = Carrot.WIDTH * img.getWidth() / 230; // width of the carrot in pixels in the image
+        depth = Carrot.DEPTH * img.getHeight() / 850; // depth of the carrot in pixels in the image
     }
 
     @Override
@@ -38,7 +39,7 @@ public class DrawableCarrot extends AbstractDrawable {
 
     @Override
     protected int widthOffset() {
-        return 0;
+        return 310;
     }
 
     @Override
@@ -48,6 +49,6 @@ public class DrawableCarrot extends AbstractDrawable {
 
     @Override
     protected int depthOffset() {
-        return 0;
+        return 10;
     }
 }

@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
@@ -83,11 +82,10 @@ public abstract class AbstractDrawable implements Drawable {
         int imgWidth = (int) (width() * pixelsPerMeter);
         int imgHeight = (int) (depth() * pixelsPerMeter);
         var image = image(obj).getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
-        var at = new AffineTransform();
-        at.translate(d.x - calculatedWidthOffset(obj, image), d.y - calculateDepthOffset(obj, image));
-        at.rotate(d.rotation, (double) d.width / 2.0, (double) d.height / 2.0);
 
-        g.drawImage(image, at, observer);
+        g.rotate(d.rotation, point.x, point.y);
+
+        g.drawImage(image, d.x - calculatedWidthOffset(obj, image), d.y - calculateDepthOffset(obj, image), observer);
     }
 
     private void drawRepeatedImage(int pixelsPerMeter, InGameObject obj, Point point, Point1S up, Graphics2D g, ImageObserver observer) {
@@ -118,9 +116,9 @@ public abstract class AbstractDrawable implements Drawable {
         var thing = obj.thing();
         var d = new Data(pixelsPerMeter, point, thing.width(), thing.depth(), up.getAzimuth(), obj.orientation().getAzimuth());
 
+        g.rotate(d.rotation, point.x, point.y);
         g.setColor(red);
         g.drawRect(d.x, d.y, d.width, d.height);
-        g.rotate(d.rotation, (double) d.width / 2.0, (double) d.height / 2.0);
     }
 
     private int calculatedWidthOffset(InGameObject obj, Image image) {
@@ -136,10 +134,14 @@ public abstract class AbstractDrawable implements Drawable {
     }
 
     @Override
-    public void draw(int pixelsPerMeter, InGameObject obj, Point point, Point1S up, Graphics g, ImageObserver observer) {
-        if (fill) drawRepeatedImage(pixelsPerMeter, obj, point, up, (Graphics2D) g, observer);
-        else drawImage(pixelsPerMeter, obj, point, up, (Graphics2D) g, observer);
-        drawCollisionBorder(pixelsPerMeter, obj, point, up, (Graphics2D) g);
+    public void draw(int pixelsPerMeter, InGameObject obj, Point point, Point1S up, Graphics2D g, ImageObserver observer) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        if (fill) drawRepeatedImage(pixelsPerMeter, obj, point, up, g2d, observer);
+        else drawImage(pixelsPerMeter, obj, point, up, g2d, observer);
+        g2d.dispose();
+        g2d = (Graphics2D) g.create();
+        drawCollisionBorder(pixelsPerMeter, obj, point, up, g2d);
+        g2d.dispose();
     }
 
     private record Data(int x, int y, int width, int height, double rotation) {

@@ -5,6 +5,10 @@ import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.drawables.SizeConvertor;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
+import com.gayasystem.games.dnd.world.World;
+import com.gayasystem.games.dnd.world.services.HitBoxUtils;
+import com.gayasystem.games.dnd.world.services.InGameObjectsManager;
+import com.gayasystem.games.dnd.world.services.PhysicalService;
 import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;
@@ -22,7 +26,7 @@ import static java.awt.Color.black;
 import static java.lang.Math.PI;
 import static java.lang.Thread.sleep;
 
-@SpringBootTest(classes = {DrawableCarrot.class, SizeConvertor.class, MeasurementConvertor.class})
+@SpringBootTest(classes = {PhysicalService.class, HitBoxUtils.class, World.class, InGameObjectsManager.class, DrawableCarrot.class, SizeConvertor.class, MeasurementConvertor.class})
 class DrawableCarrotTest extends SwingTestCase {
     private JFrame frame;
     private JPanel panel;
@@ -43,17 +47,20 @@ class DrawableCarrotTest extends SwingTestCase {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Point p = new Point(getWidth() / 2, getHeight() / 2);
-                int pixelsPerMeter = getWidth();
+                int pixelsPerMeter = (int) (getWidth() / 0.5);
+
+                Graphics2D g2d = (Graphics2D) g;
                 if (carrotObj != null)
-                    drawableCarrot.draw(pixelsPerMeter, carrotObj, p, Point1S.ZERO, g, null);
+                    drawableCarrot.draw(pixelsPerMeter, carrotObj, p, Point1S.ZERO, g2d, null);
+
             }
         };
-        panel.setSize(400, 400);
+        panel.setSize(800, 800);
         panel.setBackground(black);
         panel.setDoubleBuffered(true);
         drawableCarrot = ctx.getBean(DrawableCarrot.class);
         frame = getTestFrame();
-        frame.setSize(500, 500);
+        frame.setSize(800, 800);
         frame.add(panel);
         frame.setVisible(true);
     }

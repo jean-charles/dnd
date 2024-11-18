@@ -18,8 +18,8 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class Human extends Character {
-    private static final double WIDTH = 0.8;
-    private static final double DEPTH = 0.4;
+    public static final double WIDTH = 0.8;
+    public static final double DEPTH = 0.4;
 
     public Human(AbilityScores abilityScores, Alignment alignment, Gender gender) {
         super(
