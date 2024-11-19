@@ -122,12 +122,25 @@ public class HitBoxUtils {
     }
 
     public double azimuthWhereItCross(HitBox hb1, HitBox hb2, double azimuth) {
-        var a1 = hb2.center().angle(hb1.p1());
-        var a2 = hb2.center().angle(hb2.p2());
-        var a3 = hb2.center().angle(hb2.p3());
-        var a4 = hb2.center().angle(hb2.p4());
-
-        return Stream.of(azimuth, a1, a2, a3, a4).min(Double::compare).get();
+        return Stream.of(
+                azimuth,
+                hb1.p1().angle(hb2.p1()),
+                hb1.p1().angle(hb2.p2()),
+                hb1.p1().angle(hb2.p3()),
+                hb1.p1().angle(hb2.p4()),
+                hb1.p2().angle(hb2.p1()),
+                hb1.p2().angle(hb2.p2()),
+                hb1.p2().angle(hb2.p3()),
+                hb1.p2().angle(hb2.p4()),
+                hb1.p3().angle(hb2.p1()),
+                hb1.p3().angle(hb2.p2()),
+                hb1.p3().angle(hb2.p3()),
+                hb1.p3().angle(hb2.p4()),
+                hb1.p4().angle(hb2.p1()),
+                hb1.p4().angle(hb2.p2()),
+                hb1.p4().angle(hb2.p3()),
+                hb1.p4().angle(hb2.p4())
+        ).min(Double::compare).get();
     }
 
     /**

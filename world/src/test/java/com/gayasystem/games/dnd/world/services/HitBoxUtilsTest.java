@@ -264,7 +264,8 @@ public class HitBoxUtilsTest {
         var objB = new InGameObject(thingB, Vector2D.of(5.5, 0), Point1S.ZERO, Velocity.NO_VELOCITY);
         PolarCoordinates actual = utils.translation(objA, objB, PolarCoordinates.of(200, 0));
         PolarCoordinates expected = expected(objA, objB);
-        assertEquals(expected, actual);
+        assertEquals(expected.getAzimuth(), actual.getAzimuth(), 0.0000000001);
+        assertEquals(expected.getRadius(), actual.getRadius(), 0.0000000001);
     }
 
     @Test
@@ -275,7 +276,8 @@ public class HitBoxUtilsTest {
         var objB = new InGameObject(thingB, Vector2D.of(2, 0), Point1S.ZERO, Velocity.NO_VELOCITY);
         PolarCoordinates actual = utils.translation(objA, objB, PolarCoordinates.of(200, 0));
         PolarCoordinates expected = expected(objA, objB);
-        assertEquals(expected, actual);
+        assertEquals(expected.getAzimuth(), actual.getAzimuth(), 0.0000000001);
+        assertEquals(expected.getRadius(), actual.getRadius(), 0.0000000001);
     }
 
     @Test
