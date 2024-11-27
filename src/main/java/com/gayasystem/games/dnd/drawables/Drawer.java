@@ -38,7 +38,7 @@ public class Drawer {
      * @param size        Canvas {@link Dimension dimension}.
      * @param obj         {@link InGameObject} to draw in the Canvas.
      * @param center      {@link Vector2D Coordinates} of the center of the screen in game coordinates.
-     * @param orientation Player orientation.
+     * @param orientation Player orientation to recalculate object coordinates.
      * @param g           {@link Graphics} to use to draw the {@link InGameObject}.
      * @param observer    Object observer.
      */
@@ -48,7 +48,7 @@ public class Drawer {
             Drawable drawable = (Drawable) ctx.getBean(thingName);
 
             int pixelsPerMeter = (int) (size.width / metersWidth);
-            var p = sizeConvertor.coordinate2Point(pixelsPerMeter, size.width, size.height, center, obj.coordinate());
+            var p = sizeConvertor.coordinate2Point(pixelsPerMeter, size.width, size.height, center, orientation, obj.coordinate());
             var t = obj.thing();
             int width = sizeConvertor.meters2Pixels(pixelsPerMeter, t.width());
             int depth = sizeConvertor.meters2Pixels(pixelsPerMeter, t.depth());

@@ -69,8 +69,9 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
     }
 
     private void drawThing(InGameObject thing, Graphics2D g) {
-        var center = world.player().coordinate();
-        var orientation = world.player().orientation();
+        var player = world.player();
+        var center = player.coordinate();
+        var orientation = player.orientation();
         drawer.draw(metersWidth, getSize(), thing, center, orientation, g, this);
     }
 

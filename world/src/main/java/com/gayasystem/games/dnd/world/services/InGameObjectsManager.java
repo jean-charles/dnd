@@ -172,16 +172,20 @@ public class InGameObjectsManager {
         var inGameObj = inGameObjects.get(thing);
         var newCoordinate = inGameObj.coordinate();
         var newOrientation = inGameObj.orientation();
-        var rotation = utils.rotationRatio(wantedOrientation.signedDistance(newOrientation), interval);
+        var rotation = utils.rotationRatio(newOrientation.signedDistance(wantedOrientation), interval);
+        // TODO: To be removed
+        rotation = wantedOrientation;
 
         var hasItRotatedCompletely = rotation.equals(wantedOrientation);
         if (doesItRotate(rotation)) {
             for (var other : inGameObjects.values()) {
-                if (inGameObj != other) continue;
+                if (inGameObj == other) continue;
 
                 var finalOrientation = utils.rotation(inGameObj, other, rotation);
                 if (!rotation.equals(finalOrientation) && compare(finalOrientation, newOrientation) < 0) {
                     hasItRotatedCompletely = false;
+                    newOrientation = finalOrientation;
+                } else if (rotation.equals(finalOrientation)) {
                     newOrientation = finalOrientation;
                 }
             }
