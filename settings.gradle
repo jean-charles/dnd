@@ -6,6 +6,7 @@ rootProject.name = 'Dungeons & Dragons'
 
 include 'common'
 include 'gametools'
+include 'neuralnetwork'
 include 'ecosystem'
 include 'lifeforms'
 include 'world'
