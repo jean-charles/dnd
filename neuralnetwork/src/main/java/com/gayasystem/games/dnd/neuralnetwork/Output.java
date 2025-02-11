@@ -8,4 +8,8 @@ public interface Output extends Node {
     void setValue(@NonNull Input input, @NonNull Integer value);
 
     Integer result();
+
+    void learn(Integer expected);
+
+    Integer error(Integer expected);
 }

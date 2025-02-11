@@ -13,7 +13,8 @@ public class Neuron extends AbstractInputNeuron implements Output {
     private static final InputNeuron bias = new InputNeuron();
     private final Map<Input, Double> weights = new HashMap<>();
     private final Map<Input, Integer> inputs = new HashMap<>();
-    private Integer result;
+    private final Collection<Input> receivedInputs = new ArrayList<>();
+    private Integer result = 0;
 
     private Neuron() {
     }
@@ -34,14 +35,15 @@ public class Neuron extends AbstractInputNeuron implements Output {
             throw new InvalidInputError(input);
 
         inputs.put(input, value);
-        if (result != null)
-            result = null;
+        receivedInputs.add(input);
 
-        if (!inputs.containsValue(null))
+        if (receivedInputs.size() == inputs.size())
             compute();
     }
 
     private void compute() {
+        receivedInputs.clear();
+
         int computedResult = 0;
 
         for (var input : inputs.entrySet())
@@ -49,7 +51,6 @@ public class Neuron extends AbstractInputNeuron implements Output {
 
         result = computedResult;
 
-        inputs.values().clear();
         if (inputs.containsKey(bias))
             bias.setValue(1);
 
@@ -59,6 +60,20 @@ public class Neuron extends AbstractInputNeuron implements Output {
     @Override
     public Integer result() {
         return result;
+    }
+
+    @Override
+    public void learn(final @NonNull Integer expected) {
+        inputs.forEach((input, value) -> {
+            var error = expected - result;
+            double deltaWeight = error * value;
+            weights.compute(input, (in, weight) -> weight == null ? 0 : weight + deltaWeight);
+        });
+    }
+
+    @Override
+    public Integer error(final @NonNull Integer expected) {
+        return expected - result;
     }
 
     public static class Builder {
