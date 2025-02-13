@@ -1,7 +1,6 @@
 package com.gayasystem.games.dnd.neuralnetwork;
 
 import com.gayasystem.games.dnd.neuralnetwork.exceptions.InvalidInputError;
-import com.gayasystem.games.dnd.neuralnetwork.exceptions.NeuronBuilderException;
 import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
@@ -9,110 +8,89 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Neuron extends AbstractInputNeuron implements Output {
-    private static final InputNeuron bias = new InputNeuron();
-    private final Map<Input, Double> weights = new HashMap<>();
-    private final Map<Input, Integer> inputs = new HashMap<>();
-    private final Collection<Input> receivedInputs = new ArrayList<>();
-    private Integer result = 0;
+import static java.lang.Math.random;
 
-    private Neuron() {
+public class Neuron implements Input, Output {
+    private static final Double LEARNING_CONSTANT = random();
+
+    private final Collection<Input> receivedInputs = new ArrayList<>();
+    private final Map<Input, Double> inputsValues = new HashMap<>();
+    private final Map<Input, Double> weights = new HashMap<>();
+    private final Collection<Output> outputs = new ArrayList<>();
+    private final Double biasWeight = random();
+
+    private Double value;
+
+    public Neuron() {
     }
 
     @Override
-    public void add(@NonNull Output neuron) {
+    public void add(@NonNull Input neuron) {
+        inputsValues.put(neuron, null);
+        weights.put(neuron, random());
+        neuron.add(this);
+    }
+
+    @Override
+    public void add(@NonNull final Output neuron) {
         outputs.add(neuron);
     }
 
     @Override
-    public void setWeight(@NonNull Input input, @NonNull Double weight) {
-        this.weights.put(input, weight);
+    public void value(@NonNull Double input) {
     }
 
     @Override
-    public void setValue(@NonNull Input input, @NonNull Integer value) {
-        if (!inputs.containsKey(input))
+    public void valueOf(@NonNull final Input input, @NonNull final Double value) {
+        if (!inputsValues.containsKey(input))
             throw new InvalidInputError(input);
 
-        inputs.put(input, value);
+        inputsValues.put(input, value);
         receivedInputs.add(input);
 
-        if (receivedInputs.size() == inputs.size())
+        if (receivedInputs.size() == inputsValues.size())
             compute();
+    }
+
+    @Override
+    public Double result() {
+        return value;
+    }
+
+    //    @Override
+    public void learn(@NonNull final Double expected) {
+        inputsValues.forEach((input, theValue) -> {
+            double value = theValue;
+//            var error = error(expected);
+//            if (error != 0) {
+//                double deltaWeight = error * value * LEARNING_CONSTANT;
+//                weights.compute(input, (in, weight) -> weight == null ? 0 : weight + deltaWeight);
+//                if (input instanceof Output) {
+//                    ((Output) input).learn(value / deltaWeight);
+//                }
+//                input.setValue(inputsValues.get(input));
+//            }
+        });
+    }
+
+    //    @Override
+    public Double expected(@NonNull final Double expected) {
+        return expected - value;
     }
 
     private void compute() {
         receivedInputs.clear();
 
-        int computedResult = 0;
+        double computedResult = 0.0;
 
-        for (var input : inputs.entrySet())
-            computedResult += (int) (input.getValue() * weights.get(input.getKey()));
+        for (var input : inputsValues.entrySet())
+            computedResult += input.getValue() * weights.get(input.getKey());
 
-        result = computedResult;
+        value = computedResult;
 
-        if (inputs.containsKey(bias))
-            bias.setValue(1);
+//        if (inputsValues.containsKey(bias))
+//            bias.setValue(1.0);
 
-        setValue(computedResult);
-    }
-
-    @Override
-    public Integer result() {
-        return result;
-    }
-
-    @Override
-    public void learn(final @NonNull Integer expected) {
-        inputs.forEach((input, value) -> {
-            var error = expected - result;
-            double deltaWeight = error * value;
-            weights.compute(input, (in, weight) -> weight == null ? 0 : weight + deltaWeight);
-        });
-    }
-
-    @Override
-    public Integer error(final @NonNull Integer expected) {
-        return expected - result;
-    }
-
-    public static class Builder {
-        private final Collection<Input> inputs = new ArrayList<>();
-        private final Map<Input, Double> weights = new HashMap<>();
-        private final Collection<Output> outputs = new ArrayList<>();
-
-        public Builder add(@NonNull Input neuron, @NonNull Double weight) {
-            inputs.add(neuron);
-            weights.put(neuron, weight);
-            return this;
-        }
-
-        public Builder biasWeight(@NonNull Double weight) {
-            inputs.add(bias);
-            weights.put(bias, weight);
-            return this;
-        }
-
-        public Builder add(@NonNull Output neuron) {
-            outputs.add(neuron);
-            return this;
-        }
-
-        public Neuron build() throws NeuronBuilderException {
-            final Neuron n = new Neuron();
-            for (var input : weights.entrySet()) {
-                if (input.getValue() == null)
-                    throw new NeuronBuilderException("Weight is not set!");
-                n.weights.put(input.getKey(), weights.get(input.getKey()));
-            }
-            for (var input : inputs) {
-                n.inputs.put(input, null);
-                input.add(n);
-            }
-            n.outputs.addAll(outputs);
-            bias.setValue(1);
-
-            return n;
-        }
+//        setValue(value);
     }
 }

@@ -3,13 +3,13 @@ package com.gayasystem.games.dnd.neuralnetwork;
 import org.springframework.lang.NonNull;
 
 public interface Output extends Node {
-    void setWeight(@NonNull Input input, @NonNull Double weight);
+    void add(@NonNull Input neuron);
 
-    void setValue(@NonNull Input input, @NonNull Integer value);
+    void valueOf(@NonNull Input input, @NonNull Double value);
 
-    Integer result();
-
-    void learn(Integer expected);
-
-    Integer error(Integer expected);
+    Double result();
+//
+//    void learn(Double expected);
+//
+//    Double error(Double expected);
 }
