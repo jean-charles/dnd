@@ -1,8 +1,10 @@
 package com.gayasystem.games.dnd.neuralnetwork;
 
+import java.util.Arrays;
+
 public class NeuralNetwork {
-    Layer hiddenLayer;
-    Layer outputLayer;
+    private final Layer hiddenLayer;
+    private final Layer outputLayer;
     private double learningRate;
 
     public NeuralNetwork(int inputSize, int hiddenSize, int outputSize, double learningRate) {
@@ -35,5 +37,54 @@ public class NeuralNetwork {
         }
 
         hiddenLayer.updateWeights(inputs, hiddenErrors, learningRate);
+    }
+
+    public Weights save() {
+        double[] hiddenBiasWeights = new double[hiddenLayer.neurons.length];
+        for (int i = 0; i < hiddenBiasWeights.length; i++)
+            hiddenBiasWeights[i] = hiddenLayer.neurons[i].bias;
+
+        double[][] hiddenWeights = new double[hiddenLayer.neurons.length][hiddenLayer.neurons[0].weights.length];
+        for (int i = 0; i < hiddenWeights.length; i++)
+            hiddenWeights[i] = hiddenLayer.neurons[i].weights;
+
+        double[] outputsBiasWeights = new double[outputLayer.neurons.length];
+        for (int i = 0; i < outputsBiasWeights.length; i++)
+            outputsBiasWeights[i] = outputLayer.neurons[i].bias;
+
+        double[][] outputsWeights = new double[outputLayer.neurons.length][outputLayer.neurons[0].weights.length];
+        for (int i = 0; i < outputsWeights.length; i++)
+            outputsWeights[i] = outputLayer.neurons[i].weights;
+
+        return new Weights(hiddenWeights, hiddenBiasWeights, outputsWeights, outputsBiasWeights);
+    }
+
+    public void load(Weights weights) {
+        load(weights.hiddenWeights, weights.hiddenBiasWeights, weights.outputsWeights, weights.outputsBiasWeights);
+    }
+
+    public void load(double[][] hiddenWeights, double[] hiddenBiasWeights, double[][] outputsWeights, double[] outputsBiasWeights) {
+        for (int i = 0; i < hiddenBiasWeights.length; i++)
+            hiddenLayer.neurons[i].bias = hiddenBiasWeights[i];
+        for (int i = 0; i < hiddenWeights.length; i++)
+            hiddenLayer.neurons[i].weights = hiddenWeights[i];
+        for (int i = 0; i < outputsBiasWeights.length; i++)
+            outputLayer.neurons[i].bias = outputsBiasWeights[i];
+        for (int i = 0; i < outputsWeights.length; i++)
+            outputLayer.neurons[i].weights = outputsWeights[i];
+    }
+
+    public record Weights(double[][] hiddenWeights, double[] hiddenBiasWeights, double[][] outputsWeights,
+                          double[] outputsBiasWeights) {
+
+        @Override
+        public String toString() {
+            return "Weights{" +
+                    "hiddenBiasWeights=" + Arrays.toString(hiddenBiasWeights) +
+                    ", hiddenWeights=" + Arrays.toString(hiddenWeights) +
+                    ", outputsWeights=" + Arrays.toString(outputsWeights) +
+                    ", outputsBiasWeights=" + Arrays.toString(outputsBiasWeights) +
+                    '}';
+        }
     }
 }
