@@ -1,25 +1,19 @@
 package com.gayasystem.games.dnd.neuralnetwork;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
 
 class NeuronTest {
-    private final Input input = mock(Input.class);
-    private Neuron n;
-
-    @BeforeEach
-    void setUp() throws Exception {
-        n = new Neuron();
-        n.add(input);
-    }
+    private final NeuralNetwork network = new NeuralNetwork(2, 0, 1, 0);
 
     @Test
     void setValue() {
-        n.valueOf(input, 1.0);
-        Double r = n.result();
-        assertNotNull(r);
+        double[] inputs = {12, 4};
+        double[] outputs = network.feedForward(inputs);
+        assertNotNull(outputs);
+        assertEquals(1, outputs.length);
+        assertNotNull(outputs[0]);
     }
 }

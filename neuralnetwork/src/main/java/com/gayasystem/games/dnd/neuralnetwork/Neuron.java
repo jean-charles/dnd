@@ -1,96 +1,43 @@
 package com.gayasystem.games.dnd.neuralnetwork;
 
-import com.gayasystem.games.dnd.neuralnetwork.exceptions.InvalidInputError;
-import org.springframework.lang.NonNull;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
+import static java.lang.Math.exp;
 import static java.lang.Math.random;
 
-public class Neuron implements Input, Output {
-    private static final Double LEARNING_CONSTANT = random();
+public class Neuron {
+    double[] weights;
+    double bias;
+    private double output;
 
-    private final Collection<Input> receivedInputs = new ArrayList<>();
-    private final Map<Input, Double> inputsValues = new HashMap<>();
-    private final Map<Input, Double> weights = new HashMap<>();
-    private final Collection<Output> outputs = new ArrayList<>();
-    private final Double biasWeight = random();
-
-    private Double value;
-
-    public Neuron() {
+    public Neuron(final int nbInputs) {
+        weights = new double[nbInputs];
+        bias = random();
+        initializeWeights();
     }
 
-    @Override
-    public void add(@NonNull Input neuron) {
-        inputsValues.put(neuron, null);
-        weights.put(neuron, random());
-        neuron.add(this);
+    public double activate(final double[] inputs) {
+        double sum = bias;
+        for (int i = 0; i < weights.length; i++)
+            sum += inputs[i] * weights[i];
+        output = sigmoid(sum);
+        return output;
     }
 
-    @Override
-    public void add(@NonNull final Output neuron) {
-        outputs.add(neuron);
+    public double output() {
+        return output;
     }
 
-    @Override
-    public void value(@NonNull Double input) {
+    public void updateWeights(final double[] inputs, final double error, final double learningRate) {
+        for (int i = 0; i < weights.length; i++)
+            weights[i] += learningRate * error * output * (1 - output * inputs[i]);
+        bias += learningRate * error * output * (1 - output);
     }
 
-    @Override
-    public void valueOf(@NonNull final Input input, @NonNull final Double value) {
-        if (!inputsValues.containsKey(input))
-            throw new InvalidInputError(input);
-
-        inputsValues.put(input, value);
-        receivedInputs.add(input);
-
-        if (receivedInputs.size() == inputsValues.size())
-            compute();
+    private void initializeWeights() {
+        for (int i = 0; i < weights.length; i++)
+            weights[i] = random();
     }
 
-    @Override
-    public Double result() {
-        return value;
-    }
-
-    //    @Override
-    public void learn(@NonNull final Double expected) {
-        inputsValues.forEach((input, theValue) -> {
-            double value = theValue;
-//            var error = error(expected);
-//            if (error != 0) {
-//                double deltaWeight = error * value * LEARNING_CONSTANT;
-//                weights.compute(input, (in, weight) -> weight == null ? 0 : weight + deltaWeight);
-//                if (input instanceof Output) {
-//                    ((Output) input).learn(value / deltaWeight);
-//                }
-//                input.setValue(inputsValues.get(input));
-//            }
-        });
-    }
-
-    //    @Override
-    public Double expected(@NonNull final Double expected) {
-        return expected - value;
-    }
-
-    private void compute() {
-        receivedInputs.clear();
-
-        double computedResult = 0.0;
-
-        for (var input : inputsValues.entrySet())
-            computedResult += input.getValue() * weights.get(input.getKey());
-
-        value = computedResult;
-
-//        if (inputsValues.containsKey(bias))
-//            bias.setValue(1.0);
-
-//        setValue(value);
+    private double sigmoid(double x) {
+        return 1 / (1 + exp(-x));
     }
 }
