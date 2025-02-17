@@ -6,6 +6,7 @@ import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.*;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.neuralnetwork.NeuralNetwork;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ public abstract class AbstractBrain implements Brain {
     private final Emotion defaultEmotion;
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
     private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
+    private final NeuralNetwork neuralNetwork;
 
     @Autowired
     private EngramComputing engramComputing;
@@ -33,7 +35,8 @@ public abstract class AbstractBrain implements Brain {
      * @param defaultEmotion    default emotion for unknown things
      * @param longTermMemories  predetermined memories
      */
-    protected AbstractBrain(LifeForm body, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+    protected AbstractBrain(LifeForm body, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, NeuralNetwork neuralNetwork) {
+        this.neuralNetwork = neuralNetwork;
         if (body == null)
             throw new NullPointerException("body cannot be null");
         this.body = body;

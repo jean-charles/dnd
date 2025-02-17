@@ -13,6 +13,10 @@ public class NeuralNetwork {
         outputLayer = new Layer(outputSize, hiddenSize);
     }
 
+    public NeuralNetwork(NeuralNetworkConfig config) {
+        this(config.inputSize(), config.hiddenSize(), config.outputSize(), config.learningRate());
+    }
+
     public double[] feedForward(double[] inputs) {
         double[] hiddenOutputs = hiddenLayer.feedForward(inputs);
         return outputLayer.feedForward(hiddenOutputs);

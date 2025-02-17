@@ -14,6 +14,7 @@ import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
+import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -120,4 +121,6 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     public Gender gender() {
         return gender;
     }
+
+    public abstract NeuralNetworkConfig neuralNetworkConfig();
 }

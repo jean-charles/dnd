@@ -10,6 +10,7 @@ import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -70,5 +71,10 @@ public class Human extends Character {
 
     public Human() {
         this(Gender.male);
+    }
+
+    @Override
+    public NeuralNetworkConfig neuralNetworkConfig() {
+        return null;
     }
 }
