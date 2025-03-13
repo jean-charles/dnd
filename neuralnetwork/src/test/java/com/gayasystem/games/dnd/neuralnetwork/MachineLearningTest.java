@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,14 +21,9 @@ class MachineLearningTest {
 
     @Test
     void simple() throws Exception {
-        double[][] inputs = {
-                {1, 0.4}
-        };
-        double[][] expected = {
-                {0.5}
-        };
-        ml.learn(inputs, expected, 10000);
-        double[] outputs = network.feedForward(inputs[0]);
+        var samples = Arrays.asList(new MachineLearning.Sample(new double[]{1, 0.4}, new double[]{0.5}));
+        ml.learn(samples, 10000);
+        double[] outputs = network.feedForward(samples.getFirst().inputs());
         assertEquals(0.5, outputs[0], 0.000000001);
 
         var savedWeights = network.save();
@@ -38,7 +34,7 @@ class MachineLearningTest {
 
         NeuralNetwork n = new NeuralNetwork(2, 20, 1, 0.01);
         n.load(savedWeights);
-        outputs = n.feedForward(inputs[0]);
+        outputs = n.feedForward(samples.getFirst().inputs());
         assertEquals(0.5, outputs[0], 0.000000001);
     }
 

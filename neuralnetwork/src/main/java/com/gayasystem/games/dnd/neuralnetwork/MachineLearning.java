@@ -1,5 +1,7 @@
 package com.gayasystem.games.dnd.neuralnetwork;
 
+import java.util.Collection;
+
 public class MachineLearning {
     private final NeuralNetwork network;
 
@@ -7,11 +9,14 @@ public class MachineLearning {
         this.network = network;
     }
 
-    public void learn(final double[][] inputs, final double[][] expectedOutputs, int loop) {
-        for (int i = 0; i < inputs.length; i++) {
-            for (int j = 0; j < loop; j++) {
-                network.train(inputs[i], expectedOutputs[i]);
+    public void learn(final Collection<Sample> samples, int loops) {
+        for (var sample : samples) {
+            for (int loop = 0; loop < loops; loop++) {
+                network.train(sample.inputs, sample.expectedOutputs);
             }
         }
+    }
+
+    public record Sample(double[] inputs, double[] expectedOutputs) {
     }
 }

@@ -57,9 +57,9 @@ public class Almiraj extends Beast {
                 DEPTH,
                 MeasurementConvertor.c.poundInKg(9),
                 Gender.male,
-                15.24, // 50 feet/s
-                3218.69, // 2 miles
-                9.144, //30 feet
+                15.24, // 50 feet/s in m/s
+                3218.69, // 2 miles in m
+                9.144, // 30 feet in m
                 null,
                 0.0,
                 Emotion.neutral,
@@ -71,6 +71,6 @@ public class Almiraj extends Beast {
 
     @Override
     public NeuralNetworkConfig neuralNetworkConfig() {
-        return new NeuralNetworkConfig(2, 20, 1, 0.01);
+        return new NeuralNetworkConfig(3, 20, 3, 0.01);
     }
 }

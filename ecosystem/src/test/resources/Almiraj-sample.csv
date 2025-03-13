@@ -1,0 +1,34 @@
+Use Case,Class,Radius (in m),Azimuth,Expected Speed (%),Expected Azimuth (%)
+Food in front of it,Carrot,30.0,0.0,0.50
+Food PI.1/8 on left,Carrot,30.0,0.392699081698724,0.50,0.125
+Food PI.1/4 on left,Carrot,30.0,0.785398163397448,0.50,0.25
+Food PI.3/8 on left,Carrot,30.0,1.17809724509617,0.50,0.375
+Food PI.1/2 on left,Carrot,30.0,1.5707963267949,0.50,0.5
+Food PI.5/8 on left,Carrot,30.0,1.96349540849362,0.50,0.625
+Food PI.3/4 on left,Carrot,30.0,2.35619449019234,0.50,0.75
+Food PI.7/8 on left,Carrot,30.0,2.74889357189107,0.50,0.875
+Food behind it,Carrot,30.0,3.141592653589793,0.50,1.0
+Food PI.7/8 on right,Carrot,30.0,-2.74889357189107,0.50,-0.875
+Food PI.3/4 on right,Carrot,30.0,-2.35619449019234,0.50,-0.75
+Food PI.5/8 on right,Carrot,30.0,-1.96349540849362,0.50,-0.625
+Food PI.1/2 on right,Carrot,30.0,-1.5707963267949,0.50,-0.5
+Food PI.3/8 on right,Carrot,30.0,-1.17809724509617,0.50,-0.375
+Food PI.1/4 on right,Carrot,30.0,-0.785398163397448,0.50,-0.25
+Food PI.1/8 on right,Carrot,30.0,-0.392699081698724,0.50,-0.125
+
+Almiraj in front of it,Almiraj,30.0,0.0,0.50
+Almiraj PI.1/8 on left,Almiraj,30.0,0.392699081698724,0.50,0.125
+Almiraj PI.1/4 on left,Almiraj,30.0,0.785398163397448,0.50,0.25
+Almiraj PI.3/8 on left,Almiraj,30.0,1.17809724509617,0.50,0.375
+Almiraj PI.1/2 on left,Almiraj,30.0,1.5707963267949,0.50,0.5
+Almiraj PI.5/8 on left,Almiraj,30.0,1.96349540849362,0.50,0.625
+Almiraj PI.3/4 on left,Almiraj,30.0,2.35619449019234,0.50,0.75
+Almiraj PI.7/8 on left,Almiraj,30.0,2.74889357189107,0.50,0.875
+Almiraj behind it,Almiraj,30.0,3.141592653589793,0.50,1.0
+Almiraj PI.7/8 on right,Almiraj,30.0,-2.74889357189107,0.50,-0.875
+Almiraj PI.3/4 on right,Almiraj,30.0,-2.35619449019234,0.50,-0.75
+Almiraj PI.5/8 on right,Almiraj,30.0,-1.96349540849362,0.50,-0.625
+Almiraj PI.1/2 on right,Almiraj,30.0,-1.5707963267949,0.50,-0.5
+Almiraj PI.3/8 on right,Almiraj,30.0,-1.17809724509617,0.50,-0.375
+Almiraj PI.1/4 on right,Almiraj,30.0,-0.785398163397448,0.50,-0.25
+Almiraj PI.1/8 on right,Almiraj,30.0,-0.392699081698724,0.50,-0.125
