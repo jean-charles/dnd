@@ -5,9 +5,8 @@ import com.gayasystem.games.dnd.lifeforms.sensitive.Pain;
 import com.gayasystem.games.dnd.lifeforms.sensitive.Sighted;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 
-public class Eye implements Sighted, Pain {
+public class Eye implements Organ, Sighted, Pain {
     @Override
     public void see(final Thing thing, final PolarCoordinates origin, final double orientation) {
-
     }
 }

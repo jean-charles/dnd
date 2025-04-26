@@ -36,6 +36,7 @@ public class Tiefling extends Character {
                 null,
                 0.0,
                 Emotion.neutral,
+                null,
                 null
         );
     }

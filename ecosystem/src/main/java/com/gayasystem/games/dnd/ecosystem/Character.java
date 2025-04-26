@@ -8,6 +8,7 @@ import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.organs.Organ;
 import com.gayasystem.games.dnd.lifeforms.sensitive.hearring.SoundSpectrum;
 
 import java.util.HashSet;
@@ -21,8 +22,8 @@ public abstract class Character extends LifeForm {
     private int armorClass;
     private Set<Equipment> equipments = new HashSet<>();
 
-    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
-        super(width, depth, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, defaultEmotion, longTermMemories);
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Set<Organ> organs) {
+        super(width, depth, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, defaultEmotion, longTermMemories, organs);
         this.abilityScores = calculate(abilityScores, abilityScoreIncrease);
         this.alignment = alignment;
         this.skills = skills;

@@ -5,9 +5,8 @@ import com.gayasystem.games.dnd.lifeforms.sensitive.Hearing;
 import com.gayasystem.games.dnd.lifeforms.sensitive.hearring.SoundSpectrum;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 
-public class Ear implements Hearing {
+public class Ear implements Organ, Hearing {
     @Override
     public void ear(final Thing thing, final SoundSpectrum spectrum, final double amplitude, final PolarCoordinates origin) {
-
     }
 }

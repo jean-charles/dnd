@@ -47,7 +47,8 @@ public class Human extends Character {
                 Emotion.neutral,
                 Map.of(
                         Almiraj.class, Emotion.hungry
-                )
+                ),
+                null
         );
     }
 

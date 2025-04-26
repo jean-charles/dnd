@@ -7,20 +7,18 @@ import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
-import com.gayasystem.games.dnd.lifeforms.brain.images.Image;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.brain.sounds.Sound;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Hearing;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Sighted;
+import com.gayasystem.games.dnd.lifeforms.organs.Organ;
 import com.gayasystem.games.dnd.lifeforms.sensitive.hearring.SoundSpectrum;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
-public abstract class LifeForm extends Thing implements Moveable, Sighted, Hearing, Eater {
+public abstract class LifeForm extends Thing implements Moveable, Eater {
     private final Gender gender;
     private final double speed;
     private final double sightDistance;
@@ -29,6 +27,7 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     private final double minSoundAmplitude;
     private final Emotion defaultEmotion;
     private final Map<Class<? extends Thing>, Emotion> longTermMemories;
+    private final Set<Organ> organs;
 
     private Brain brain;
     private Velocity movement;
@@ -54,8 +53,9 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
      * @param soundSpectrum      TBD
      * @param minSoundAmplitude  TBD
      * @param longTermMemories   list of long term memories.
+     * @param organs             all life form organs.
      */
-    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories) {
+    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Set<Organ> organs) {
         super(width, depth, mass);
         this.gender = gender;
         this.speed = speed;
@@ -65,6 +65,7 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
         this.minSoundAmplitude = minSoundAmplitude;
         this.defaultEmotion = defaultEmotion;
         this.longTermMemories = longTermMemories;
+        this.organs = Collections.unmodifiableSet(organs);
     }
 
     @Override
@@ -75,8 +76,8 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
         foodCoordinate = null;
         movement = null;
 
-        environment.show(this, convertor.miles2Inches(sightDistance));
-        environment.listen(this, minSoundAmplitude);
+//        environment.show(this, convertor.miles2Inches(sightDistance));
+//        environment.listen(this, minSoundAmplitude);
         brain.run();
         if (foodCoordinate != null)
             environment.eat(this);
@@ -87,20 +88,6 @@ public abstract class LifeForm extends Thing implements Moveable, Sighted, Heari
     @Override
     public void movement(Velocity velocity) {
         movement = velocity;
-    }
-
-    @Override
-    public void see(Thing thing, PolarCoordinates origin, double orientation) {
-        Image image = new Image(thing.getClass());
-        brain.handle(new SpatialEngram(image, origin));
-    }
-
-    @Override
-    public void ear(Thing thing, SoundSpectrum spectrum, double amplitude, PolarCoordinates origin) {
-        var sound = new Sound(thing.getClass(), spectrum, amplitude);
-        if (sound.spectrum().equals(soundSpectrum) && sound.amplitude() >= minSoundAmplitude) {
-            brain.handle(new SpatialEngram(sound, origin));
-        }
     }
 
     @Override

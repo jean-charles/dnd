@@ -65,7 +65,8 @@ public class Almiraj extends Beast {
                 Emotion.neutral,
                 Map.of(
                         Carrot.class, Emotion.hungry
-                )
+                ),
+                null
         );
     }
 

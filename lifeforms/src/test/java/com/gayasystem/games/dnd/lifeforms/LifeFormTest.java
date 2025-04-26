@@ -73,7 +73,7 @@ class LifeFormTest {
         var thing = new ThingA();
         PolarCoordinates origin = PolarCoordinates.of(10, 0);
 
-        lifeForm.see(thing, origin, 0);
+//        lifeForm.see(thing, origin, 0);
 
         verify(brain).handle(any(SpatialEngram.class));
     }
@@ -84,7 +84,7 @@ class LifeFormTest {
         double amplitude = MIN_SOUND_AMPLITUDE * 2;
         var thing = new ThingA();
 
-        lifeForm.ear(thing, SOUND_SPECTRUM, amplitude, origin);
+//        lifeForm.ear(thing, SOUND_SPECTRUM, amplitude, origin);
 
         verify(brain).handle(any(SpatialEngram.class));
     }

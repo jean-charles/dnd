@@ -36,6 +36,7 @@ public class HalfElf extends Character {
                 null,
                 0.0,
                 Emotion.neutral,
+                null,
                 null
         );
     }
