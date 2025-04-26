@@ -2,8 +2,8 @@ package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
-import com.gayasystem.games.dnd.common.hear.Hearing;
-import com.gayasystem.games.dnd.common.sight.Sighted;
+import com.gayasystem.games.dnd.lifeforms.sensitive.Hearing;
+import com.gayasystem.games.dnd.lifeforms.sensitive.Sighted;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 
 public interface LifeEnvironment {

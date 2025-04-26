@@ -1,4 +1,4 @@
-package com.gayasystem.games.dnd.common.sight;
+package com.gayasystem.games.dnd.lifeforms.sensitive;
 
 import com.gayasystem.games.dnd.common.Thing;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;

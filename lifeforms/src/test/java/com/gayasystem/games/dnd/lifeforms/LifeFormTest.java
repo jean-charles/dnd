@@ -2,13 +2,12 @@ package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
-import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
-import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.sensitive.hearring.SoundSpectrum;
+import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

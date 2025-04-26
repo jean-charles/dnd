@@ -1,13 +1,13 @@
 package com.gayasystem.games.dnd.ecosystem;
 
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.hear.SoundSpectrum;
 import com.gayasystem.games.dnd.gametools.alignments.Alignment;
 import com.gayasystem.games.dnd.gametools.dices.Die;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.sensitive.hearring.SoundSpectrum;
 
 import java.util.Map;
 
