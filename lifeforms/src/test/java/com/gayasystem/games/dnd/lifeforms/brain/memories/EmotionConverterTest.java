@@ -1,8 +1,8 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
 import com.gayasystem.games.dnd.common.coordinates.Orientation;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.EmotionConverter;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.EmotionConverter;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.PI;

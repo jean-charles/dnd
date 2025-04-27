@@ -1,5 +1,6 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.EngramComputing;
 import org.junit.jupiter.api.Test;
 
 class EngramComputingTest {

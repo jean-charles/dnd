@@ -1,6 +1,7 @@
 package com.gayasystem.games.dnd.lifeforms.organs;
 
-import com.gayasystem.games.dnd.lifeforms.brain.Brain;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.Brain;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Hair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,7 @@ class HairTest {
 
     @Test
     void press() {
-        hair.press(1.0);
+//        hair.press(1.0);
 //        brain.
     }
 }

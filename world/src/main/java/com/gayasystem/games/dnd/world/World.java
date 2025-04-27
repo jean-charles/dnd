@@ -4,10 +4,7 @@ import com.gayasystem.games.dnd.common.Food;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.ecosystem.Character;
-import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Hearing;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Sighted;
 import com.gayasystem.games.dnd.world.services.InGameObjectsManager;
 import com.gayasystem.games.dnd.world.services.domains.InGameObject;
 import org.apache.commons.geometry.euclidean.twod.Vector2D;
@@ -21,7 +18,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Component
-public class World implements Runnable, LifeEnvironment {
+public class World implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(World.class);
 
     @Autowired
@@ -39,25 +36,8 @@ public class World implements Runnable, LifeEnvironment {
         manager.clean();
     }
 
-    @Override
-    public void show(Sighted sighted, double sightDistance) {
-        if (!(sighted instanceof Thing)) return;
 
-        for (var other : manager.getAllThings()) {
-            if (sighted == other) continue;
-
-            var relativeCoordinate = manager.relativeCoordinates((Thing) sighted, other);
-            if (relativeCoordinate.getRadius() <= sightDistance) {
-                sighted.see(other, relativeCoordinate, 0);
-            }
-        }
-    }
-
-    @Override
-    public void listen(Hearing hearing, double minSoundAmplitude) {
-    }
-
-    @Override
+    //    @Override
     public void addFrom(Thing origin, Thing newThing, Velocity newThingVelocity) {
         var obj = manager.get(origin);
         var originCoordinate = obj.coordinate();
@@ -65,12 +45,12 @@ public class World implements Runnable, LifeEnvironment {
         manager.add(newThing, originCoordinate, newThingVelocity.azimuth());
     }
 
-    @Override
+    //    @Override
     public void move(Thing thing, Point1S orientation, Velocity velocity) {
         manager.move(thing, orientation, velocity);
     }
 
-    @Override
+    //    @Override
     public void eat(LifeForm lifeForm) {
         var foodCoordinate = lifeForm.foodCoordinate();
         if (foodCoordinate == null)

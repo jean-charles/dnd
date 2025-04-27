@@ -5,12 +5,12 @@ import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
-import com.gayasystem.games.dnd.lifeforms.brain.Brain;
-import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
-import com.gayasystem.games.dnd.lifeforms.brain.NeuralNetworkInputsConverter;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.organs.Organ;
-import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.SoundSpectrum;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.Brain;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Organ;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.stimuli.SoundSpectrum;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +30,13 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
     private final Map<Class<? extends Thing>, Emotion> longTermMemories;
     private final Collection<Organ> organs;
     private final NeuralNetworkConfig neuralNetworkConfig;
+    private final Brain brain;
 
-    private Brain brain;
     private Velocity movement;
     private PolarCoordinates foodCoordinate;
 
     @Autowired
     private NeuralNetworkInputsConverter neuralNetworkInputsConverter;
-
-    @Autowired
-    private LifeEnvironment environment;
 
     @Autowired
     private BrainFactory brainFactory;
@@ -77,23 +74,21 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
         int outputSize = 1;
         double learningRate = 0.01;
         neuralNetworkConfig = new NeuralNetworkConfig(inputSize, hiddenSize, outputSize, learningRate);
+        brain = brainFactory.create(this, speed, defaultEmotion, longTermMemories, neuralNetworkConfig, this.organs);
     }
 
     @Override
     public void run() {
-        if (brain == null)
-            brain = brainFactory.create(this, speed, defaultEmotion, longTermMemories, neuralNetworkConfig, organs);
-
         foodCoordinate = null;
         movement = null;
 
 //        environment.show(this, convertor.miles2Inches(sightDistance));
 //        environment.listen(this, minSoundAmplitude);
         brain.run();
-        if (foodCoordinate != null)
-            environment.eat(this);
-        if (movement != null)
-            environment.move(this, movement.azimuth(), movement);
+//        if (foodCoordinate != null)
+//            environment.eat(this);
+//        if (movement != null)
+//            environment.move(this, movement.azimuth(), movement);
     }
 
     @Override

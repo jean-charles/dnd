@@ -1,8 +1,8 @@
 package com.gayasystem.games.dnd.lifeforms;
 
-import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.organs.Hair;
-import com.gayasystem.games.dnd.lifeforms.organs.Organ;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Hair;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Organ;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;

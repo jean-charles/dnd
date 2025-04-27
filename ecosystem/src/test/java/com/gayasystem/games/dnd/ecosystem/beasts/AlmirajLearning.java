@@ -4,14 +4,13 @@ import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.ecosystem.food.Carrot;
 import com.gayasystem.games.dnd.ecosystem.races.Human;
-import com.gayasystem.games.dnd.lifeforms.LifeEnvironment;
-import com.gayasystem.games.dnd.lifeforms.brain.BrainFactoryImpl;
-import com.gayasystem.games.dnd.lifeforms.brain.DefaultBrain;
-import com.gayasystem.games.dnd.lifeforms.brain.NeuralNetworkInputsConverter;
-import com.gayasystem.games.dnd.lifeforms.brain.VelocityFactory;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.EngramComputing;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.NextAction;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactoryImpl;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.DefaultBrain;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.VelocityFactory;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.EngramComputing;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.NextAction;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.neuralnetwork.MachineLearning;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetwork;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,7 @@ import org.springframework.context.ApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gayasystem.games.dnd.lifeforms.brain.memories.Action.doNothing;
+import static com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.Action.doNothing;
 import static java.lang.Math.PI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,9 +42,6 @@ class AlmirajLearning {
 
     @Autowired
     private VelocityFactory outputsFactory;
-
-    @MockBean
-    private LifeEnvironment env;
 
     @MockBean
     private MeasurementConvertor mc;

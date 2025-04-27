@@ -2,10 +2,10 @@ package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
-import com.gayasystem.games.dnd.lifeforms.brain.Brain;
-import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.SoundSpectrum;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.Brain;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.stimuli.SoundSpectrum;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,9 +31,6 @@ class LifeFormTest {
     static final double MIN_SOUND_AMPLITUDE = 20.0;
     static final Emotion DEFAULT_EMOTION = Emotion.neutral;
     static final Map<Class<? extends Thing>, Emotion> MEMORIES = Map.of();
-
-    @MockBean
-    LifeEnvironment environment;
 
     @MockBean
     BrainFactory brainFactory;
