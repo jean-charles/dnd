@@ -1,10 +1,14 @@
 package com.gayasystem.games.dnd.lifeforms.organs;
 
-import com.gayasystem.games.dnd.lifeforms.sensitive.Pressure;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Touch;
+import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.Pressure;
 
-public class Hair implements Organ, Pressure, Touch {
+public class Hair extends AbstractOrgan<Pressure> {
     @Override
-    public void press(final double pressure) {
+    public int nbSignals() {
+        return 0;
+    }
+
+    @Override
+    public void stimulate(final Pressure pressure) {
     }
 }

@@ -88,9 +88,9 @@ class AlmirajLearning {
                 double[] inputs = new double[inputSize];
                 double[] expectedOutputs = new double[outputSize];
 
-                inputs[NeuralNetworkInputsConverter.ENGRAM] = thing.hashCode();
-                inputs[NeuralNetworkInputsConverter.RADIUS] = radius;
-                inputs[NeuralNetworkInputsConverter.AZIMUTH] = azimuth;
+//                inputs[NeuralNetworkInputsConverter.ENGRAM] = thing.hashCode();
+//                inputs[NeuralNetworkInputsConverter.RADIUS] = radius;
+//                inputs[NeuralNetworkInputsConverter.AZIMUTH] = azimuth;
 
                 expectedOutputs[VelocityFactory.SPEED] = afraid ? 1 : 0.5;
                 expectedOutputs[VelocityFactory.AZIMUTH] = azimuth(azimuth, afraid) / PI;

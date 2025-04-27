@@ -1,30 +1,27 @@
 package com.gayasystem.games.dnd.lifeforms.brain;
 
-import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.Engram;
+import com.gayasystem.games.dnd.lifeforms.organs.Organ;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
 @Component
 public class NeuralNetworkInputsConverter {
-    public static final int ENGRAM = 0;
-    public static final int RADIUS = 1;
-    public static final int AZIMUTH = 2;
+    public int inputSize(Collection<Organ> organs) {
+        int nbSignals = 0;
+        for (var organ : organs)
+            nbSignals += organ.nbSignals();
+        return nbSignals;
+    }
 
-    public double[] create(Collection<SpatialEngram> spatialEngrams) {
-        SpatialEngram closest = null;
-        for (var spatialEngram : spatialEngrams) {
-            if (closest == null)
-                closest = spatialEngram;
-            if (spatialEngram.origin().getAzimuth() < closest.origin().getAzimuth()) {
-                closest = spatialEngram;
-            }
-        }
-        var inputs = new double[]{0, 0, 0};
-        if (closest != null) {
-            inputs[ENGRAM] = closest.engram().thingClass().hashCode();
-            inputs[RADIUS] = closest.origin().getRadius();
-            inputs[AZIMUTH] = closest.origin().getAzimuth();
+    public double[] create(Collection<Engram> engrams, int nbSignals) {
+        double[] inputs = new double[nbSignals];
+        int offset = 0;
+        for (var engram : engrams) {
+            var values = engram.values();
+            System.arraycopy(values, 0, inputs, offset, values.length);
+            offset += values.length;
         }
         return inputs;
     }

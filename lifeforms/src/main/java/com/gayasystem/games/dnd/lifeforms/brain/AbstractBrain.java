@@ -3,11 +3,13 @@ package com.gayasystem.games.dnd.lifeforms.brain;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
+import com.gayasystem.games.dnd.lifeforms.brain.memories.Engram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.EngramComputing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.PersistedEngram;
-import com.gayasystem.games.dnd.lifeforms.brain.memories.SpatialEngram;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
+import com.gayasystem.games.dnd.lifeforms.organs.Organ;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetwork;
+import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,8 @@ public abstract class AbstractBrain implements Brain {
     private final double maxSpeedPerSecond;
     private final Emotion defaultEmotion;
     private final Collection<PersistedEngram> longTermMemories = new ArrayList<>();
-    private final Collection<SpatialEngram> shortTermMemories = new ArrayList<>();
+    private final Collection<Engram> shortTermMemories = new ArrayList<>();
+    private final NeuralNetworkConfig neuralNetworkConfig;
     private final NeuralNetwork neuralNetwork;
 
     @Autowired
@@ -39,7 +42,7 @@ public abstract class AbstractBrain implements Brain {
      * @param defaultEmotion    default emotion for unknown things
      * @param longTermMemories  predetermined memories
      */
-    protected AbstractBrain(LifeForm body, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, NeuralNetwork neuralNetwork) {
+    protected AbstractBrain(LifeForm body, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, NeuralNetwork neuralNetwork, final NeuralNetworkConfig config, Collection<Organ> organs) {
         this.neuralNetwork = neuralNetwork;
         if (body == null)
             throw new NullPointerException("body cannot be null");
@@ -47,6 +50,9 @@ public abstract class AbstractBrain implements Brain {
         this.maxSpeedPerSecond = maxSpeedPerSecond;
         this.defaultEmotion = defaultEmotion;
 //        rememberLongTermMemories(longTermMemories);
+        this.neuralNetworkConfig = config;
+        for (var organ : organs)
+            organ.connect(this);
     }
 
 //    private void rememberLongTermMemories(Map<Class<? extends Thing>, Emotion> longTermMemories) {
@@ -94,7 +100,7 @@ public abstract class AbstractBrain implements Brain {
 //    }
 
     @Override
-    public void handle(SpatialEngram engram) {
+    public void handle(Engram engram) {
         shortTermMemories.add(engram);
     }
 
@@ -112,7 +118,7 @@ public abstract class AbstractBrain implements Brain {
 //            }
 //        }
 
-        double[] inputs = neuralNetworkInputsConverter.create(shortTermMemories);
+        double[] inputs = neuralNetworkInputsConverter.create(shortTermMemories, neuralNetworkConfig.inputSize());
         double[] outputs = neuralNetwork.feedForward(inputs);
         Velocity velocity = velocityFactory.create(outputs);
         body.movement(velocity);
@@ -124,7 +130,7 @@ public abstract class AbstractBrain implements Brain {
         return longTermMemories;
     }
 
-    Collection<SpatialEngram> getShortTermMemories() {
+    Collection<Engram> getShortTermMemories() {
         return shortTermMemories;
     }
 }

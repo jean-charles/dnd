@@ -8,7 +8,7 @@ import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.lifeforms.organs.Organ;
-import com.gayasystem.games.dnd.lifeforms.sensitive.hearring.SoundSpectrum;
+import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.SoundSpectrum;
 
 import java.util.Map;
 import java.util.Set;

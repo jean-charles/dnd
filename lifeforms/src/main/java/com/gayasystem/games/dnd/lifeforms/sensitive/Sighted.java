@@ -3,6 +3,7 @@ package com.gayasystem.games.dnd.lifeforms.sensitive;
 import com.gayasystem.games.dnd.common.Thing;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 
+@Deprecated(forRemoval = true)
 public interface Sighted {
     /**
      * Called by the world to show other things.

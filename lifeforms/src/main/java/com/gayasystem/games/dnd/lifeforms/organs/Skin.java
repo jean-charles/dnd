@@ -1,12 +1,14 @@
 package com.gayasystem.games.dnd.lifeforms.organs;
 
-import com.gayasystem.games.dnd.lifeforms.sensitive.Pain;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Pressure;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Thermoception;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Touch;
+import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.Pressure;
 
-public class Skin implements Organ, Pain, Pressure, Touch, Thermoception {
+public class Skin extends AbstractOrgan<Pressure> {
     @Override
-    public void press(double pressure) {
+    public int nbSignals() {
+        return 0;
+    }
+
+    @Override
+    public void stimulate(final Pressure pressure) {
     }
 }

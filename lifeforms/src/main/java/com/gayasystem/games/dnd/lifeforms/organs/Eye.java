@@ -1,12 +1,14 @@
 package com.gayasystem.games.dnd.lifeforms.organs;
 
-import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Pain;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Sighted;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
+import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.Image;
 
-public class Eye implements Organ, Sighted, Pain {
+public class Eye extends AbstractOrgan<Image> {
     @Override
-    public void see(final Thing thing, final PolarCoordinates origin, final double orientation) {
+    public int nbSignals() {
+        return 0;
+    }
+
+    @Override
+    public void stimulate(final Image image) {
     }
 }

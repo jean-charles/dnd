@@ -1,8 +1,14 @@
 package com.gayasystem.games.dnd.lifeforms.organs;
 
-import com.gayasystem.games.dnd.lifeforms.sensitive.Pain;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Taste;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Thermoception;
+import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.Flavour;
 
-public class Tong implements Organ, Pain, Taste, Thermoception {
+public class Tong extends AbstractOrgan<Flavour> {
+    @Override
+    public int nbSignals() {
+        return 0;
+    }
+
+    @Override
+    public void stimulate(final Flavour flavour) {
+    }
 }

@@ -1,12 +1,14 @@
 package com.gayasystem.games.dnd.lifeforms.organs;
 
-import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.lifeforms.sensitive.Hearing;
-import com.gayasystem.games.dnd.lifeforms.sensitive.hearring.SoundSpectrum;
-import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
+import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.Sound;
 
-public class Ear implements Organ, Hearing {
+public class Ear extends AbstractOrgan<Sound> {
     @Override
-    public void ear(final Thing thing, final SoundSpectrum spectrum, final double amplitude, final PolarCoordinates origin) {
+    public int nbSignals() {
+        return 0;
+    }
+
+    @Override
+    public void stimulate(final Sound sound) {
     }
 }

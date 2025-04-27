@@ -1,7 +1,6 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
-import com.gayasystem.games.dnd.common.Thing;
+import com.gayasystem.games.dnd.lifeforms.sensitive.Sense;
 
-public interface Engram {
-    Class<? extends Thing> thingClass();
+public record Engram(Sense sense, double[] values) {
 }

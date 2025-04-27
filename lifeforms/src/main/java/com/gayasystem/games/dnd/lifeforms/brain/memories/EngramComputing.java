@@ -1,6 +1,5 @@
 package com.gayasystem.games.dnd.lifeforms.brain.memories;
 
-import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +12,16 @@ import static com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion
 @Service
 public class EngramComputing {
     private PersistedEngram search(Collection<PersistedEngram> memories, SpatialEngram engram) {
-        Class<? extends Thing> thing = engram.engram().thingClass();
+//        Class<? extends Thing> thing = engram.engram().thingClass();
         PersistedEngram similarMemory = null;
 
         for (var memory : memories) {
-            var memoryThing = memory.engram().thingClass();
-            if (memoryThing.isAssignableFrom(thing)) {
-                if (memoryThing.equals(thing))
-                    return memory;
-                similarMemory = memory;
-            }
+//            var memoryThing = memory.engram().thingClass();
+//            if (memoryThing.isAssignableFrom(thing)) {
+//                if (memoryThing.equals(thing))
+//                    return memory;
+            similarMemory = memory;
+//            }
         }
         return similarMemory;
     }

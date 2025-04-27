@@ -7,16 +7,17 @@ import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.lifeforms.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.brain.BrainFactory;
+import com.gayasystem.games.dnd.lifeforms.brain.NeuralNetworkInputsConverter;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.lifeforms.organs.Organ;
-import com.gayasystem.games.dnd.lifeforms.sensitive.hearring.SoundSpectrum;
+import com.gayasystem.games.dnd.lifeforms.sensitive.stimuli.SoundSpectrum;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 public abstract class LifeForm extends Thing implements Moveable, Eater {
     private final Gender gender;
@@ -27,11 +28,15 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
     private final double minSoundAmplitude;
     private final Emotion defaultEmotion;
     private final Map<Class<? extends Thing>, Emotion> longTermMemories;
-    private final Set<Organ> organs;
+    private final Collection<Organ> organs;
+    private final NeuralNetworkConfig neuralNetworkConfig;
 
     private Brain brain;
     private Velocity movement;
     private PolarCoordinates foodCoordinate;
+
+    @Autowired
+    private NeuralNetworkInputsConverter neuralNetworkInputsConverter;
 
     @Autowired
     private LifeEnvironment environment;
@@ -55,7 +60,7 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
      * @param longTermMemories   list of long term memories.
      * @param organs             all life form organs.
      */
-    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Set<Organ> organs) {
+    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Collection<Organ> organs) {
         super(width, depth, mass);
         this.gender = gender;
         this.speed = speed;
@@ -65,13 +70,19 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
         this.minSoundAmplitude = minSoundAmplitude;
         this.defaultEmotion = defaultEmotion;
         this.longTermMemories = longTermMemories;
-        this.organs = Collections.unmodifiableSet(organs);
+        this.organs = Collections.unmodifiableCollection(organs);
+
+        int inputSize = neuralNetworkInputsConverter.inputSize(this.organs);
+        int hiddenSize = 1;
+        int outputSize = 1;
+        double learningRate = 0.01;
+        neuralNetworkConfig = new NeuralNetworkConfig(inputSize, hiddenSize, outputSize, learningRate);
     }
 
     @Override
     public void run() {
         if (brain == null)
-            brain = brainFactory.create(this, speed, defaultEmotion, longTermMemories);
+            brain = brainFactory.create(this, speed, defaultEmotion, longTermMemories, neuralNetworkConfig, organs);
 
         foodCoordinate = null;
         movement = null;
@@ -109,5 +120,7 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
         return gender;
     }
 
-    public abstract NeuralNetworkConfig neuralNetworkConfig();
+    public NeuralNetworkConfig neuralNetworkConfig() {
+        return neuralNetworkConfig;
+    }
 }

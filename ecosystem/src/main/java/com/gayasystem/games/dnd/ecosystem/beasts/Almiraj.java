@@ -9,7 +9,6 @@ import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.lifeforms.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -68,10 +67,5 @@ public class Almiraj extends Beast {
                 ),
                 null
         );
-    }
-
-    @Override
-    public NeuralNetworkConfig neuralNetworkConfig() {
-        return new NeuralNetworkConfig(3, 20, 3, 0.01);
     }
 }
