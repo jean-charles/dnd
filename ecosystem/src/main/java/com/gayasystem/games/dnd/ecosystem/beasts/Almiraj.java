@@ -8,6 +8,8 @@ import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,7 @@ public class Almiraj extends Beast {
     private static final double WIDTH = 0.25;
     private static final double DEPTH = 0.50;
 
-    public Almiraj() {
+    public Almiraj(NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
         super(
                 new AbilityScores(
                         new Ability(2),
@@ -65,7 +67,9 @@ public class Almiraj extends Beast {
                 Map.of(
                         Carrot.class, Emotion.hungry
                 ),
-                null
+                null,
+                neuralNetworkInputsConverter,
+                brainFactory
         );
     }
 }

@@ -3,6 +3,8 @@ package com.gayasystem.games.dnd.world.services;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.ecosystem.beasts.Almiraj;
 import com.gayasystem.games.dnd.ecosystem.houses.Wall;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
 import com.gayasystem.games.dnd.world.ThingA;
 import com.gayasystem.games.dnd.world.services.domains.HitBox;
 import com.gayasystem.games.dnd.world.services.domains.InGameObject;
@@ -11,6 +13,7 @@ import org.apache.commons.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.geometry.spherical.oned.Point1S;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static java.lang.Math.PI;
@@ -21,6 +24,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringJUnitConfig(classes = {HitBoxUtils.class})
 public class HitBoxUtilsTest {
     private static final double PRECISION = 0.0000000000001;
+
+    @MockBean
+    NeuralNetworkInputsConverter neuralNetworkInputsConverter;
+
+    @MockBean
+    BrainFactory brainFactory;
 
     @Autowired
     HitBoxUtils utils = new HitBoxUtils();
@@ -270,7 +279,7 @@ public class HitBoxUtilsTest {
 
     @Test
     void translationGame() {
-        var thingA = new Almiraj();
+        var thingA = new Almiraj(neuralNetworkInputsConverter, brainFactory);
         var thingB = new Wall(1.0, 0.05);
         var objA = new InGameObject(thingA, Vector2D.of(-1.2, 0), Point1S.ZERO, Velocity.NO_VELOCITY);
         var objB = new InGameObject(thingB, Vector2D.of(2, 0), Point1S.ZERO, Velocity.NO_VELOCITY);

@@ -7,6 +7,8 @@ import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.gametools.scores.Skills;
 import com.gayasystem.games.dnd.lifeforms.Gender;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
 import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Organ;
 import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.stimuli.SoundSpectrum;
@@ -22,8 +24,8 @@ public abstract class Character extends LifeForm {
     private int armorClass;
     private Set<Equipment> equipments = new HashSet<>();
 
-    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Set<Organ> organs) {
-        super(width, depth, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, defaultEmotion, longTermMemories, organs);
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Set<Organ> organs, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
+        super(width, depth, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, defaultEmotion, longTermMemories, organs, neuralNetworkInputsConverter, brainFactory);
         this.abilityScores = calculate(abilityScores, abilityScoreIncrease);
         this.alignment = alignment;
         this.skills = skills;

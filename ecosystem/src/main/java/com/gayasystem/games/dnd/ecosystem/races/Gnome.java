@@ -5,6 +5,8 @@ import com.gayasystem.games.dnd.gametools.alignments.Alignment;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.lifeforms.Gender;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Gnome extends Character {
-    public Gnome(AbilityScores abilityScores, Alignment alignment, Gender gender) {
+    public Gnome(AbilityScores abilityScores, Alignment alignment, Gender gender, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -36,7 +38,9 @@ public class Gnome extends Character {
                 0.0,
                 Emotion.neutral,
                 null,
-                null
+                null,
+                neuralNetworkInputsConverter,
+                brainFactory
         );
     }
 }

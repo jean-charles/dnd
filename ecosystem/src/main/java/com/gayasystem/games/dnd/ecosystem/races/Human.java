@@ -9,6 +9,8 @@ import com.gayasystem.games.dnd.gametools.dices.Die1D20;
 import com.gayasystem.games.dnd.gametools.scores.Ability;
 import com.gayasystem.games.dnd.gametools.scores.AbilityScores;
 import com.gayasystem.games.dnd.lifeforms.Gender;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,7 @@ public class Human extends Character {
     public static final double WIDTH = 0.8;
     public static final double DEPTH = 0.4;
 
-    public Human(AbilityScores abilityScores, Alignment alignment, Gender gender) {
+    public Human(AbilityScores abilityScores, Alignment alignment, Gender gender, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
         super(
                 abilityScores,
                 new AbilityScores(
@@ -47,11 +49,13 @@ public class Human extends Character {
                 Map.of(
                         Almiraj.class, Emotion.hungry
                 ),
-                null
+                null,
+                neuralNetworkInputsConverter,
+                brainFactory
         );
     }
 
-    public Human(Gender gender) {
+    public Human(Gender gender, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
         this(
                 new AbilityScores(
                         new Ability(Die1D20.die.roll()),
@@ -65,11 +69,13 @@ public class Human extends Character {
                         Ethical.neutral,
                         Moral.neutral
                 ),
-                gender
+                gender,
+                neuralNetworkInputsConverter,
+                brainFactory
         );
     }
 
-    public Human() {
-        this(Gender.male);
+    public Human(NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
+        this(Gender.male, neuralNetworkInputsConverter, brainFactory);
     }
 }

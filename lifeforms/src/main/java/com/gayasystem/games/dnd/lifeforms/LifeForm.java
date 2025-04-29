@@ -36,12 +36,6 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
     private PolarCoordinates foodCoordinate;
 
     @Autowired
-    private NeuralNetworkInputsConverter neuralNetworkInputsConverter;
-
-    @Autowired
-    private BrainFactory brainFactory;
-
-    @Autowired
     private MeasurementConvertor convertor;
 
     /**
@@ -57,7 +51,7 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
      * @param longTermMemories   list of long term memories.
      * @param organs             all life form organs.
      */
-    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Collection<Organ> organs) {
+    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Collection<Organ> organs, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
         super(width, depth, mass);
         this.gender = gender;
         this.speed = speed;
