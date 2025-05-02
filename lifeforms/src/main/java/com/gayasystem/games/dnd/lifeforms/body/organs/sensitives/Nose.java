@@ -2,7 +2,11 @@ package com.gayasystem.games.dnd.lifeforms.body.organs.sensitives;
 
 import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.stimuli.Smell;
 
-public class Nose extends AbstractOrgan<Smell> {
+public class Nose extends AbstractSensitiveOrgan<Smell> {
+    public Nose() {
+        super(Sense.SmellSense);
+    }
+
     @Override
     public int nbSignals() {
         return 0;

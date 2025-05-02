@@ -1,23 +1,21 @@
 package com.gayasystem.games.dnd.lifeforms.body.organs.brain;
 
 import com.gayasystem.games.dnd.common.Thing;
-import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.Engram;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.EngramComputing;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.PersistedEngram;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Organ;
+import com.gayasystem.games.dnd.lifeforms.body.organs.muscular.MuscularOrgan;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.SensitiveOrgan;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetwork;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-@Component
 public abstract class AbstractBrain implements Brain {
     private final LifeForm body;
     private final double maxSpeedPerSecond;
@@ -26,6 +24,7 @@ public abstract class AbstractBrain implements Brain {
     private final Collection<Engram> shortTermMemories = new ArrayList<>();
     private final NeuralNetworkConfig neuralNetworkConfig;
     private final NeuralNetwork neuralNetwork;
+    private final Collection<MuscularOrgan> organs = new ArrayList<>();
 
     @Autowired
     private EngramComputing engramComputing;
@@ -33,16 +32,13 @@ public abstract class AbstractBrain implements Brain {
     @Autowired
     private NeuralNetworkInputsConverter neuralNetworkInputsConverter;
 
-    @Autowired
-    private VelocityFactory velocityFactory;
-
     /**
      * @param body              body that contain the brain
      * @param maxSpeedPerSecond max speed in meter per second
      * @param defaultEmotion    default emotion for unknown things
      * @param longTermMemories  predetermined memories
      */
-    protected AbstractBrain(LifeForm body, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, NeuralNetwork neuralNetwork, final NeuralNetworkConfig config, Collection<Organ> organs) {
+    protected AbstractBrain(LifeForm body, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, NeuralNetwork neuralNetwork, final NeuralNetworkConfig config, final Collection<SensitiveOrgan> sensitiveOrgans, final Collection<MuscularOrgan> muscularOrgans) {
         this.neuralNetwork = neuralNetwork;
         if (body == null)
             throw new NullPointerException("body cannot be null");
@@ -51,7 +47,9 @@ public abstract class AbstractBrain implements Brain {
         this.defaultEmotion = defaultEmotion;
 //        rememberLongTermMemories(longTermMemories);
         this.neuralNetworkConfig = config;
-        for (var organ : organs)
+        for (var organ : sensitiveOrgans)
+            organ.connect(this);
+        for (var organ : muscularOrgans)
             organ.connect(this);
     }
 
@@ -99,6 +97,17 @@ public abstract class AbstractBrain implements Brain {
 //        return 0;
 //    }
 
+    private void muscularReaction(double[] outputs) {
+        int offset = 0;
+        for (var organ : organs) {
+            var nbSignals = organ.nbSignals();
+            double[] signals = new double[nbSignals];
+            System.arraycopy(outputs, offset, signals, 0, nbSignals);
+            organ.handleSignals(signals);
+            offset += nbSignals;
+        }
+    }
+
     @Override
     public void handle(Engram engram) {
         shortTermMemories.add(engram);
@@ -117,11 +126,10 @@ public abstract class AbstractBrain implements Brain {
 //                body.movement(velocity);
 //            }
 //        }
-
         double[] inputs = neuralNetworkInputsConverter.create(shortTermMemories, neuralNetworkConfig.inputSize());
         double[] outputs = neuralNetwork.feedForward(inputs);
-        Velocity velocity = velocityFactory.create(outputs);
-        body.movement(velocity);
+        muscularReaction(outputs);
+        body.movement(organs);
         shortTermMemories.clear();
     }
 

@@ -39,6 +39,7 @@ public class Dragonborn extends Character {
                 Emotion.neutral,
                 null,
                 null,
+                null,
                 neuralNetworkInputsConverter,
                 brainFactory
         );

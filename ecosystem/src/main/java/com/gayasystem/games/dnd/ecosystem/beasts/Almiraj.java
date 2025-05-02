@@ -68,6 +68,7 @@ public class Almiraj extends Beast {
                         Carrot.class, Emotion.hungry
                 ),
                 null,
+                null,
                 neuralNetworkInputsConverter,
                 brainFactory
         );

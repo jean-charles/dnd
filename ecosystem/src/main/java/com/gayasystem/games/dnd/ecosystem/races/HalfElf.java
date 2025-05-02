@@ -39,6 +39,7 @@ public class HalfElf extends Character {
                 Emotion.neutral,
                 null,
                 null,
+                null,
                 neuralNetworkInputsConverter,
                 brainFactory
         );

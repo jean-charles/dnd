@@ -50,6 +50,7 @@ public class Human extends Character {
                         Almiraj.class, Emotion.hungry
                 ),
                 null,
+                null,
                 neuralNetworkInputsConverter,
                 brainFactory
         );

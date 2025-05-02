@@ -10,9 +10,11 @@ import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Organ;
+import com.gayasystem.games.dnd.lifeforms.body.organs.muscular.MuscularOrgan;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.SensitiveOrgan;
 import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.stimuli.SoundSpectrum;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -24,8 +26,8 @@ public abstract class Character extends LifeForm {
     private int armorClass;
     private Set<Equipment> equipments = new HashSet<>();
 
-    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Set<Organ> organs, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
-        super(width, depth, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, defaultEmotion, longTermMemories, organs, neuralNetworkInputsConverter, brainFactory);
+    public Character(AbilityScores abilityScores, AbilityScores abilityScoreIncrease, Alignment alignment, Skills skills, double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Collection<SensitiveOrgan<?>> sensitiveOrgans, final Collection<MuscularOrgan> muscularOrgans, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
+        super(width, depth, mass, gender, speed, sightDistance, nightSightDistance, soundSpectrum, minSoundAmplitude, defaultEmotion, longTermMemories, sensitiveOrgans, muscularOrgans, neuralNetworkInputsConverter, brainFactory);
         this.abilityScores = calculate(abilityScores, abilityScoreIncrease);
         this.alignment = alignment;
         this.skills = skills;

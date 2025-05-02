@@ -39,6 +39,7 @@ public class Tiefling extends Character {
                 Emotion.neutral,
                 null,
                 null,
+                null,
                 neuralNetworkInputsConverter,
                 brainFactory
         );

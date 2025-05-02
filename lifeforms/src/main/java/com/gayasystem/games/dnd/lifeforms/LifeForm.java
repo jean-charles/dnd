@@ -1,15 +1,16 @@
 package com.gayasystem.games.dnd.lifeforms;
 
 import com.gayasystem.games.dnd.common.Food;
-import com.gayasystem.games.dnd.common.Moveable;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.common.Velocity;
 import com.gayasystem.games.dnd.common.coordinates.MeasurementConvertor;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.Brain;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.BrainFactory;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.NeuralNetworkInputsConverter;
+import com.gayasystem.games.dnd.lifeforms.body.organs.brain.VelocityFactory;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Organ;
+import com.gayasystem.games.dnd.lifeforms.body.organs.muscular.MuscularOrgan;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.SensitiveOrgan;
 import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.stimuli.SoundSpectrum;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.apache.commons.geometry.euclidean.twod.PolarCoordinates;
@@ -20,6 +21,8 @@ import java.util.Collections;
 import java.util.Map;
 
 public abstract class LifeForm extends Thing implements Moveable, Eater {
+    public final Collection<SensitiveOrgan<?>> sensitiveOrgans;
+    public final Collection<MuscularOrgan> muscularOrgans;
     private final Gender gender;
     private final double speed;
     private final double sightDistance;
@@ -28,15 +31,18 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
     private final double minSoundAmplitude;
     private final Emotion defaultEmotion;
     private final Map<Class<? extends Thing>, Emotion> longTermMemories;
-    private final Collection<Organ> organs;
     private final NeuralNetworkConfig neuralNetworkConfig;
-    private final Brain brain;
+    private final BrainFactory brainFactory;
 
+    private Brain brain;
     private Velocity movement;
     private PolarCoordinates foodCoordinate;
 
     @Autowired
     private MeasurementConvertor convertor;
+
+    @Autowired
+    private VelocityFactory velocityFactory;
 
     /**
      * @param width              width in meter.
@@ -49,9 +55,10 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
      * @param soundSpectrum      TBD
      * @param minSoundAmplitude  TBD
      * @param longTermMemories   list of long term memories.
-     * @param organs             all life form organs.
+     * @param sensitiveOrgans    life form sensitive organs.
+     * @param muscularOrgans     life form muscular organs.
      */
-    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Collection<Organ> organs, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
+    public LifeForm(double width, double depth, double mass, Gender gender, double speed, double sightDistance, double nightSightDistance, SoundSpectrum soundSpectrum, double minSoundAmplitude, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, final Collection<SensitiveOrgan<?>> sensitiveOrgans, final Collection<MuscularOrgan> muscularOrgans, NeuralNetworkInputsConverter neuralNetworkInputsConverter, BrainFactory brainFactory) {
         super(width, depth, mass);
         this.gender = gender;
         this.speed = speed;
@@ -61,14 +68,16 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
         this.minSoundAmplitude = minSoundAmplitude;
         this.defaultEmotion = defaultEmotion;
         this.longTermMemories = longTermMemories;
-        this.organs = Collections.unmodifiableCollection(organs);
+        this.sensitiveOrgans = Collections.unmodifiableCollection(sensitiveOrgans);
+        this.muscularOrgans = Collections.unmodifiableCollection(muscularOrgans);
+        this.brainFactory = brainFactory;
 
-        int inputSize = neuralNetworkInputsConverter.inputSize(this.organs);
-        int hiddenSize = 1;
+        int inputSize = neuralNetworkInputsConverter.inputSize(this.sensitiveOrgans);
+        int hiddenSize = 20;
         int outputSize = 1;
         double learningRate = 0.01;
         neuralNetworkConfig = new NeuralNetworkConfig(inputSize, hiddenSize, outputSize, learningRate);
-        brain = brainFactory.create(this, speed, defaultEmotion, longTermMemories, neuralNetworkConfig, this.organs);
+        brain = brainFactory.create(this, speed, defaultEmotion, longTermMemories, neuralNetworkConfig, this.sensitiveOrgans, this.muscularOrgans);
     }
 
     @Override
@@ -86,7 +95,9 @@ public abstract class LifeForm extends Thing implements Moveable, Eater {
     }
 
     @Override
-    public void movement(Velocity velocity) {
+    public void movement(Collection<MuscularOrgan> organs) {
+        double[] outputs = new double[0];
+        Velocity velocity = velocityFactory.create(outputs);
         movement = velocity;
     }
 

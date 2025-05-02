@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gayasystem.games.dnd.common.Thing;
 import com.gayasystem.games.dnd.lifeforms.LifeForm;
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.emotions.Emotion;
-import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Organ;
+import com.gayasystem.games.dnd.lifeforms.body.organs.muscular.MuscularOrgan;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.SensitiveOrgan;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetwork;
 import com.gayasystem.games.dnd.neuralnetwork.NeuralNetworkConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class BrainFactoryImpl implements BrainFactory {
     private ApplicationContext ctx;
 
     @Override
-    public Brain create(LifeForm lifeForm, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, NeuralNetworkConfig config, Collection<Organ> organs) {
+    public Brain create(LifeForm lifeForm, double maxSpeedPerSecond, Emotion defaultEmotion, Map<Class<? extends Thing>, Emotion> longTermMemories, NeuralNetworkConfig config, final Collection<SensitiveOrgan<?>> sensitiveOrgans, final Collection<MuscularOrgan> muscularOrgans) {
         var cfg = lifeForm.neuralNetworkConfig();
         var neuralNetwork = new NeuralNetwork(cfg);
         var om = new ObjectMapper();
@@ -33,6 +34,6 @@ public class BrainFactoryImpl implements BrainFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return ctx.getBean(DefaultBrain.class, lifeForm, maxSpeedPerSecond, defaultEmotion, longTermMemories, neuralNetwork, organs);
+        return ctx.getBean(DefaultBrain.class, lifeForm, maxSpeedPerSecond, defaultEmotion, longTermMemories, neuralNetwork, config, sensitiveOrgans, muscularOrgans);
     }
 }

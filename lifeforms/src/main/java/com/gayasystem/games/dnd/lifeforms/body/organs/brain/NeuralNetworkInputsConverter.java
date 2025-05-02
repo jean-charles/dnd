@@ -1,14 +1,14 @@
 package com.gayasystem.games.dnd.lifeforms.body.organs.brain;
 
 import com.gayasystem.games.dnd.lifeforms.body.organs.brain.memories.Engram;
-import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.Organ;
+import com.gayasystem.games.dnd.lifeforms.body.organs.sensitives.SensitiveOrgan;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
 @Component
 public class NeuralNetworkInputsConverter {
-    public int inputSize(Collection<Organ> organs) {
+    public int inputSize(Collection<SensitiveOrgan<?>> organs) {
         int nbSignals = 0;
         for (var organ : organs)
             nbSignals += organ.nbSignals();
